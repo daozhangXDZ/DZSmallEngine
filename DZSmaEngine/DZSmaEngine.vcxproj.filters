@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{7cf190cf-31f9-4819-9162-e55af19ed55d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Check">
+      <UniqueIdentifier>{f6d25099-03c5-441a-a10b-a6ce41794925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor">
+      <UniqueIdentifier>{c3991b38-19f6-4a3f-ad0f-961a10fc63b3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Check\CheckEngineUnit.cpp" />
+    <ClCompile Include="Engine\Check\Source.cpp" />
+    <ClCompile Include="Engine\Runtime\Core\Private\CoreUtil\EngineTimer.cpp" />
+    <ClCompile Include="Engine\Runtime\Core\Private\Graphics\Graphics.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\ActorComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\CombineMesh.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\CubeMesh.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\PrimitiveComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\SceneComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\StaticMeshComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\Keyboard\KeyboardClass.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\Keyboard\KeyboardEvent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\Mouse\MouseClass.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\Mouse\MouseEvent.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\RenderWindow.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\WindowContainer.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\WindowsApplicaion.cpp" />
+    <ClCompile Include="Engine\Runtime\Launch\Private\Windows\LaunchWindows.cpp" />
+    <ClCompile Include="Engine\Runtime\Launch\Private\Launch.cpp" />
+    <ClCompile Include="Engine\Runtime\Launch\Private\LaunchEngineLoop.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\AdapterReader.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11Depth.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11Device.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11RenderTargets.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11State.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11TextureSample.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ViewPort.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\WinD3D11RHI.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\DynamicRHI.cpp" />
+    <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ConsoleLog.cpp" />
+    <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ErrorLogger.cpp" />
+    <ClCompile Include="Engine\Runtime\Tool\Private\String\StringConverter.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11Shader.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11PrimitiveTopology.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11VertexBuffer.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11IndexBuffer.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ConstantBuffer.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\PrimitiveSceneProxy.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\SimpleRenderProxy.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\StaticMeshRenderProxy.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Scene.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\SceneRender.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\SimpleShadingRender.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ShaderResource.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\VertexElementDesc.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\CoreUtil\EngineTimer.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\Graphics\Graphics.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\CoreMinimal.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\ActorComponent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\CombineMesh.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\CubeMesh.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\PrimitiveComponent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\SceneComponent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\StaticMeshComponent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\BaseEngine.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\EngineGlobal.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\GameEngine.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\GeneralApplication.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\GeneralWindow.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\Keyboard\KeyboardClass.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\Keyboard\KeyboardEvent.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\Mouse\MouseClass.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\Mouse\MouseEvent.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\RenderWindow.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\WindowContainer.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\WindowsApplicaion.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\WindowsWindows.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\EngineApplicationMIisc.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineApplication.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineWindow.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineWindowDesc.h" />
+    <ClInclude Include="Engine\Runtime\Launch\Public\LaunchEngineLoop.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\AdapterReader.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11DynamicRHI.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11RHIResources.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\DynamicRHI.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHI.h" />
+    <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\COMException.h" />
+    <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\ConsoleLog.h" />
+    <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\ErrorLogger.h" />
+    <ClInclude Include="Engine\Runtime\Tool\Public\String\StringConverter.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\primitivesceneproxy.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\simplerenderproxy.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\staticmeshrenderproxy.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Scene.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\PanelMeshComponent.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\SceneRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\SimpleShadingRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\RHICommandList.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\ConstantBufferTypes.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\VertexElementDesc.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\Geometry.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\ViewPortDesc.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\UIMeshCompnent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\CameraComponent.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\DeviceInput.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_VS_2D.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
+    <FxCompile Include="Engine\Shaders\SimplePixelBase_Shader.hlsl" />
+    <FxCompile Include="Engine\Shaders\SimpleVertexBase_Shader.hlsl" />
+  </ItemGroup>
+</Project>
