@@ -3,17 +3,12 @@
 #include <DirectXMath.h>
 #include <wrl/client.h>
 #include "CoreMinimal.h"
+#include "RHISources.h"
 using namespace DirectX;
-
-
-class D3D11RenderResource 
-{
-
-};
 
 //////////////////////////////////--------------资源--------------////////////////////////////////////////
 
-class D3D11ShaderResourceViewRes : public D3D11RenderResource
+class D3D11ShaderResourceViewRes : public RHIResource
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> mShaderResView;
@@ -26,7 +21,7 @@ typedef D3D11ShaderResourceViewRes* D3D11ShaderResourceViewResParamRef;
 /**
  * DX11着色器
  */
-class D3D11ShaderRes:public D3D11RenderResource
+class D3D11ShaderRes:public RHIResource
 {
 public:
 	D3D11ShaderRes() {};
@@ -49,7 +44,7 @@ typedef D3D11ShaderRes* D3D11ShaderResParamRef;
 /**
  * DX11顶点着色器
  */
-class D3D11VertexShaderRes:public D3D11ShaderRes
+class D3D11VertexShaderRes:public D3D11ShaderRes,public RHIVertexShader
 {
 public:
 	ID3D11VertexShader * GetShader()
@@ -70,7 +65,7 @@ typedef D3D11VertexShaderRes* D3D11VertexShaderResParamRef;
 /**
  * DX11像素着色器
  */
-class D3D11PixelShaderRes :public D3D11ShaderRes
+class D3D11PixelShaderRes :public D3D11ShaderRes, public RHIPixelShader
 {
 public:
 	ID3D11PixelShader * GetShader()
@@ -92,7 +87,7 @@ typedef D3D11PixelShaderRes* D3D11PixelShaderResParamRef;
 
 
 //////////////////////////////////---------顶点数据布局资源------------////////////////////////////////////////
-class D3D11InputLayoutRes :public D3D11RenderResource
+class D3D11InputLayoutRes :public RHIResource
 {
 public:
 	ID3D11InputLayout * GetInput()
@@ -116,8 +111,8 @@ typedef D3D11InputLayoutRes* D3D11InputLayoutResParamRef;
 /// <summary>
 ///  
 /// </summary>
-/// <seealso cref="D3D11RenderResource" />
-class D3D11RenderTargetResource :public D3D11RenderResource
+/// <seealso cref="RHIResource" />
+class D3D11RenderTargetResource :public RHIResource
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
@@ -144,7 +139,7 @@ typedef D3D11RenderTargetResource* D3D11RHIRenderTargetParamRef;
 
 
 //////////////////////////////////---------深度目标资源------------////////////////////////////////////////
-class D3D11DepthResource :public D3D11RenderResource
+class D3D11DepthResource :public RHIResource
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthTexture;
@@ -277,7 +272,7 @@ typedef D3D11TextureSampleState* D3D11TextureSampleStateParamRef;
 
 
 /////////////////////////////////---------顶点布局-----------/////////////////////////////////////////
-class D3DInputElementRes :public D3D11RenderResource
+class D3DInputElementRes :public RHIResource
 {
 public:
 	D3D11_INPUT_ELEMENT_DESC* elementsDesc;
@@ -305,7 +300,7 @@ enum PrimitiveTopology
 };
 
 //////////////////////////////////缓璁去资源////////////////////////////////////////
-class D3D11VertexBufferRes:public D3D11RenderResource
+class D3D11VertexBufferRes:public RHIResource
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
@@ -351,7 +346,7 @@ public:
 typedef D3D11VertexBufferRes* D3D11VertexBufferResParamRef;
 
 
-class D3D11IndexBufferRes :public D3D11RenderResource
+class D3D11IndexBufferRes :public RHIResource
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
@@ -382,7 +377,7 @@ typedef D3D11IndexBufferRes* D3D11IndexBufferResParamRef;
 /**
  * 
  */
-class D3D11ConstanBufferRes :public D3D11RenderResource
+class D3D11UniFormBuffer :public RHIUniFormBuffer
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mBuffer;
@@ -392,7 +387,7 @@ public:
 	bool isBindVS = false;
 	bool isBindPS = false;
 };
-typedef D3D11ConstanBufferRes* D3D11ConstanBufferResParamRef;
+typedef D3D11UniFormBuffer* D3D11UniFormBufferRef;
 
 enum D3D11ShaderType
 {

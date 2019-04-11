@@ -130,12 +130,13 @@ public:
 	virtual void Present() = 0;
 
 
-	virtual void ApplyConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT pDataWidth, void * pData, bool isReBind) =0;
+	virtual void ApplyConstantBuffer(D3D11UniFormBufferRef ResTarget, UINT pDataWidth, void * pData, bool isReBind) =0;
 
 
 protected:
-	virtual void CreateConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT pDataWidth) =0;
-	virtual void BindConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT index, D3D11ShaderType bindShaderType) =0;
+	//virtual RHIUniFormBufferRef CreateConstantBuffer(D3D11UniFormBufferRef ResTarget, UINT pDataWidth) =0;
+	virtual RHIUniFormBufferRef CreateUniFormBuffer(void* Content, UniFormLayout* layout) = 0;
+	virtual void BindConstantBuffer(D3D11UniFormBufferRef ResTarget, UINT index, D3D11ShaderType bindShaderType) =0;
 	
 	virtual void InitDefaultRes() = 0;
 	virtual void InitContantBuffer() = 0;
@@ -153,11 +154,11 @@ public:
 	D3D11RHIRenderTargetParamRef		mMainRenderTarget;
 	D3D11DepthResourceParamRef			mMainDepthRes;
 
-	D3D11ConstanBufferResParamRef		mCBStates;
-	D3D11ConstanBufferResParamRef		mCBFrame;
-	D3D11ConstanBufferResParamRef		mCBOnResize;
-	D3D11ConstanBufferResParamRef		mCBRarely;
-	D3D11ConstanBufferResParamRef		mCBDraw;
+	D3D11UniFormBufferRef		mCBStates;
+	D3D11UniFormBufferRef		mCBFrame;
+	D3D11UniFormBufferRef		mCBOnResize;
+	D3D11UniFormBufferRef		mCBRarely;
+	D3D11UniFormBufferRef		mCBDraw;
 
 	D3D11VertexShaderRes*				mDefaultVertexShader;
 	D3D11PixelShaderRes*				mDefaultPixelShader;
