@@ -4,6 +4,8 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include "EngineGlobal.h"
+#include "D3D11RHIResources.h"
+#include "D3D11State.h"
 
 using namespace DirectX;
 
@@ -32,41 +34,38 @@ public:
 	/// <summary>
 	/// 创建渲染目标
 	/// </summary>
-	virtual void CreateRenderTarget(D3D11RHIRenderTargetParamRef RenderTargetResource) override;
-	virtual void SetRenderTarget(D3D11RHIRenderTargetParamRef RenderTargetResource) override;
+	virtual RHIRenderTargetRef CreateRenderTarget(uint32 width, uint32 height) override;
+	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource) override;
 	
 
-	virtual void CreateDepthTarget(D3D11DepthResourceParamRef DepthTargetResource) override;
-	virtual void SetDepthTarget(D3D11DepthResourceParamRef DepthTargetResource) override;
+	virtual RHIDepthTargetRef CreateDepthTarget() override;
+	virtual void SetDepthTarget(RHIDepthTargetParamRef DepthTargetResource) override;
 	/// <summary>
 	/// 分配渲染目标
 	/// </summary>
-	virtual void OMRenderTarget() override;
+	virtual void OMRenderTarget(RHIRenderTargetRef RenTarRef, RHIDepthTargetRef defRef) override;
 	
 	/// <summary>
 	/// 分配视口
 	/// </summary>
 	virtual void OMViewPort(float view_width, float  view_height) override;
-	virtual void UpdateViewPort(ViewPortDesc* desc) override;
-	virtual void UpdateViewPortViewMat(ViewPortDesc* desc) override;
-	virtual void UpdateViewPortProjMat(ViewPortDesc* desc) override;
 
-	virtual void CreateBlendState(D3D11BlendStateResParamRef blendStateParam) override;
-	virtual void CreateDepthStencilState(D3D11DepthStencilStateResParamRef DepthStateParam) override;
-	virtual void CreaRasterizerState(D3D11RasterizerStateResParamRef rasterStateParam) override;
-	virtual void CreaTextureSampleState(D3D11TextureSampleStateParamRef rasterStateParam) override;
+	virtual RHIBlendStateRef CreateBlendState() override;
+	virtual RHIDepthStencilStateRef CreateDepthStencilState() override;
+	virtual RHIRasterizerStateRef CreaRasterizerState() override;
+	virtual RHISampleStateRef CreaTextureSampleState() override;
 	
 	//////////////////////////////////清理////////////////////////////////////////
 
 	/// <summary>
 	/// 清理RenderTarget
 	/// </summary>
-	virtual void ClearRMT(D3D11RHIRenderTargetParamRef RenderTargetResource) override;	
+	virtual void ClearRMT(RHIRenderTargetParamRef RenderTargetResource) override;
 	/// <summary>
 	/// Clears the depth view.
 	/// </summary>
 	/// <param name="DepthTargetResource">The depth target resource.</param>
-	virtual void ClearDepthView(D3D11DepthResourceParamRef DepthTargetResource) override;
+	virtual void ClearDepthView(RHIDepthTargetParamRef DepthTargetResource) override;
 	
 
 	//////////////////////////////////状态分配////////////////////////////////////////
@@ -78,72 +77,78 @@ public:
 	/// Sets the state of the rasterizer.
 	/// </summary>
 	/// <param name="rasterizerStateParam">The rasterizer state parameter.</param>
-	virtual void SetRasterizerState(D3D11RasterizerStateResParamRef rasterizerStateParam) override;
-	virtual void SetDepthState(D3D11DepthStencilStateResParamRef depthStateParam) override;
-	virtual void SetBlendState(D3D11BlendStateResParamRef blendStateParam) override;
+	virtual void SetRasterizerState(RHIRasterizerStateParamRef rasterizerStateParam) override;
+	virtual void SetDepthState(RHIDepthStencilStateParamRef depthStateParam) override;
+	virtual void SetBlendState(RHIBlendStateParamRef blendStateParam) override;
 
 
 
 
 	//////////////////////////////////纹理采样模式分配////////////////////////////////////////
-	virtual void SetTextureSample(D3D11TextureSampleStateParamRef TextureSamParam) override;
+	virtual void SetTextureSample(RHISampleStateParamRef TextureSamParam) override;
 
 
 
 	
 	//////////////////////////////////Shader分配////////////////////////////////////////
-	virtual void CreateVertexShader(D3D11VertexShaderResParamRef ResTarget, FWString shaderFileName) override;
-	virtual void CreatePixelShader(D3D11PixelShaderResParamRef ResTarget, FWString shaderFileName) override;
-	virtual void CreateInputLayout(D3D11InputLayoutRes* outInput, D3DInputElementResParamRef ResTarget, D3D11VertexShaderResParamRef vertexShader) override;
+	virtual RHIVertexShaderRef CreateVertexShader(FWString shaderFileName) override;
+	virtual RHIPixelShaderRef CreatePixelShader(FWString shaderFileName) override;
+	virtual RHIVertexLayoutRef CreateInputLayout(RHIVertexInputElementParamRef ResTarget, RHIVertexShaderParamRef vertexShader) override;
 
 
 	/// <summary>
 	/// Omvses the shader.
 	/// </summary>
-	virtual void OMVSShader(D3D11VertexShaderResParamRef ResTarget) override;
+	virtual void OMVSShader(RHIVertexShaderParamRef ResTarget) override;
 	
 	/// <summary>
 	/// Ompses the shader.
 	/// </summary>
-	virtual void OMPSShader(D3D11PixelShaderResParamRef ResTarget) override;
+	virtual void OMPSShader(RHIPixelShaderParamRef ResTarget) override;
 	/// <summary>
-/// Ompses the shader.
-/// </summary>
-	virtual void OMPInputLayout(D3D11InputLayoutResParamRef ResTarget) override;
+	/// Ompses the shader.
+	/// </summary>
+	virtual void OMPInputLayout(RHIVertexLayoutParamRef ResTarget) override;
 
 
-	virtual void CreateShaderResourcesView(D3D11ShaderResourceViewResParamRef ResTarget, FWString filePath) override;
-	virtual void SetShaderResourcesView(int stIndex, int num, D3D11ShaderResourceViewResParamRef ResTarget, D3D11ShaderType bindShaderType)override;
-	virtual void CreateVertexBuffer(D3D11VertexBufferResParamRef ResTarget, void*data, UINT descSize, UINT numVertices)override;
-	virtual void CreateIndexBuffer(D3D11IndexBufferResParamRef ResTarget, DWORD * pMemData, UINT numIndices) override;
-	virtual void BindVertexBuffer(D3D11VertexBufferResParamRef ResTarget, int statIndex, int Num, UINT offset) override;
-	virtual void BindIndexBuffer(D3D11IndexBufferResParamRef ResTarget, int statIndex, DXGI_FORMAT pformat) override;
-	virtual void DrawIndexBuffer(D3D11IndexBufferResParamRef ResTarget, int startIndexPos, int startIndexVertex) override;
+	/**
+	 * 创建着色器资源视图
+	 */
+	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString filePath) override;
+	/**
+	 * 设置着色器资源视图
+	 */
+	virtual void SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EPipeLineFlag bindShaderType)override;
+
+	virtual RHIVertexBufferRef CreateVertexBuffer(void*data, UINT descSize, UINT numVertices)override;
+	virtual RHIIndexBufferRef CreateIndexBuffer(DWORD * pMemData, UINT numIndices) override;
+
+	virtual void BindVertexBuffer(RHIVertexBufferParamRef ResTarget, int statIndex, int Num, UINT offset) override;
+	virtual void BindIndexBuffer(RHIIndexBufferParamRef ResTarget, int statIndex, DXGI_FORMAT pformat) override;
+
+	virtual void DrawIndexBuffer(RHIIndexBufferParamRef ResTarget, int startIndexPos, int startIndexVertex) override;
 	/**
 	 * 呈现
 	 */
 	virtual void Present() override;
 
-	virtual void ApplyConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT pDataWidth, void * pData, bool isReBind) override;
-protected:
-	virtual void CreateConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT pDataWidth) override;
-	virtual void BindConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT index, D3D11ShaderType bindShaderType) override;
+	virtual void ApplyConstantBuffer(RHIUniFormBufferRef ResTarget, void * pData, bool isReBind) override;
 
-	virtual void InitDefaultRes() override;
-	virtual void InitContantBuffer() override;
-	virtual void InitShader() override;
-	virtual void InitializeViewPort() override;
-	virtual void InitDefaultState() override;
+	/**
+	 * 创建缓冲区
+	 */
+	virtual RHIUniFormBufferRef CreateUniFormBuffer(void* Content, UniFormLayout* layout) final override;
+	/**
+	 * 设置顶点缓冲区
+	 */
+	virtual void SetUniFormBuffer(RHIVertexShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex) final override;
+	virtual void SetUniFormBuffer(RHIComputerShader shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)  final override;
+	virtual void SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)	final override;
 
 private:
 	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device;
 	Microsoft::WRL::ComPtr< ID3D11DeviceContext >		md3d11DeviceContext;
-	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain;
-
-	Microsoft::WRL::ComPtr< ID3D11RenderTargetView	>	md3d11RenderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>		mDepthStencilView;
-
-	
+	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain;	
 };
 
 

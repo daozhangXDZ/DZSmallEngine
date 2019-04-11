@@ -8,23 +8,23 @@ using namespace DirectX;
 
 //////////////////////////////////--------------资源--------------////////////////////////////////////////
 
-class D3D11ShaderResourceViewRes : public RHIResource
+class RHID3D11ShaderResourceView : public RHIShaderResourceView
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> mShaderResView;
 };
-
-typedef D3D11ShaderResourceViewRes* D3D11ShaderResourceViewResParamRef;
+typedef RHID3D11ShaderResourceView* RHID3D11ShaderResViewRef;
+typedef RHID3D11ShaderResourceView* RHID3D11ShaderResViewParamRef;
 //////////////////////////////////--------------着色器资源--------------///////////////////////////////////////
 
 
 /**
  * DX11着色器
  */
-class D3D11ShaderRes:public RHIResource
+class D3D11Shader:public RHIResource
 {
 public:
-	D3D11ShaderRes() {};
+	D3D11Shader() {};
 	void * GetResBlob()
 	{
 		return mShaderBuffer.Get();
@@ -37,14 +37,14 @@ public:
 public:
 	Microsoft::WRL::ComPtr<ID3DBlob> mShaderBuffer;
 };
-typedef D3D11ShaderRes* D3D11ShaderResParamRef;
+typedef D3D11Shader* D3D11ShaderParamRef;
 
 
 
 /**
  * DX11顶点着色器
  */
-class D3D11VertexShaderRes:public D3D11ShaderRes,public RHIVertexShader
+class RHID3D11VertexShader:public D3D11Shader,public RHIVertexShader
 {
 public:
 	ID3D11VertexShader * GetShader()
@@ -59,13 +59,14 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> mShader;
 };
 
-typedef D3D11VertexShaderRes* D3D11VertexShaderResParamRef;
+typedef RHID3D11VertexShader* RHID3D11VertexShaderRef;
+typedef RHID3D11VertexShader* RHID3D11VertexShaderParamRef;
 
 
 /**
  * DX11像素着色器
  */
-class D3D11PixelShaderRes :public D3D11ShaderRes, public RHIPixelShader
+class RHID3D11PixelShader :public D3D11Shader, public RHIPixelShader
 {
 public:
 	ID3D11PixelShader * GetShader()
@@ -81,13 +82,13 @@ private:
 	
 };
 
-typedef D3D11PixelShaderRes* D3D11PixelShaderResParamRef;
-
+typedef RHID3D11PixelShader* RHID3D11PixelShaderRef;
+typedef RHID3D11PixelShader* RHID3D11PixelShaderParamRef;
 
 
 
 //////////////////////////////////---------顶点数据布局资源------------////////////////////////////////////////
-class D3D11InputLayoutRes :public RHIResource
+class RHID3D1VertexInputLayout :public RHIVertexLayout
 {
 public:
 	ID3D11InputLayout * GetInput()
@@ -101,7 +102,8 @@ public:
 private:
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> mInput;
 };
-typedef D3D11InputLayoutRes* D3D11InputLayoutResParamRef;
+typedef RHID3D1VertexInputLayout* RHID3D11InputLayoutRef;
+typedef RHID3D1VertexInputLayout* RHID3D11InputLayoutParamRef;
 
 
 
@@ -112,7 +114,7 @@ typedef D3D11InputLayoutRes* D3D11InputLayoutResParamRef;
 ///  
 /// </summary>
 /// <seealso cref="RHIResource" />
-class D3D11RenderTargetResource :public RHIResource
+class RHID3D11RenderTarget :public RHIRenderTarget
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
@@ -134,12 +136,12 @@ public:
 	}
 
 };
-
-typedef D3D11RenderTargetResource* D3D11RHIRenderTargetParamRef;
+typedef RHID3D11RenderTarget* RHID3D11RenderTargetRef;
+typedef RHID3D11RenderTarget* RHID3D11RenderTargetParamRef;
 
 
 //////////////////////////////////---------深度目标资源------------////////////////////////////////////////
-class D3D11DepthResource :public RHIResource
+class RHID3D11DepthTarget :public RHIDepthTarget
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthTexture;
@@ -173,110 +175,19 @@ public:
 	int height;
 };
 
-typedef D3D11DepthResource* D3D11DepthResourceParamRef;
+typedef RHID3D11DepthTarget* RHID3D11DepthTargetRef;
+typedef RHID3D11DepthTarget* RHID3D11DepthTagtetParamRef;
 
 
-///////////////////////////////-------------状态资源----------///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 
-/// <summary>
-/// DX渲染状态，会记录状态的相关信息，用于Debug
-/// </summary>
-struct D3D11BaseStateRes
-{
-public:
-	std::string StateDescName;
-
-};
-
-/// <summary>
-/// D3D11光栅化状态
-/// </summary>
-struct D3D11RasterizerStateRes :public D3D11BaseStateRes
-{
-public:
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState>	mRasterizerState;
-	void** GetStateNativeAddress()
-	{
-		return reinterpret_cast<void**>(mRasterizerState.GetAddressOf());
-	}
-	void* GetStateAddress()
-	{
-		return reinterpret_cast<void*>(mRasterizerState.Get());
-	}
-};
-typedef D3D11RasterizerStateRes* D3D11RasterizerStateResParamRef;
-
-
-
-/// <summary>
-/// D3D11深度模版状态
-/// </summary>
-struct D3D11DepthStencilStateRes :public D3D11BaseStateRes
-{
-public:
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> mDdepthStencilState;
-	void** GetStateNativeAddress()
-	{
-		return reinterpret_cast<void**>(mDdepthStencilState.GetAddressOf());
-	}
-	void* GetStateAddress()
-	{
-		return reinterpret_cast<void*>(mDdepthStencilState.Get());
-	}
-};
-typedef D3D11DepthStencilStateRes* D3D11DepthStencilStateResParamRef;
-
-
-
-/// <summary>
-/// D3D11光栅化状态
-/// </summary>
-struct D3D11BlendStateRes :public D3D11BaseStateRes
-{
-public:
-	Microsoft::WRL::ComPtr<ID3D11BlendState>	mBlendState;
-	void** GetStateNativeAddress()
-	{
-		return reinterpret_cast<void**>(mBlendState.GetAddressOf());
-	}
-	void* GetStateAddress()
-	{
-		return reinterpret_cast<void*>(mBlendState.Get());
-	}
-};
-typedef D3D11BlendStateRes* D3D11BlendStateResParamRef;
-
-
-
-//////////////////////////////////---------纹理采样-----------////////////////////////////////////////
-
-/// <summary>
-/// 纹理采样状态
-/// </summary>
-struct D3D11TextureSampleState
-{
-public:
-	std::string SampleName;
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
-	void** GetStateNativeAddress()
-	{
-		return reinterpret_cast<void**>(samplerState.GetAddressOf());
-	}
-	void* GetStateAddress() const
-	{
-		return reinterpret_cast<void*>(samplerState.Get());
-	}
-};
-typedef D3D11TextureSampleState* D3D11TextureSampleStateParamRef;
 
 
 /////////////////////////////////---------顶点布局-----------/////////////////////////////////////////
-class D3DInputElementRes :public RHIResource
+class D3DInputElement :public RHIVertexInputElement
 {
 public:
-	D3D11_INPUT_ELEMENT_DESC* elementsDesc;
-	UINT elementsNumber;
 	void* GetNative()
 	{
 		return reinterpret_cast<void*>(input.Get());
@@ -289,7 +200,7 @@ public:
 public:
 	Microsoft::WRL::ComPtr < ID3D11InputLayout > input;
 };
-typedef D3DInputElementRes* D3DInputElementResParamRef;
+typedef D3DInputElement* D3DInputElementParamRef;
 
 /**
  * 绘制方式
@@ -300,7 +211,7 @@ enum PrimitiveTopology
 };
 
 //////////////////////////////////缓璁去资源////////////////////////////////////////
-class D3D11VertexBufferRes:public RHIResource
+class RHID3D11VertexBuffer:public RHIVertexBuffer
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
@@ -343,17 +254,18 @@ public:
 		buffer.Reset();
 	}
 };
-typedef D3D11VertexBufferRes* D3D11VertexBufferResParamRef;
+typedef RHID3D11VertexBuffer* RHID3D11VertexBufferRef;
+typedef RHID3D11VertexBuffer* RHID3D11VertexBufferParamRef;
 
 
-class D3D11IndexBufferRes :public RHIResource
+class RHID3D11IndexBuffer :public RHIIndexBuffer
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
 	UINT bufferSize = 0;
 
 public:
-	D3D11IndexBufferRes() {}
+	RHID3D11IndexBuffer() {}
 
 
 	ID3D11Buffer* Get() const
@@ -371,7 +283,8 @@ public:
 		return this->bufferSize;
 	}
 };
-typedef D3D11IndexBufferRes* D3D11IndexBufferResParamRef;
+typedef RHID3D11IndexBuffer* RHID3D11IndexBufferRef;
+typedef RHID3D11IndexBuffer* RHID3D11IndexBufferParamRef;
 
 
 /**
@@ -389,8 +302,3 @@ public:
 };
 typedef D3D11UniFormBuffer* D3D11UniFormBufferRef;
 
-enum D3D11ShaderType
-{
-	VertexShader = 0,
-	PixelShader = 1,
-};

@@ -5,45 +5,14 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "D3DCompiler.lib")
 
-void D3D11DynamicRHI::InitShader()
-{
-
-	std::wstring shaderfolder = L"";
-#pragma region DetermineShaderPath
-	if (IsDebuggerPresent() == TRUE)
-	{
-#ifdef _DEBUG //Debug Mode
-#ifdef _WIN64 //x64
-		shaderfolder = L"..\\x64\\Debug\\Shaders\\";
-#else  //x86 (Win32)
-		shaderfolder = L"..\\Debug\\Shaders\\";
-#endif
-#else //Release Mode
-#ifdef _WIN64 //x64
-		shaderfolder = L"..\\x64\\Release\\Shaders\\";
-#else  //x86 (Win32)
-		shaderfolder = L"..\\Release\\Shaders\\";
-#endif
-#endif
-	}
-	mDefaultVertexShader = new D3D11VertexShaderRes();
-	mDefaultPixelShader = new D3D11PixelShaderRes();
-	CreateVertexShader(mDefaultVertexShader, shaderfolder + L"Basic_VS_3D.cso");
-	CreatePixelShader(mDefaultPixelShader, shaderfolder + L"Basic_PS_3D.cso");
-	mDefaultInputLayout = new D3D11InputLayoutRes();
-	D3DInputElementResParamRef ref = new D3DInputElementRes();
-	ref->elementsDesc = const_cast<D3D11_INPUT_ELEMENT_DESC*>(VertexPosNormalTex::inputLayout);
-	ref->elementsNumber = ARRAYSIZE(VertexPosNormalTex::inputLayout);
-	CreateInputLayout(mDefaultInputLayout, ref, mDefaultVertexShader);
-}
-
 
 
 //////////////////////////////////Shader·ÖÅä////////////////////////////////////////
-void D3D11DynamicRHI::CreateVertexShader(D3D11VertexShaderResParamRef ResTarget, FWString shaderFileName)
+RHIVertexShaderRef D3D11DynamicRHI::CreateVertexShader(FWString shaderFileName)
 {
+	RHID3D11VertexShaderRef shaderRes = new RHID3D11VertexShader();
 	////////////////////////////////////---InitBuffer---//////////////////////////////////////
-	HRESULT hr = D3DReadFileToBlob(shaderFileName.c_str(), (ID3DBlob**)ResTarget->GetResBlobNativeAddressOf());
+	HRESULT hr = D3DReadFileToBlob(shaderFileName.c_str(), (ID3DBlob**)shaderRes->GetResBlobNativeAddressOf());
 	if (FAILED(hr))
 	{
 		std::wstring errorMsg = L"Failed to load shader: ";
@@ -55,8 +24,8 @@ void D3D11DynamicRHI::CreateVertexShader(D3D11VertexShaderResParamRef ResTarget,
 	//_In_  SIZE_T BytecodeLength,
 	//_In_opt_  ID3D11ClassLinkage *pClassLinkage,
 	//_COM_Outptr_opt_  ID3D11VertexShader **ppVertexShader
-	ID3DBlob* bu = (ID3DBlob*)(ResTarget->GetResBlob());
-	ID3D11VertexShader** buSha = (ID3D11VertexShader**)(ResTarget->GetNativeAddress());
+	ID3DBlob* bu = (ID3DBlob*)(shaderRes->GetResBlob());
+	ID3D11VertexShader** buSha = (ID3D11VertexShader**)(shaderRes->GetNativeAddress());
 	md3d11Device->CreateVertexShader(
 		bu->GetBufferPointer(),
 		bu->GetBufferSize(),
@@ -69,13 +38,15 @@ void D3D11DynamicRHI::CreateVertexShader(D3D11VertexShaderResParamRef ResTarget,
 		errorMsg += shaderFileName;
 		ErrorLogger::Log(hr, errorMsg);
 	}
+	return shaderRes;
 }
 
 
-void D3D11DynamicRHI::CreatePixelShader(D3D11PixelShaderResParamRef ResTarget, FWString shaderFileName)
+RHIPixelShaderRef D3D11DynamicRHI::CreatePixelShader(FWString shaderFileName)
 {
+	RHID3D11PixelShaderRef shaderRes = new RHID3D11PixelShader();
 	////////////////////////////////////---InitBuffer---//////////////////////////////////////
-	HRESULT hr = D3DReadFileToBlob(shaderFileName.c_str(), (ID3DBlob**)ResTarget->GetResBlobNativeAddressOf());
+	HRESULT hr = D3DReadFileToBlob(shaderFileName.c_str(), (ID3DBlob**)shaderRes->GetResBlobNativeAddressOf());
 	if (FAILED(hr))
 	{
 		std::wstring errorMsg = L"Failed to load shader: ";
@@ -87,8 +58,8 @@ void D3D11DynamicRHI::CreatePixelShader(D3D11PixelShaderResParamRef ResTarget, F
 	//_In_  SIZE_T BytecodeLength,
 	//_In_opt_  ID3D11ClassLinkage *pClassLinkage,
 	//_COM_Outptr_opt_  ID3D11VertexShader **ppVertexShader
-	ID3DBlob* bu = (ID3DBlob*)(ResTarget->GetResBlob());
-	ID3D11PixelShader** buSha = (ID3D11PixelShader**)(ResTarget->GetNativeAddress());
+	ID3DBlob* bu = (ID3DBlob*)(shaderRes->GetResBlob());
+	ID3D11PixelShader** buSha = (ID3D11PixelShader**)(shaderRes->GetNativeAddress());
 	md3d11Device->CreatePixelShader(
 		bu->GetBufferPointer(),
 		bu->GetBufferSize(),
@@ -101,54 +72,49 @@ void D3D11DynamicRHI::CreatePixelShader(D3D11PixelShaderResParamRef ResTarget, F
 		errorMsg += shaderFileName;
 		ErrorLogger::Log(hr, errorMsg);
 	}
+	return shaderRes;
 }
 
-void D3D11DynamicRHI::CreateInputLayout(D3D11InputLayoutRes* outInput,D3DInputElementResParamRef ResTarget, D3D11VertexShaderResParamRef vertexShader)
+RHIVertexLayoutRef D3D11DynamicRHI::CreateInputLayout(RHIVertexInputElementParamRef ResTarget, RHIVertexShaderParamRef vertexShader)
 {
-	ID3DBlob* bu = (ID3DBlob*)(vertexShader->GetResBlob());
-	HRESULT hr = md3d11Device->CreateInputLayout(ResTarget->elementsDesc, 
-		ResTarget->elementsNumber, 
+	RHID3D11VertexShaderRef vD3D11Shader = static_cast<RHID3D11VertexShaderRef>(vertexShader);
+	RHID3D11InputLayoutRef vInput = new RHID3D1VertexInputLayout();
+	RHIVertexInputElementRef vInputElement = static_cast<RHIVertexInputElementRef>(ResTarget);
+	ID3DBlob* bu = (ID3DBlob*)(vD3D11Shader->GetResBlob());
+
+	HRESULT hr = md3d11Device->CreateInputLayout(
+		(D3D11_INPUT_ELEMENT_DESC * )vInputElement->elementsDesc,
+		vInputElement->elementsNumber,
 		bu->GetBufferPointer(),
 		bu->GetBufferSize(),
-		(ID3D11InputLayout**)outInput->GetNativeAddressOff()
+		(ID3D11InputLayout**)vInput->GetNativeAddressOff()
 	);
 	if (FAILED(hr))
 	{
 		ErrorLogger::Log(hr, "Failed to create input layout.");
 	}
+	return vInput;
 }
 
 
-void D3D11DynamicRHI::OMVSShader(D3D11VertexShaderResParamRef ResTarget)
+void D3D11DynamicRHI::OMVSShader(RHIVertexShaderParamRef ResTarget)
 {
-	this->md3d11DeviceContext->VSSetShader(ResTarget->GetShader(), NULL, 0);
+	RHID3D11VertexShaderRef vD3D11Shader = static_cast<RHID3D11VertexShaderRef>(ResTarget);
+	this->md3d11DeviceContext->VSSetShader(vD3D11Shader->GetShader(), NULL, 0);
 
 }
 
 
-void D3D11DynamicRHI::OMPSShader(D3D11PixelShaderResParamRef ResTarget)
+void D3D11DynamicRHI::OMPSShader(RHIPixelShaderParamRef ResTarget)
 {
-	this->md3d11DeviceContext->PSSetShader(ResTarget->GetShader(), NULL, 0);
+	RHID3D11PixelShaderRef vD3D11Shader = static_cast<RHID3D11PixelShaderRef>(ResTarget);
+	this->md3d11DeviceContext->PSSetShader(vD3D11Shader->GetShader(), NULL, 0);
 }
 
-void D3D11DynamicRHI::OMPInputLayout(D3D11InputLayoutResParamRef ResTarget)
+void D3D11DynamicRHI::OMPInputLayout(RHIVertexLayoutParamRef ResTarget)
 {
-	this->md3d11DeviceContext->IASetInputLayout((ID3D11InputLayout*)ResTarget->GetInput());
+	RHID3D11InputLayoutRef vInput = static_cast<RHID3D11InputLayoutRef>(ResTarget);
+	this->md3d11DeviceContext->IASetInputLayout((ID3D11InputLayout*)vInput->GetInput());
 }
 
-
-void D3D11DynamicRHI::InitDefaultState()
-{
-	/*D3D11RasterizerStateRes*							mDefaultRasState;
-	D3D11DepthStencilStateRes*							mDepthState;
-	D3D11BlendStateRes*									mBlendStateRes;*/
-	mDefaultRasState = new D3D11RasterizerStateRes();
-	mDefaultDepthState = new D3D11DepthStencilStateRes();
-	mDefaultBlendState = new D3D11BlendStateRes();
-	mDefaultTextureSampleState = new D3D11TextureSampleState();
-	this->CreaRasterizerState(mDefaultRasState);
-	this->CreateDepthStencilState(mDefaultDepthState);
-	this->CreateBlendState(mDefaultBlendState);
-	this->CreaTextureSampleState(mDefaultTextureSampleState);
-}
 

@@ -2,87 +2,71 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 
-void D3D11DynamicRHI::InitContantBuffer()
+
+ RHIUniFormBufferRef D3D11DynamicRHI::CreateUniFormBuffer(void* Content, UniFormLayout* layout)
 {
-	mCBDraw = new D3D11ConstanBufferRes();
-	CreateConstantBuffer(mCBDraw, sizeof(CBChangesEveryDrawing));
-	BindConstantBuffer(mCBDraw, 0, D3D11ShaderType::VertexShader);
-	BindConstantBuffer(mCBDraw, 0, D3D11ShaderType::PixelShader);
+	 D3D11UniFormBufferRef vUniFormBuffer = new D3D11UniFormBuffer();
+	 D3D11_BUFFER_DESC desc;
+	 desc.Usage = D3D11_USAGE_DYNAMIC;
+	 desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	 desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	 desc.MiscFlags = 0;
+	 desc.ByteWidth = layout->ConstantBufferSize;
+	 desc.StructureByteStride = 0;
+	 vUniFormBuffer->Layout = layout;
 
-	mCBStates = new D3D11ConstanBufferRes();
-	CreateConstantBuffer(mCBStates, sizeof(CBDrawingStates));
-	BindConstantBuffer(mCBStates, 1, D3D11ShaderType::VertexShader);
-	BindConstantBuffer(mCBStates, 1, D3D11ShaderType::PixelShader);
-
-	mCBFrame = new D3D11ConstanBufferRes();
-	CreateConstantBuffer(mCBFrame, sizeof(CBChangesEveryFrame));
-	BindConstantBuffer(mCBFrame, 2, D3D11ShaderType::VertexShader);
-	BindConstantBuffer(mCBFrame, 2, D3D11ShaderType::PixelShader);
-
-	mCBOnResize = new D3D11ConstanBufferRes();
-	CreateConstantBuffer(mCBOnResize, sizeof(CBChangesOnResize));
-	BindConstantBuffer(mCBOnResize, 3, D3D11ShaderType::VertexShader);
-
-	mCBRarely = new D3D11ConstanBufferRes();
-	CreateConstantBuffer(mCBRarely, sizeof(CBChangesRarely));
-	BindConstantBuffer(mCBRarely, 4, D3D11ShaderType::VertexShader);
-	BindConstantBuffer(mCBRarely, 4, D3D11ShaderType::PixelShader);
+	 HRESULT hr = md3d11Device->CreateBuffer(&desc, 0, vUniFormBuffer->mBuffer.GetAddressOf());
+	 COM_ERROR_IF_FAILED(hr, "Failed to CreateConstantBuffer.");
+	 return vUniFormBuffer;
 }
 
-void D3D11DynamicRHI::CreateConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT pDataWidth)
-{
-	D3D11_BUFFER_DESC desc;
-	desc.Usage = D3D11_USAGE_DYNAMIC;
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	desc.MiscFlags = 0;
-	desc.ByteWidth = static_cast<UINT>(pDataWidth + (16 - (pDataWidth % 16)));
-	desc.StructureByteStride = 0;
 
-	HRESULT hr = md3d11Device->CreateBuffer(&desc, 0, ResTarget->mBuffer.GetAddressOf());
-	COM_ERROR_IF_FAILED(hr, "Failed to CreateConstantBuffer.");
+void  D3D11DynamicRHI::SetUniFormBuffer(RHIVertexShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)
+{
+	D3D11UniFormBufferRef vUniFormBuffer = static_cast<D3D11UniFormBuffer*>(ResTarget);
+	md3d11DeviceContext->VSSetConstantBuffers(BufferIndex, 1, vUniFormBuffer->mBuffer.GetAddressOf());
+	vUniFormBuffer->vertecShader = shader;
+	vUniFormBuffer->bindVSIndex = BufferIndex;
+	vUniFormBuffer->isBindVS = true;
 }
 
-void D3D11DynamicRHI::BindConstantBuffer(D3D11ConstanBufferResParamRef ResTarget, UINT index,D3D11ShaderType bindShaderType)
+void  D3D11DynamicRHI::SetUniFormBuffer(RHIComputerShader shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)
 {
-	switch (bindShaderType)
-	{
-	case D3D11ShaderType::VertexShader:
-		md3d11DeviceContext->VSSetConstantBuffers(index, 1, ResTarget->mBuffer.GetAddressOf());
-		ResTarget->bindVSIndex = index;
-		ResTarget->isBindVS = true;
-		break;
-	case D3D11ShaderType::PixelShader:
-		md3d11DeviceContext->PSSetConstantBuffers(index, 1, ResTarget->mBuffer.GetAddressOf());
-		ResTarget->bindPSIndex = index;
-		ResTarget->isBindPS = true;
-		break;
-	default:
-		break;
-	}
+	
 }
 
-void D3D11DynamicRHI::ApplyConstantBuffer(D3D11ConstanBufferResParamRef ResTarget,UINT pDataWidth,void * pData,bool isReBind)
+void  D3D11DynamicRHI::SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)
 {
+	D3D11UniFormBufferRef vUniFormBuffer = static_cast<D3D11UniFormBuffer*>(ResTarget);
+	md3d11DeviceContext->PSSetConstantBuffers(BufferIndex, 1, vUniFormBuffer->mBuffer.GetAddressOf());
+	vUniFormBuffer->pixelShader = shader;
+	vUniFormBuffer->bindPSIndex = BufferIndex;
+	vUniFormBuffer->isBindPS = true;
+}
+
+
+void D3D11DynamicRHI::ApplyConstantBuffer(RHIUniFormBufferRef ResTarget, void * pData, bool isReBind)
+{
+	D3D11UniFormBufferRef vUniFormBuffer = static_cast<D3D11UniFormBuffer*>(ResTarget);
 	D3D11_MAPPED_SUBRESOURCE vSubResource;
-	HRESULT hr = md3d11DeviceContext->Map(ResTarget->mBuffer.Get(), 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &vSubResource);
+	HRESULT hr = md3d11DeviceContext->Map(vUniFormBuffer->mBuffer.Get(), 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &vSubResource);
 	if (FAILED(hr))
 	{
 		COM_ERROR_IF_FAILED(hr, "Failed to map constant buffer.");
 	}
-	CopyMemory(vSubResource.pData, pData, pDataWidth);
-	this->md3d11DeviceContext->Unmap(ResTarget->mBuffer.Get(), 0);
+	CopyMemory(vSubResource.pData, pData, vUniFormBuffer->Layout->ConstantBufferSize);
+	this->md3d11DeviceContext->Unmap(vUniFormBuffer->mBuffer.Get(), 0);
 	COM_ERROR_IF_FAILED(hr, "Failed to ApplyConstantBuffer.");
 
 	if (isReBind)
 	{
-		if (ResTarget->isBindVS)
+		if (vUniFormBuffer->isBindVS)
 		{
-			BindConstantBuffer(ResTarget, ResTarget->bindVSIndex, D3D11ShaderType::VertexShader);
+			SetUniFormBuffer(vUniFormBuffer->vertecShader, ResTarget, vUniFormBuffer->bindVSIndex);
 		}
-		if (ResTarget->isBindPS)
+		if (vUniFormBuffer->isBindPS)
 		{
-			BindConstantBuffer(ResTarget, ResTarget->bindPSIndex, D3D11ShaderType::PixelShader);
+			SetUniFormBuffer(vUniFormBuffer->pixelShader, ResTarget, vUniFormBuffer->bindPSIndex);
 		}
 	}
 }

@@ -11,28 +11,19 @@ StaticMeshSubRenderProxy::StaticMeshSubRenderProxy()
 
 void StaticMeshSubRenderProxy::InitRender()
 {
-	mMainTexture = new D3D11ShaderResourceViewRes();
-	mVertexBuffer = new D3D11VertexBufferRes();
-	mIndexBuffer = new D3D11IndexBufferRes();
-	RHICreateVertexBuffer(mVertexBuffer,
-		mVertexData.data(),
+	mMainTexture = RHICreateShaderResourcesView(filePath);
+	mVertexBuffer = RHICreateVertexBuffer(mVertexData.data(),
 		sizeof(VertexPosNormalTex),
-		mVertexData.size());
-
-	RHICreateIndexBuffer(
-		mIndexBuffer,
+		mVertexData.size()
+	);
+	mIndexBuffer = RHICreateIndexBuffer(
 		mIndexData.data(),
 		mIndexData.size()
-	);
-
-	RHICreateShaderResourcesView(
-		mMainTexture,
-		filePath
 	);
 }
 
 
-void StaticMeshSubRenderProxy::Draw()
+void StaticMeshSubRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 {
 	XMMATRIX W = GetWorldMatrix();
 	mCBDraw->world = XMMatrixTranspose(W);
@@ -41,8 +32,8 @@ void StaticMeshSubRenderProxy::Draw()
 	mCBDraw->material.Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	mCBDraw->material.Reflect = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	mCBDraw->material.Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-	RHIChangeConstanBuffer(mCBDraw, true);
-	RHISetShaderResourcesView(0, 1, mMainTexture, D3D11ShaderType::PixelShader);
+	RHIChangeConstanBuffer(UniFormBuffer, mCBDraw, true);
+	RHISetShaderRessourcesView(0, 1, mMainTexture, EPipeLineFlag::PixelShader);
 	RHIBindIndexBuffer(mIndexBuffer, 0, DXGI_FORMAT::DXGI_FORMAT_R32_UINT);
 	UINT offset = 0;
 	RHIBindVertexBuffer(mVertexBuffer, 0, 1, offset);
@@ -67,10 +58,10 @@ void StaticMeshRenderProxy::InitRender()
 }
 
 
-void StaticMeshRenderProxy::Draw()
+void StaticMeshRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 {
 	for (int i = 0; i < mSubMeshRenderList.size(); i++)
 	{
-		mSubMeshRenderList[i]->Draw();
+		mSubMeshRenderList[i]->Draw(UniFormBuffer);
 	}
 }

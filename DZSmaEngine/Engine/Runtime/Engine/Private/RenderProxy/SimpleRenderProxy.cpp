@@ -11,6 +11,7 @@ SimpleMeshRenderProxy::SimpleMeshRenderProxy()
 }
 
 
+
 void SimpleMeshRenderProxy::InitRender()
 {
 
@@ -28,28 +29,19 @@ void SimpleMeshRenderProxy::InitRender()
 	//const WCHAR * vLPPath = filePath.c_str();
 	//hr = DirectX::CreateWICTextureFromFile(this->device, vLPPath, nullptr, &mMainTexture);
 	//COM_ERROR_IF_FAILED(hr, "Failed to create wic texture from file.");
-	mMainTexture = new D3D11ShaderResourceViewRes();
-	mVertexBuffer = new D3D11VertexBufferRes();
-	mIndexBuffer = new D3D11IndexBufferRes();
-	RHICreateVertexBuffer(mVertexBuffer, 
-		mVertexData.data(),
+	mMainTexture = RHICreateShaderResourcesView(filePath);
+	mVertexBuffer = RHICreateVertexBuffer(mVertexData.data(),
 		sizeof(VertexPosNormalTex),
-		mVertexData.size());
-
-	RHICreateIndexBuffer(
-		mIndexBuffer,
+		mVertexData.size()
+	);
+	mIndexBuffer = RHICreateIndexBuffer(
 		mIndexData.data(),
 		mIndexData.size()
-	);
-
-	RHICreateShaderResourcesView(
-		mMainTexture,
-		filePath
 	);
 }
 
 
-void SimpleMeshRenderProxy::Draw()
+void SimpleMeshRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 {
 	XMMATRIX W = GetWorldMatrix();
 	mCBDraw->world = XMMatrixTranspose(W);
@@ -58,22 +50,10 @@ void SimpleMeshRenderProxy::Draw()
 	mCBDraw->material.Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	mCBDraw->material.Reflect = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	mCBDraw->material.Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-	RHIChangeConstanBuffer(mCBDraw,true);
-	RHISetShaderResourcesView(0,1,mMainTexture,D3D11ShaderType::PixelShader);
+	RHIChangeConstanBuffer(UniFormBuffer,mCBDraw,true);
+	RHISetShaderRessourcesView(0,1,mMainTexture,EPipeLineFlag::PixelShader);
 	RHIBindIndexBuffer(mIndexBuffer,0,DXGI_FORMAT::DXGI_FORMAT_R32_UINT);
 	UINT offset = 0;
 	RHIBindVertexBuffer(mVertexBuffer,0,1, offset);
 	RHIDrawIndexBuffer(mIndexBuffer,0,0);
-	//if (this->mCBDraw->ApplyChanges())
-	//{
-	//	this->mCBDraw->RefreshBind();
-	//}
-	//if (this->mMainTexture != NULL)
-	//{
-	//	this->deviceContext->PSSetShaderResources(0, 1, &this->mMainTexture); //Set Texture
-	//}
-	//this->deviceContext->IASetIndexBuffer(this->mIndexBuffer.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
-	//UINT offset = 0;
-	//this->deviceContext->IASetVertexBuffers(0, 1, this->mVertexBuffer.GetAddressOf(), this->mVertexBuffer.StridePtr(), &offset);
-	//this->deviceContext->DrawIndexed(this->mIndexBuffer.BufferSize(), 0, 0); //Draw
 }

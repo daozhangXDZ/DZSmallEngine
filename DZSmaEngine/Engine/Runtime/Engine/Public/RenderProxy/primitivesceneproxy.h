@@ -5,7 +5,7 @@
 #include "VertexElementDesc.h"
 #include "ConstantBufferTypes.h"
 #include "Components/SceneComponent.h"
-
+#include "RHISources.h"
 
 class PrimitiveSceneProxy
 {
@@ -27,5 +27,5 @@ protected:
 	DirectX::XMMATRIX GetWorldMatrix();
 public:
 
-	virtual void Draw();
+	virtual void Draw(RHIUniFormBufferRef UniFormBuffer);
 };

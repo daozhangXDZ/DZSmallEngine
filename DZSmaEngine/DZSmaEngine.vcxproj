@@ -111,6 +111,11 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\AdapterReader.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11DynamicRHI.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11RHIResources.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIDefine.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHISources.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIState.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIUtil.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\ViewPortDesc.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\Geometry.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\VertexElementDesc.h" />

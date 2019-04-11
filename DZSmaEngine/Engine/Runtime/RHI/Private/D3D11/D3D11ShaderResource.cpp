@@ -4,8 +4,9 @@
 #include <WICTextureLoader.h>
 using namespace DirectX;
 
-void D3D11DynamicRHI::CreateShaderResourcesView(D3D11ShaderResourceViewResParamRef ResTarget, FWString filePath)
+RHIShaderResourceViewRef D3D11DynamicRHI::CreateShaderResourcesView(FWString filePath)
 {
+	RHID3D11ShaderResViewRef ResTarget = new RHID3D11ShaderResourceView();
 	HRESULT hr;
 	const WCHAR * vLPPath = filePath.c_str();
 	hr = DirectX::CreateWICTextureFromFile(
@@ -15,29 +16,29 @@ void D3D11DynamicRHI::CreateShaderResourcesView(D3D11ShaderResourceViewResParamR
 		ResTarget->mShaderResView.GetAddressOf()
 	);
 	COM_ERROR_IF_FAILED(hr, "Failed to create wic texture from file.");
+	return ResTarget;
 }
 
 
 
-void D3D11DynamicRHI::SetShaderResourcesView(int stIndex, int num, 
-	D3D11ShaderResourceViewResParamRef ResTarget, D3D11ShaderType bindShaderType
-)
+void D3D11DynamicRHI::SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EPipeLineFlag bindShaderType)
 {
+	RHID3D11ShaderResViewRef D3DResTarget = static_cast<RHID3D11ShaderResViewRef>(ResTarget);
 	switch (bindShaderType)
 	{
-	case D3D11ShaderType::VertexShader:
+	case EPipeLineFlag::VertexShader:
 	{
 		this->md3d11DeviceContext->VSSetShaderResources(
 			stIndex, num,
-			ResTarget->mShaderResView.GetAddressOf());
+			D3DResTarget->mShaderResView.GetAddressOf());
 	}
 	break;
 
-	case D3D11ShaderType::PixelShader:
+	case EPipeLineFlag::PixelShader:
 	{
 		this->md3d11DeviceContext->PSSetShaderResources(
 			stIndex, num,
-			ResTarget->mShaderResView.GetAddressOf());
+			D3DResTarget->mShaderResView.GetAddressOf());
 	}
 	break;
 	}

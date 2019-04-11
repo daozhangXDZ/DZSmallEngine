@@ -3,27 +3,31 @@
 #include "LogUtil/ErrorLogger.h"
 
 
-void D3D11DynamicRHI::CreateRenderTarget(D3D11RHIRenderTargetParamRef RenderTargetResource)
+RHIRenderTargetRef D3D11DynamicRHI::CreateRenderTarget(uint32 width, uint32 height)
 {
+	RHID3D11RenderTargetRef vRenderTarget = new RHID3D11RenderTarget();
 	HRESULT hr;
 	hr = this->mdxgiSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), 
-		RenderTargetResource->GetTextureNativeAddress()
+		vRenderTarget->GetTextureNativeAddress()
 	);
 	///////////////////////////////------------CreateRenderTargetView------------///////////////////////////////////////////
 	hr = this->md3d11Device->CreateRenderTargetView(
-		RenderTargetResource->GetBackBuffer(), NULL,
-		RenderTargetResource->GetRTNativeAddress()
+		vRenderTarget->GetBackBuffer(), NULL,
+		vRenderTarget->GetRTNativeAddress()
 	);
+	return vRenderTarget;
 }
 
-void D3D11DynamicRHI::SetRenderTarget(D3D11RHIRenderTargetParamRef RenderTargetResource)
+void D3D11DynamicRHI::SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource)
 {
-	md3d11RenderTargetView = RenderTargetResource->md3d11RenderTargetView.Get();
+	/*RHID3D11RenderTargetRef vRenderTarget = static_cast<RHID3D11RenderTargetRef>(RenderTargetResource);
+	md3d11RenderTargetView = vRenderTarget->md3d11RenderTargetView.Get();*/
 }
 
 
-void D3D11DynamicRHI::ClearRMT(D3D11RHIRenderTargetParamRef RenderTargetResource)
+void D3D11DynamicRHI::ClearRMT(RHIRenderTargetParamRef RenderTargetResource)
 {
+	RHID3D11RenderTargetRef vRenderTarget = static_cast<RHID3D11RenderTargetRef>(RenderTargetResource);
 	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	this->md3d11DeviceContext->ClearRenderTargetView(this->md3d11RenderTargetView.Get(), bgcolor);
+	this->md3d11DeviceContext->ClearRenderTargetView(vRenderTarget->md3d11RenderTargetView.Get(), bgcolor);
 }

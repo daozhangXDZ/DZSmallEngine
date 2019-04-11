@@ -10,13 +10,10 @@ using namespace DirectX;
 
 class SimpleMeshRenderProxy :public PrimitiveSceneProxy
 {
-private:
-	D3D11ShaderResourceViewRes* mMainTexture = nullptr;
 public:
-	/*BaseVertexBuffer<VertexPosNormalTex> mVertexBuffer;
-	BaseIndexBuffer mIndexBuffer;*/
-	D3D11VertexBufferRes*		mVertexBuffer;
-	D3D11IndexBufferRes*		mIndexBuffer;
+	RHIShaderResourceViewRef mMainTexture = nullptr;
+	RHIVertexBufferRef		mVertexBuffer = nullptr;
+	RHIIndexBufferRef		mIndexBuffer = nullptr;
 
 	std::wstring filePath; //L"Data\\Textures\\p1.jpg"
 	std::vector<VertexPosNormalTex> mVertexData;
@@ -25,5 +22,5 @@ public:
 public:
 	SimpleMeshRenderProxy();
 	virtual void InitRender() override;
-	virtual void Draw()override;
+	virtual void Draw(RHIUniFormBufferRef UniFormBuffer)override;
 };

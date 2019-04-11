@@ -19,20 +19,14 @@ void D3D11DynamicRHI::Exit()
 	DynamicRHI::Exit();
 }
 
-void D3D11DynamicRHI::InitDefaultRes()
-{
-	mMainRenderTarget = new D3D11RenderTargetResource();
-	GDynamicRHI->CreateRenderTarget(mMainRenderTarget);
-	
-	mMainDepthRes = new D3D11DepthResource();
-	GDynamicRHI->CreateDepthTarget(mMainDepthRes);
 
-	GDynamicRHI->SetRenderTarget(mMainRenderTarget);
-	GDynamicRHI->SetDepthTarget(mMainDepthRes);
-	GDynamicRHI->OMRenderTarget();
-}
-
-void D3D11DynamicRHI::OMRenderTarget()
+void D3D11DynamicRHI::OMRenderTarget(RHIRenderTargetRef RenTarRef, RHIDepthTargetRef defRef)
 {
-	md3d11DeviceContext->OMSetRenderTargets(1, this->md3d11RenderTargetView.GetAddressOf(), this->mDepthStencilView.Get());
+	RHID3D11RenderTargetRef d3dRenderTar = static_cast<RHID3D11RenderTargetRef>(RenTarRef);
+	RHID3D11DepthTargetRef d3dDepthTar = static_cast<RHID3D11DepthTargetRef>(defRef);
+
+	md3d11DeviceContext->OMSetRenderTargets(1, 
+		d3dRenderTar->md3d11RenderTargetView.GetAddressOf(), 
+		d3dDepthTar->md3d11DepthStencilView.Get()
+	);
 }

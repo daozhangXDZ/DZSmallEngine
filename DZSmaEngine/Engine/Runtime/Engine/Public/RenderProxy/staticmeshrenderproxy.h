@@ -16,9 +16,9 @@ using namespace DirectX;
 class StaticMeshSubRenderProxy :public PrimitiveSceneProxy
 {
 private:
-	D3D11ShaderResourceViewRes * mMainTexture = nullptr;
-	D3D11VertexBufferRes*		mVertexBuffer;
-	D3D11IndexBufferRes*		mIndexBuffer;
+	RHIShaderResourceViewRef mMainTexture = nullptr;
+	RHIVertexBufferRef		mVertexBuffer = nullptr;
+	RHIIndexBufferRef		mIndexBuffer = nullptr;
 
 public:
 	std::wstring filePath;
@@ -28,20 +28,20 @@ public:
 
 public:
 	StaticMeshSubRenderProxy();
-	virtual void Draw()override;
+	virtual void Draw(RHIUniFormBufferRef UniFormBuffer)override;
 	virtual void InitRender() override;
 };
 
 class StaticMeshRenderProxy :public PrimitiveSceneProxy
 {
 private:
-	D3D11ShaderResourceViewRes * mMainTexture = nullptr;
+	RHIShaderResourceViewRef mMainTexture = nullptr;
 public:
 	std::vector<StaticMeshSubRenderProxy*> mSubMeshRenderList;
 	Material mMaterialDesc;
 	FWString filePath; //L"Data\\Textures\\p1.jpg"
 public:
 	StaticMeshRenderProxy();
-	virtual void Draw()override;
+	virtual void Draw(RHIUniFormBufferRef UniFormBuffer)override;
 	virtual void InitRender() override;
 };

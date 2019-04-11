@@ -32,9 +32,13 @@ public:
 		if (staticRenderProxy == nullptr)
 			return;
 		mSceneProxy->Tick(0.1f);
-		SceneRender* CurrRender = SceneRender::GetShaderRender();
+		if (CurrRender == nullptr)
+		{
+			CurrRender = SceneRender::GetShaderRender();
+			CurrRender->InitRes();
+		}
 		CurrRender->Render(staticRenderProxy);
-		CurrRender->UpdateViewProject(&(mSceneProxy->GetMainCameraDesc()),true);
+		CurrRender->UpdateViewPort(&(mSceneProxy->GetMainCameraDesc()),true);
 	};
 
 	virtual void Exit() final override 
@@ -80,5 +84,6 @@ public:
 private:
 	float mCameraSpeed = 0.005;
 	SceneProxy* mSceneProxy;
+	SceneRender* CurrRender;
 	std::vector<PrimitiveSceneProxy*>* staticRenderProxy;
 };

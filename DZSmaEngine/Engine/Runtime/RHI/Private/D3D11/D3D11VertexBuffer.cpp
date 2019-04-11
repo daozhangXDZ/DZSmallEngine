@@ -2,8 +2,9 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 
-void D3D11DynamicRHI::CreateVertexBuffer(D3D11VertexBufferResParamRef ResTarget, void*data, UINT descSize, UINT numVertices)
+RHIVertexBufferRef D3D11DynamicRHI::CreateVertexBuffer(void*data, UINT descSize, UINT numVertices)
 {
+	RHID3D11VertexBufferRef ResTarget = new RHID3D11VertexBuffer();
 	if (ResTarget->Get() != nullptr)
 		ResTarget->Reset();
 
@@ -27,9 +28,11 @@ void D3D11DynamicRHI::CreateVertexBuffer(D3D11VertexBufferResParamRef ResTarget,
 
 	HRESULT hr = md3d11Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, ResTarget->buffer.GetAddressOf());
 	COM_ERROR_IF_FAILED(hr, "Failed to CreateVertexBuffer.");
+	return ResTarget;
 }
 
-void D3D11DynamicRHI::BindVertexBuffer(D3D11VertexBufferResParamRef ResTarget,int statIndex, int Num,UINT offset)
+void D3D11DynamicRHI::BindVertexBuffer(RHIVertexBufferParamRef ResTarget,int statIndex, int Num,UINT offset)
 {
-	md3d11DeviceContext->IASetVertexBuffers(statIndex, Num, ResTarget->GetAddressOf(), ResTarget->StridePtr(), &offset);
+	RHID3D11VertexBufferRef ResTargetParam = static_cast<RHID3D11VertexBufferRef>(ResTarget);
+	md3d11DeviceContext->IASetVertexBuffers(statIndex, Num, ResTargetParam->GetAddressOf(), ResTargetParam->StridePtr(), &offset);
 }

@@ -39,13 +39,26 @@ void SceneProxy::InitMeshObj()
 	{
 		InitExtendMode(XMFLOAT3(0, -1, 2), XMFLOAT3(0, 0, 0), XMFLOAT3(0.5f, 0.5f, 0.5f), "Data\\Objects\\Nanosuit\\Nanosuit.obj", L"Data\\Textures\\p3.jpg", 1.0f);
 
-		InitCubeMode(XMFLOAT3(3, 0, 2), XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1), L"Data\\Textures\\p1.jpg", 1.0f);
-		InitCubeMode(XMFLOAT3(-3, 0, 2), XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1), L"Data\\Textures\\p2.jpg", 1.0f);
-		InitCubeMode(XMFLOAT3(0, 0, 10), XMFLOAT3(0, 0, 0), XMFLOAT3(90, 90, 1), L"Data\\Textures\\SampleTextureExam.PNG", 1.0f);
+		for (int i=1; i<10; i++)
+		{
+			for (int j = 1; j < 10; j++)
+			{
+				float scale = (j + i) % 2 == 0? 1.0f : 2.0f;
+				InitCubeMode(XMFLOAT3(j * 5, 4, i*5.0f), XMFLOAT3(0, 0, 0), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p1.jpg", 1.0f);
+				InitCubeMode(XMFLOAT3(-5 * j, 4, i*5.0f), XMFLOAT3(0, 0, 0), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p2.jpg", 1.0f);
+			}
+		}
+	
+
+
+		InitCubeMode(XMFLOAT3(0, 0, 50), XMFLOAT3(0, 0, 0), XMFLOAT3(90, 90, 1), L"Data\\Textures\\SampleTextureExam.PNG", 1.0f);
 		InitPanelMode(XMFLOAT3(0, -1, 0), XMFLOAT3(0, 0, 0), XMFLOAT3(10, 1, 10), L"Data\\Textures\\p3.jpg", 1.0f);
 
-		InitStaticMesh(XMFLOAT3(10, 3, 2), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
-		InitStaticMesh(XMFLOAT3(-10, 3, 2), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
+		for (int i = 1; i < 10; i++)
+		{
+			InitStaticMesh(XMFLOAT3(20+i*2, 5+i*4, 30), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
+			InitStaticMesh(XMFLOAT3(-20-i*2, 5+i*4, 30), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
+		}
 	}
 	catch (COMException & exception)
 	{

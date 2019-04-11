@@ -28,7 +28,7 @@ DirectX::XMMATRIX PrimitiveSceneProxy::GetWorldMatrix()
 	return this->parentComponent->GetWorldMaterix();
 }
 
-void PrimitiveSceneProxy::Draw()
+void PrimitiveSceneProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 {
 
 }

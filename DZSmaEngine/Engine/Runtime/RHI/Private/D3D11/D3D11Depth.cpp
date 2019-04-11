@@ -2,8 +2,9 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 
-void D3D11DynamicRHI::CreateDepthTarget(D3D11DepthResourceParamRef DepthTargetResource)
+RHIDepthTargetRef D3D11DynamicRHI::CreateDepthTarget()
 {
+	RHID3D11DepthTargetRef DepthTargetResource = new RHID3D11DepthTarget();
 	HRESULT hr;
 	CD3D11_TEXTURE2D_DESC depthStencilTextureDesc(DXGI_FORMAT_D24_UNORM_S8_UINT, this->view_width, this->view_height);
 	depthStencilTextureDesc.MipLevels = 1;
@@ -16,15 +17,18 @@ void D3D11DynamicRHI::CreateDepthTarget(D3D11DepthResourceParamRef DepthTargetRe
 		DepthTargetResource->GetDepthBuffer(), NULL,
 		(ID3D11DepthStencilView**)DepthTargetResource->GetDepthViewNativeAddress()
 	);
+	return DepthTargetResource;
 }
 
-void D3D11DynamicRHI::SetDepthTarget(D3D11DepthResourceParamRef DepthTargetResource)
+void D3D11DynamicRHI::SetDepthTarget(RHIDepthTargetParamRef DepthTargetParam)
 {
-	mDepthStencilView = DepthTargetResource->GetDepthView();
+	/*RHID3D11DepthTargetRef DepthTargetResource = static_cast<RHID3D11DepthTargetRef>(DepthTargetParam);
+	mDepthStencilView = DepthTargetResource->GetDepthView();*/
 }
 
-void D3D11DynamicRHI::ClearDepthView(D3D11DepthResourceParamRef DepthTargetResource)
+void D3D11DynamicRHI::ClearDepthView(RHIDepthTargetParamRef DepthTargetParam)
 {
+	RHID3D11DepthTargetRef DepthTargetResource = static_cast<RHID3D11DepthTargetRef>(DepthTargetParam);
 	this->md3d11DeviceContext->ClearDepthStencilView(DepthTargetResource->GetDepthView(),
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0
 	);

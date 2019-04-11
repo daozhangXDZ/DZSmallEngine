@@ -114,6 +114,11 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\UIMeshCompnent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\CameraComponent.h" />
     <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\DeviceInput.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHISources.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIDefine.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIUtil.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIState.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />

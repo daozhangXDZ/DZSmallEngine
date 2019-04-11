@@ -2,8 +2,9 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 
-void D3D11DynamicRHI::CreateIndexBuffer(D3D11IndexBufferResParamRef ResTarget, DWORD * pMemData, UINT numIndices)
+RHIIndexBufferRef D3D11DynamicRHI::CreateIndexBuffer(DWORD * pMemData, UINT numIndices)
 {
+	RHID3D11IndexBufferRef ResTarget = new RHID3D11IndexBuffer();
 	HRESULT hr;
 	ResTarget->bufferSize = numIndices;
 
@@ -20,14 +21,17 @@ void D3D11DynamicRHI::CreateIndexBuffer(D3D11IndexBufferResParamRef ResTarget, D
 
 	hr = md3d11Device->CreateBuffer(&indexBufferDesc, &vSubData, ResTarget->buffer.GetAddressOf());
 	COM_ERROR_IF_FAILED(hr, "Failed to CreateIndexBuffer.");
+	return ResTarget;
 }
 
-void D3D11DynamicRHI::BindIndexBuffer(D3D11IndexBufferResParamRef ResTarget, int statIndex, DXGI_FORMAT pformat)
+void D3D11DynamicRHI::BindIndexBuffer(RHIIndexBufferParamRef ResTarget, int statIndex, DXGI_FORMAT pformat)
 {
-	md3d11DeviceContext->IASetIndexBuffer(ResTarget->Get(), pformat, statIndex);
+	RHID3D11IndexBufferParamRef ResTargetParam = static_cast<RHID3D11IndexBufferParamRef>(ResTarget);
+	md3d11DeviceContext->IASetIndexBuffer(ResTargetParam->Get(), pformat, statIndex);
 }
 
-void D3D11DynamicRHI::DrawIndexBuffer(D3D11IndexBufferResParamRef ResTarget, int startIndexPos, int startIndexVertex)
+void D3D11DynamicRHI::DrawIndexBuffer(RHIIndexBufferParamRef ResTarget, int startIndexPos, int startIndexVertex)
 {
-	md3d11DeviceContext->DrawIndexed(ResTarget->BufferSize(), startIndexPos, startIndexVertex); //Draw
+	RHID3D11IndexBufferParamRef ResTargetParam = static_cast<RHID3D11IndexBufferParamRef>(ResTarget);
+	md3d11DeviceContext->DrawIndexed(ResTargetParam->BufferSize(), startIndexPos, startIndexVertex); //Draw
 }
