@@ -60,6 +60,7 @@
     <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\VertexElementDesc.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\DirectionLightComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -119,6 +120,13 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIUtil.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIState.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\GeneralPlaform\GeneralPlaform.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\HAL\Platform.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\WindowsPlatform.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\LightComponent.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\Math\MathDefine.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\DirectionLightComponent.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />

@@ -47,7 +47,7 @@ void SimpleMeshRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 	mCBDraw->world = XMMatrixTranspose(W);
 	mCBDraw->worldInvTranspose = XMMatrixInverse(nullptr, W);
 	mCBDraw->material.Ambient = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-	mCBDraw->material.Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+	mCBDraw->material.Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
 	mCBDraw->material.Reflect = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	mCBDraw->material.Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 	RHIChangeConstanBuffer(UniFormBuffer,mCBDraw,true);

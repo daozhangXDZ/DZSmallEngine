@@ -23,6 +23,7 @@
     <ClCompile Include="Engine\Check\Source.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\CoreUtil\EngineTimer.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\DirectionLightComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Scene.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\Graphics\Graphics.cpp" />
@@ -72,8 +73,15 @@
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\CoreMinimal.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\CoreUtil\EngineTimer.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\GeneralPlaform\GeneralPlaform.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\HAL\Platform.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\Math\MathDefine.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\Math\Vector.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\WindowsPlatform.h" />
     <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\DeviceInput.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\CameraComponent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\DirectionLightComponent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Components\LightComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\PanelMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\UIMeshCompnent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Scene.h" />

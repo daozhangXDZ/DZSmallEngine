@@ -3,6 +3,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/CameraComponent.h"
+#include "Components/LightComponent.h"
 #include "Graphics/Graphics.h"
 #include "ViewPortDesc.h"
 #include <vector>
@@ -44,7 +45,8 @@ private:
 	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha, XMFLOAT4 Ambient, XMFLOAT4 Spec, XMFLOAT4 Diffcuse);
 
 private:
-	std::vector<PrimitiveComponent*> __ObjList;
+	std::vector<PrimitiveComponent*>	__ObjList;
+	std::vector<LightComponent*>		__LightList;
 	BaseCameraComponent* mCameraComponent;
 	ViewPortDesc mViewPortdesc;
 };

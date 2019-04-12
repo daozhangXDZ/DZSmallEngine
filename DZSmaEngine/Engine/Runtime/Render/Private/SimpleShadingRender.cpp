@@ -65,14 +65,17 @@ void SimpleShadingRender::InitRes()
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBStates, 1);
 	RHISetUniFormBuffer(mDefaultPixelShader, mCBStates, 1);
 
+	//vFrameCSB = new CBChangesEveryFrame();
 	mCBFrame = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesEveryFrame));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBFrame, 2);
 	RHISetUniFormBuffer(mDefaultPixelShader, mCBFrame, 2);
 
+	//vResizeCSB = new CBChangesOnResize();
 	mCBOnResize = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesOnResize));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBOnResize, 3);
 
-	mCBRarely = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesRarely));
+	vRarelyCSB = new CBChangesRarely();
+	mCBRarely = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(vRarelyCSB));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBRarely, 4);
 	RHISetUniFormBuffer(mDefaultPixelShader, mCBRarely, 4);
 
@@ -89,6 +92,32 @@ void SimpleShadingRender::InitRes()
 	mDefaultBlendState = RHICreateBlendState();
 	mDefaultTextureSampleState = RHICreaTextureSampleState();
 	RHIOMViewPort(800.0f, 600.0f);
+
+
+	//初始化灯光相关渲染资源
+	{
+		XMStoreFloat4x4(
+			&vRarelyCSB->reflection,
+			XMMatrixTranspose(XMMatrixReflect(XMVectorSet(0.0f, 0.0f, -1.0f, 10.0f)))
+		);
+		// 环境光
+		vRarelyCSB->dirLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB->dirLight[0].Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
+		vRarelyCSB->dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB->dirLight[0].Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
+		// 灯光
+		vRarelyCSB->pointLight[0].Position = XMFLOAT3(0.0f, 15.0f, 0.0f);
+		vRarelyCSB->pointLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB->pointLight[0].Diffuse = XMFLOAT4(0.6f, 0.6f, 0.6f, 1.0f);
+		vRarelyCSB->pointLight[0].Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+		vRarelyCSB->pointLight[0].Att = XMFLOAT3(0.0f, 0.1f, 0.0f);
+		vRarelyCSB->pointLight[0].Range = 25.0f;
+		vRarelyCSB->numDirLight = 1;
+		vRarelyCSB->numPointLight = 0;
+		vRarelyCSB->numSpotLight = 0;
+		RHIApplyConstantBuffer(mCBRarely, &vRarelyCSB, true);
+	}
+	
 }
 
 
