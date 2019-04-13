@@ -35,6 +35,7 @@ public:
 protected:
 	void InitCamera();
 	void InitMeshObj();
+	void InitLight();
 
 private:
 	void InitExtendMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha);

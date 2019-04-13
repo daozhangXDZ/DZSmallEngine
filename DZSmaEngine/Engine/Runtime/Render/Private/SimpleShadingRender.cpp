@@ -10,12 +10,12 @@ void SimpleShadingRender::UpdateViewPort(ViewPortDesc* desc, bool isUpdateProj)
 	{
 		UpdateViewPortProjMat(desc);
 	}
+	vFrameCSB.eyePos = XMLoadFloat3(&desc->eyepos);
 	UpdateViewPortViewMat(desc);
 }
 
 void SimpleShadingRender::UpdateViewPortViewMat(ViewPortDesc* desc)
 {
-
 	vFrameCSB.view = XMMatrixTranspose(desc->viewMat);
 	RHIApplyConstantBuffer(mCBFrame,	&vFrameCSB, true);
 }
@@ -25,6 +25,7 @@ void SimpleShadingRender::UpdateViewPortProjMat(ViewPortDesc* desc)
 	vResizeCSB.proj = XMMatrixTranspose(desc->ProjMat);
 	RHIApplyConstantBuffer(mCBOnResize,  &vResizeCSB, true);
 }
+
 
 void SimpleShadingRender::InitRes()
 {
@@ -74,10 +75,28 @@ void SimpleShadingRender::InitRes()
 	mCBOnResize = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesOnResize));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBOnResize, 3);
 
-	vRarelyCSB = new CBChangesRarely();
-	mCBRarely = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(vRarelyCSB));
+	mCBRarely = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesRarely()));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBRarely, 4);
 	RHISetUniFormBuffer(mDefaultPixelShader, mCBRarely, 4);
+
+	//初始化灯光相关渲染资源
+	{
+		vRarelyCSB.reflection = XMMatrixTranspose(XMMatrixReflect(XMVectorSet(0.0f, 0.0f, -1.0f, 10.0f)));
+		// 环境光
+		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB.dirLight[0].Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
+		vRarelyCSB.dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB.dirLight[0].Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
+		// 灯光
+		vRarelyCSB.pointLight[0].Position = XMFLOAT3(0.0f, 15.0f, 0.0f);
+		vRarelyCSB.pointLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB.pointLight[0].Diffuse = XMFLOAT4(0.6f, 0.6f, 0.6f, 1.0f);
+		vRarelyCSB.pointLight[0].Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+		vRarelyCSB.pointLight[0].Att = XMFLOAT3(0.0f, 0.1f, 0.0f);
+		vRarelyCSB.pointLight[0].Range = 25.0f;
+		RHIApplyConstantBuffer(mCBRarely, &vRarelyCSB, true);
+	}
+
 
 	mDefaultRenderTarget = RHICreateRenderTarget(800, 600);
 	mDefaultDepthRes = RHICreateDepthTarget();
@@ -94,29 +113,6 @@ void SimpleShadingRender::InitRes()
 	RHIOMViewPort(800.0f, 600.0f);
 
 
-	//初始化灯光相关渲染资源
-	{
-		XMStoreFloat4x4(
-			&vRarelyCSB->reflection,
-			XMMatrixTranspose(XMMatrixReflect(XMVectorSet(0.0f, 0.0f, -1.0f, 10.0f)))
-		);
-		// 环境光
-		vRarelyCSB->dirLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-		vRarelyCSB->dirLight[0].Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
-		vRarelyCSB->dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-		vRarelyCSB->dirLight[0].Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
-		// 灯光
-		vRarelyCSB->pointLight[0].Position = XMFLOAT3(0.0f, 15.0f, 0.0f);
-		vRarelyCSB->pointLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-		vRarelyCSB->pointLight[0].Diffuse = XMFLOAT4(0.6f, 0.6f, 0.6f, 1.0f);
-		vRarelyCSB->pointLight[0].Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-		vRarelyCSB->pointLight[0].Att = XMFLOAT3(0.0f, 0.1f, 0.0f);
-		vRarelyCSB->pointLight[0].Range = 25.0f;
-		vRarelyCSB->numDirLight = 1;
-		vRarelyCSB->numPointLight = 0;
-		vRarelyCSB->numSpotLight = 0;
-		RHIApplyConstantBuffer(mCBRarely, &vRarelyCSB, true);
-	}
 	
 }
 
@@ -130,7 +126,8 @@ void SimpleShadingRender::Render(std::vector<PrimitiveSceneProxy*>* RenderProxyL
 void SimpleShadingRender::RenderBasePass(std::vector<PrimitiveSceneProxy*>* RenderProxyList)
 {
 	
-	
+	static float dtZ;
+	static float speed = 0.001f;
 	RHIClearRMT(mDefaultRenderTarget);
 	RHIClearDepthView(mDefaultDepthRes);
 	RHIOMPInputLayout(mDefualtInputLayout);
@@ -141,6 +138,15 @@ void SimpleShadingRender::RenderBasePass(std::vector<PrimitiveSceneProxy*>* Rend
 	RHISetTextureSample(mDefaultTextureSampleState);
 	RHIOMVSShader(mDefaultVertexShader);
 	RHIOMPSShader(mDefaultPixelShader);
+	{
+		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f+dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f + dtZ);
+		RHIApplyConstantBuffer(mCBRarely, &vRarelyCSB, true);
+		dtZ += speed;
+		if (dtZ > 1.0f || dtZ< 0.0f)
+		{
+			speed = -1*speed;
+		}
+	}
 
 	for (int i=0; i<RenderProxyList->size(); i++)
 	{

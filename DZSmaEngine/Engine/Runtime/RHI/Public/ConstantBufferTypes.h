@@ -2,9 +2,17 @@
 #include <cstring>
 #include <DirectXMath.h>
 
+
+// 各种类型灯光允许的最大数目
+class CEffect
+{
+public:
+	// 各种类型灯光允许的最大数目
+	static const int maxLights = 1;
+};
 struct DirectionalLight
 {
-	//DirectionalLight() { memset(this, 0, sizeof(DirectionalLight)); }
+	DirectionalLight() { memset(this, 0, sizeof(DirectionalLight)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -16,7 +24,7 @@ struct DirectionalLight
 // 点光
 struct PointLight
 {
-	//PointLight() { memset(this, 0, sizeof(PointLight)); }
+	PointLight() { memset(this, 0, sizeof(PointLight)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -34,7 +42,7 @@ struct PointLight
 // 聚光灯
 struct SpotLight
 {
-	//SpotLight() { memset(this, 0, sizeof(SpotLight)); }
+	SpotLight() { memset(this, 0, sizeof(SpotLight)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -56,7 +64,7 @@ struct SpotLight
 // 物体表面材质
 struct Material
 {
-	//Material() { memset(this, 0, sizeof(Material)); }
+	Material() { memset(this, 0, sizeof(Material)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -75,13 +83,14 @@ struct CBChangesEveryDrawing
 struct CBDrawingStates
 {
 	int isReflection;
+	int isShadow;
 	DirectX::XMFLOAT3 pad;
 };
 
 struct CBChangesEveryFrame
 {
 	DirectX::XMMATRIX view;
-	DirectX::XMFLOAT4 eyePos;
+	DirectX::XMVECTOR eyePos;
 
 };
 
@@ -93,12 +102,10 @@ struct CBChangesOnResize
 
 struct CBChangesRarely
 {
-	DirectX::XMFLOAT4X4 reflection;
-	DirectionalLight dirLight[10];
-	PointLight pointLight[10];
-	SpotLight spotLight[10];
-	int numDirLight;
-	int numPointLight;
-	int numSpotLight;
-	float pad;		// 打包保证16字节对齐
+	DirectX::XMMATRIX reflection;
+	DirectX::XMMATRIX shadow;
+	DirectX::XMMATRIX refShadow;
+	DirectionalLight dirLight[CEffect::maxLights];
+	PointLight pointLight[CEffect::maxLights];
+	SpotLight spotLight[CEffect::maxLights];
 };

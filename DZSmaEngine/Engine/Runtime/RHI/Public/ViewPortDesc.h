@@ -5,6 +5,7 @@ struct ViewPortDesc
 public:
 	XMMATRIX viewMat;
 	XMMATRIX ProjMat;
+	XMFLOAT3 eyepos;
 };
 
 struct RenderViewBoard

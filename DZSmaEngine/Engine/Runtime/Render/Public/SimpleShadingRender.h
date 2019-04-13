@@ -13,5 +13,5 @@ protected:
 private:
 	CBChangesEveryFrame vFrameCSB;
 	CBChangesOnResize vResizeCSB;
-	CBChangesRarely* vRarelyCSB;
+	CBChangesRarely vRarelyCSB;
 };

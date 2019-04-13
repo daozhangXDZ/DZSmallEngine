@@ -19,6 +19,7 @@ bool SceneProxy::initScene()
 {
 	InitCamera();
 	InitMeshObj();
+	InitLight();
 	return true;
 
 }
@@ -60,15 +61,7 @@ void SceneProxy::InitMeshObj()
 			InitStaticMesh(XMFLOAT3(-20-i*2, 5+i*4, 30), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
 		}
 
-		//方向光
-		for (int i=1; i< 1; i++)
-		{
-			LightComponent* DireLight = new DirectionLightComponent();
-			DireLight->SetPosition(2.0f, 5.0f, 3.0f);
-			DireLight->SetScale(0.0f, 0.0f, 0.0f);
-			DireLight->SetLightColor(DFVector(0.5f, 0.0f, 0.0f));
-			__LightList.push_back(DireLight);
-		}
+		
 	
 	
 	
@@ -77,6 +70,19 @@ void SceneProxy::InitMeshObj()
 	{
 		ErrorLogger::Log(exception);
 		return;
+	}
+}
+
+void SceneProxy::InitLight()
+{
+	//方向光
+	for (int i = 1; i < 1; i++)
+	{
+		LightComponent* DireLight = new DirectionLightComponent();
+		DireLight->SetPosition(2.0f, 5.0f, 3.0f);
+		DireLight->SetScale(1.0f, 1.0f, 1.0f);
+		DireLight->SetLightColor(DFVector(0.5f, 0.0f, 0.0f));
+		__LightList.push_back(DireLight);
 	}
 }
 
@@ -89,6 +95,7 @@ void SceneProxy::Tick(float dt)
 	}
 	mViewPortdesc.viewMat = mCameraComponent->GetViewMatrix();
 	mViewPortdesc.ProjMat = mCameraComponent->GetProjectionMatrix();
+	mViewPortdesc.eyepos = mCameraComponent->GetPositionFloat3();
 }
 
 void SceneProxy::AddOneStaticPrimitiveComponent(PrimitiveComponent * obj)
