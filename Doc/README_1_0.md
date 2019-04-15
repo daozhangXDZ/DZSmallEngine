@@ -4,7 +4,7 @@
 
 0. 5:   Complety
 
-   ![](.\DOCContent\Capt_RenderFrameWork_1-1_Com.PNG)
+   ![](./DOCContent/Capt_RenderFrameWork_1-1_Com.PNG)
 
 加入：材质，灯光，Shader模块
 
