@@ -35,7 +35,7 @@ void FEngineLoop::CalculateFrameStats()
 		wstring fpsStr = to_wstring(fps);
 		wstring mspfStr = to_wstring(mspf);
 
-		wstring windowText = "BaiPaoXD SmaEngine MainEngine"
+		wstring windowText = "BaiPaoXD SmaEngine MainEngine******£º"
 			L"    fps: " + fpsStr +
 			L"   mspf: " + mspfStr;
 
