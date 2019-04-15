@@ -27,7 +27,7 @@ public:
 		GEngineApliation->Register_input(this);
 	};
 
-	virtual void Tick() final override 
+	virtual void Tick(float dt) final override
 	{
 		if (staticRenderProxy == nullptr)
 			return;

@@ -31,6 +31,9 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual int Tick();
+
+
+	void CalculateFrameStats();
 };
 
 extern FEngineLoop GEngineLoop;

@@ -45,6 +45,7 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\SimpleRenderProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\StaticMeshRenderProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialInput.cpp" />
+    <ClCompile Include="Engine\Runtime\Core\Private\WindowsPlatform\GameTimer.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\Launch.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\LaunchEngineLoop.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\Windows\LaunchWindows.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\primitivesceneproxy.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\simplerenderproxy.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\staticmeshrenderproxy.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
     <ClInclude Include="Engine\Runtime\Launch\Public\LaunchEngineLoop.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\RHICommandList.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SceneRender.h" />

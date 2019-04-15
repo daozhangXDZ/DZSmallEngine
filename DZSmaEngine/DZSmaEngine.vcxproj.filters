@@ -65,6 +65,7 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialInput.cpp" />
     <ClCompile Include="Engine\Runtime\Shader\Private\shader.cpp" />
     <ClCompile Include="Engine\Runtime\Shader\Private\ShaderUtils.cpp" />
+    <ClCompile Include="Engine\Runtime\Core\Private\WindowsPlatform\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Engine\Runtime\Shader\Public\Shader.h" />
     <ClInclude Include="Engine\Runtime\Shader\Public\ShaderCore.h" />
     <ClInclude Include="Engine\Runtime\Shader\Public\ShaderUtils.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />
