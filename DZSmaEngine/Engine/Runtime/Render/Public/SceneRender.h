@@ -45,12 +45,9 @@ protected:
 	/// </summary>
 	RHIPixelShaderRef					mDefaultPixelShader;
 
-	std::map< string, int>				mVertexShaderMap;
-	std::map< string, int>				mPixelShadeMap;
-	std::vector<RHIVertexShaderRef>     mCurrMaterias_VertexShaderList;
-	std::vector<RHIPixelShaderRef>		mCurrMaterias_PixelShaderList;
 
 	RHIVertexInputElementRef			mDefaultInputElement;
+
 	RHIVertexLayoutRef					mDefualtInputLayout;
 
 	RHIRasterizerStateRef				mDefaultRasState;

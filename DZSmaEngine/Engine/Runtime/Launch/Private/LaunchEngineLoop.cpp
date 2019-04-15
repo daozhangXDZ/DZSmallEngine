@@ -4,6 +4,7 @@
 #include "GameEngine.h"
 #include "RHI.h"
 #include "D3D11/D3D11DynamicRHI.h"
+#include "ShaderUtils.h"
 
 EngineApplication* GEngineApliation = nullptr;
 BaseEngine* GEngine = nullptr;
@@ -38,6 +39,7 @@ int FEngineLoop::Init()
 	GEngineApliation->InitRender();
 	GEngineApliation->OpenEngineWindow();
 	GDynamicRHI->InitRender();	
+	ShaderUtils::InitCombileAllShader();
 	GEngine->Init();
 	return 0;
 }

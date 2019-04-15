@@ -7,6 +7,7 @@
 #include "Components/SceneComponent.h"
 #include "RHISources.h"
 #include "Material/Material.h"
+#include "ShaderUtils.h"
 
 class PrimitiveSceneProxy
 {

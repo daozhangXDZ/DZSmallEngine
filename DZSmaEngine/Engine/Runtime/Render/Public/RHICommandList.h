@@ -180,7 +180,7 @@ inline RHIShaderResourceViewRef RHICreateShaderResourcesView(FWString filePath)
 /**
  * 设置着色器资源视图
  */
-inline void RHISetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EPipeLineFlag bindShaderType)
+inline void RHISetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EShaderFrequency bindShaderType)
 {
 	GDynamicRHI->SetShaderRessourcesView(stIndex, num, ResTarget, bindShaderType);
 }

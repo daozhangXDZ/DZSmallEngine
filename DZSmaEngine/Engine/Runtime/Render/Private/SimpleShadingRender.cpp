@@ -3,6 +3,7 @@
 #include "D3D11/D3D11RHIResources.h"
 #include "RHICommandList.h"
 #include "RHIUtil.h"
+#include "ShaderUtils.h"
 
 void SimpleShadingRender::UpdateViewPort(ViewPortDesc* desc, bool isUpdateProj)
 {
@@ -29,40 +30,23 @@ void SimpleShadingRender::UpdateViewPortProjMat(ViewPortDesc* desc)
 
 void SimpleShadingRender::InitRes()
 {
+	
 
-	std::wstring shaderfolder = L"";
-#pragma region DetermineShaderPath
-	if (IsDebuggerPresent() == TRUE)
-	{
 #ifdef _DEBUG //Debug Mode
 #ifdef _WIN64 //x64
-		shaderfolder = L"..\\x64\\Debug\\Shaders\\";
+	std::wstring  shaderfolder = L"..\\x64\\Debug\\Shaders\\";
 #else  //x86 (Win32)
-		shaderfolder = L"..\\Debug\\Shaders\\";
+	std::wstring  shaderfolder = L"..\\Debug\\Shaders\\";
 #endif
 #else //Release Mode
 #ifdef _WIN64 //x64
-		shaderfolder = L"..\\x64\\Release\\Shaders\\";
+	std::wstring  shaderfolder = L"..\\x64\\Release\\Shaders\\";
 #else  //x86 (Win32)
-		shaderfolder = L"..\\Release\\Shaders\\";
+	std::wstring  shaderfolder = L"..\\Release\\Shaders\\";
 #endif
 #endif
-	}
-	std::wstring vAllVertexShader[] = { L"Basic_VS_3D.cso"};
-	std::wstring vAllPixelShader[] = { L"Basic_PS_3D.cso" };
-
-	for (int i=0,len =ARRAYSIZE(vAllPixelShader) ; i < len; i++)
-	{
-		RHIVertexShaderRef vVertexShader = RHICreateVertexShader(shaderfolder + vAllVertexShader[i]);
-		
-	}
-	for (int i = 0, len = ARRAYSIZE(vAllPixelShader); i < len; i++)
-	{
-		RHIPixelShaderRef vVertexShader = RHICreatePixelShader(shaderfolder + vAllPixelShader[i]);
-	}
-
-	mDefaultVertexShader = RHICreateVertexShader(shaderfolder + L"Basic_VS_3D.cso");
-	mDefaultPixelShader = RHICreatePixelShader(shaderfolder + L"Basic_PS_3D.cso");
+	mDefaultVertexShader = RHICreateVertexShader(shaderfolder + L"Default_VS.cso");
+	mDefaultPixelShader = RHICreatePixelShader(shaderfolder + L"Default_PS.cso");
 
 	mDefaultInputElement = RHICreateRHIInputElement(VertexPosNormalTex::inputLayout
 					,ARRAYSIZE(VertexPosNormalTex::inputLayout));
@@ -70,6 +54,7 @@ void SimpleShadingRender::InitRes()
 	mDefualtInputLayout = RHICreateInputLayout(mDefaultInputElement,mDefaultVertexShader);
 
 	//创建基础缓冲区
+
 
 	mCBDraw = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesEveryDrawing));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBDraw, 0);
@@ -124,9 +109,6 @@ void SimpleShadingRender::InitRes()
 	mDefaultBlendState = RHICreateBlendState();
 	mDefaultTextureSampleState = RHICreaTextureSampleState();
 	RHIOMViewPort(800.0f, 600.0f);
-
-
-	
 }
 
 
@@ -149,8 +131,8 @@ void SimpleShadingRender::RenderBasePass(std::vector<PrimitiveSceneProxy*>* Rend
 	RHISetDepthState(mDefaultDepthState);
 	RHISetBlendState(mDefaultBlendState);
 	RHISetTextureSample(mDefaultTextureSampleState);
-	RHIOMVSShader(mDefaultVertexShader);
-	RHIOMPSShader(mDefaultPixelShader);
+	/*RHIOMVSShader(mDefaultVertexShader);
+	RHIOMPSShader(mDefaultPixelShader);*/
 	{
 		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f+dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f + dtZ);
 		RHIApplyConstantBuffer(mCBRarely, &vRarelyCSB, true);

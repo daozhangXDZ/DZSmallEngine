@@ -1,6 +1,7 @@
 #pragma once
 #include "DynamicRHI.h"
 #include "EngineGlobal.h"
+#include "ShaderUtils.h"
 // Globals.
 void RHIInit()
 {

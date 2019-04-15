@@ -21,12 +21,12 @@ RHIShaderResourceViewRef D3D11DynamicRHI::CreateShaderResourcesView(FWString fil
 
 
 
-void D3D11DynamicRHI::SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EPipeLineFlag bindShaderType)
+void D3D11DynamicRHI::SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EShaderFrequency bindShaderType)
 {
 	RHID3D11ShaderResViewRef D3DResTarget = static_cast<RHID3D11ShaderResViewRef>(ResTarget);
 	switch (bindShaderType)
 	{
-	case EPipeLineFlag::VertexShader:
+	case EShaderFrequency::SF_Vertex:
 	{
 		this->md3d11DeviceContext->VSSetShaderResources(
 			stIndex, num,
@@ -34,7 +34,7 @@ void D3D11DynamicRHI::SetShaderRessourcesView(int stIndex, int num, RHIShaderRes
 	}
 	break;
 
-	case EPipeLineFlag::PixelShader:
+	case EShaderFrequency::SF_Pixel:
 	{
 		this->md3d11DeviceContext->PSSetShaderResources(
 			stIndex, num,

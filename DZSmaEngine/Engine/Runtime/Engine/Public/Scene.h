@@ -43,6 +43,9 @@ private:
 	void InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
 	void InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
 	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
+	BaseMaterial* CreateOneMateria(
+		std::wstring pVSName,std::wstring pPSName,
+		XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection);
 	BaseMaterial* CreateOneMateria(XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection);
 private:
 	std::vector<PrimitiveComponent*>	__ObjList;

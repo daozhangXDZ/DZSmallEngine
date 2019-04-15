@@ -15,6 +15,8 @@ public:
 	RHIVertexBufferRef		mVertexBuffer = nullptr;
 	RHIIndexBufferRef		mIndexBuffer = nullptr;
 
+
+
 	std::wstring filePath; //L"Data\\Textures\\p1.jpg"
 	std::vector<VertexPosNormalTex> mVertexData;
 	std::vector<DWORD> mIndexData;

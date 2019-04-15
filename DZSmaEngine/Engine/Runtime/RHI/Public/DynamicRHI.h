@@ -15,6 +15,7 @@ public:
 	virtual void InitRender()
 	{
 		InitRenderDevice();
+	
 	}
 
 	virtual void Tick()
@@ -118,7 +119,7 @@ public:
 	/**
 	 * 设置着色器资源视图
 	 */
-	virtual void SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EPipeLineFlag bindShaderType) = 0;
+	virtual void SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EShaderFrequency bindShaderType) = 0;
 
 
 	virtual RHIVertexBufferRef CreateVertexBuffer(void*data, UINT descSize, UINT numVertices) = 0;

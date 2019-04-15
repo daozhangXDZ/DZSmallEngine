@@ -5,6 +5,7 @@
 #include "Components/PanelMeshComponent.h"
 #include "Components/DirectionLightComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "ShaderUtils.h"
 
 SceneProxy::SceneProxy():SceneComponent()
 {
@@ -44,6 +45,7 @@ void SceneProxy::InitMeshObj()
 				float scale = (j + i) % 2 == 0? 1.0f : 2.0f;
 				InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, i*5.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p1.jpg",
 					CreateOneMateria(
+						L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
 						XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 						XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
 						XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
@@ -52,6 +54,7 @@ void SceneProxy::InitMeshObj()
 				);
 				InitCubeMode(XMFLOAT3(-5.0f * j, 4.0f, i*5.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p2.jpg",
 					CreateOneMateria(
+						L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
 						XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 						XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
 						XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
@@ -65,6 +68,7 @@ void SceneProxy::InitMeshObj()
 
 		InitCubeMode(XMFLOAT3(0.0f, 0.0f, 50.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(90.0f, 90.0f, 1.0f), L"Data\\Textures\\SampleTextureExam.PNG",
 			CreateOneMateria(
+				L"Basic_VS_3D.cso", L"Basic_PS_3D_Emit.cso",
 				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
 				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
@@ -73,6 +77,7 @@ void SceneProxy::InitMeshObj()
 		);
 		InitPanelMode(XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(10.0f, 1.0f, 10.0f), L"Data\\Textures\\p3.jpg",
 			CreateOneMateria(
+				L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
 				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
 				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
@@ -161,7 +166,7 @@ ViewPortDesc SceneProxy::GetMainCameraDesc()
 
 
 
-///////////////////////////////---------------------------²âÊÔ´úÂë--------------------------------------///////////////////////////////////////////
+///////////////////////////////---------------------------²âÊÔ´úÂëBegin--------------------------------------///////////////////////////////////////////
 void SceneProxy::InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial)
 {
 	CubeMeshComponent* pMeshMode = new CubeMeshComponent(mainTexturePath);
@@ -212,12 +217,29 @@ void SceneProxy::InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::s
 	AddOneStaticPrimitiveComponent(pMeshMode);
 }
 
+
+
 BaseMaterial * SceneProxy::CreateOneMateria(XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection)
+{
+	return CreateOneMateria(
+		L"Basic_VS_3D.cso",L"Basic_PS_3D.cso"
+		, Ambient, Diffcuse, Specular, reflection
+	);
+}
+
+BaseMaterial * SceneProxy::CreateOneMateria(std::wstring pVSName, std::wstring pPSName, XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection)
 {
 	BaseMaterial* vOutMaterial = new BaseMaterial();
 	vOutMaterial->AmbientNode->fill(Ambient);
 	vOutMaterial->DiffuseNode->fill(Diffcuse);
 	vOutMaterial->SpecularNode->fill(Specular);
 	vOutMaterial->ReflectNode->fill(reflection);
+	vOutMaterial->mVertexShader = ShaderUtils::GetShaderResource(pVSName)->getVertexShader();
+	vOutMaterial->mPixelShader = ShaderUtils::GetShaderResource(pPSName)->getPixelShader();
+	vOutMaterial->mInputElement = RHICreateRHIInputElement(VertexPosNormalTex::inputLayout
+		, ARRAYSIZE(VertexPosNormalTex::inputLayout));
+	vOutMaterial->mInputLayout = RHICreateInputLayout(vOutMaterial->mInputElement, vOutMaterial->mVertexShader);
 	return vOutMaterial;
 }
+
+///////////////////////////////////---------------------------²âÊÔ´úÂëEnd--------------------------------------///////////////////////////////////////

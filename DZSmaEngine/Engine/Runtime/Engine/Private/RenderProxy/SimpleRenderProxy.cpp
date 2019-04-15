@@ -24,6 +24,8 @@ void SimpleMeshRenderProxy::InitRender()
 		mIndexData.data(),
 		mIndexData.size()
 	);
+
+	
 }
 
 void SimpleMeshRenderProxy::SetupMainMaterial(BaseMaterial * pMainMateria)
@@ -38,11 +40,11 @@ void SimpleMeshRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 	mCBDraw->world = XMMatrixTranspose(W);
 	mCBDraw->worldInvTranspose = XMMatrixInverse(nullptr, W);
 	MaterialUtil::fillShaderMaterial(mainMaterial, &mCBDraw->material);
-	//mCBDraw->material.Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
-	//mCBDraw->material.Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
-	//mCBDraw->material.Specular = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
+	RHIOMVSShader(mainMaterial->mVertexShader);
+	RHIOMPSShader(mainMaterial->mPixelShader);
+	RHIOMPInputLayout(mainMaterial->mInputLayout);
 	RHIChangeConstanBuffer(UniFormBuffer,mCBDraw,true);
-	RHISetShaderRessourcesView(0,1,mMainTexture,EPipeLineFlag::PixelShader);
+	RHISetShaderRessourcesView(0,1,mMainTexture,EShaderFrequency::SF_Pixel);
 	RHIBindIndexBuffer(mIndexBuffer,0,DXGI_FORMAT::DXGI_FORMAT_R32_UINT);
 	UINT offset = 0;
 	RHIBindVertexBuffer(mVertexBuffer,0,1, offset);

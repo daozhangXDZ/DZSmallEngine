@@ -63,6 +63,8 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\Material.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialUtils.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialInput.cpp" />
+    <ClCompile Include="Engine\Runtime\Shader\Private\shader.cpp" />
+    <ClCompile Include="Engine\Runtime\Shader\Private\ShaderUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -132,14 +134,20 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialOutput.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialInput.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialUtils.h" />
+    <ClInclude Include="Engine\Runtime\Shader\Public\GlobalShader.h" />
+    <ClInclude Include="Engine\Runtime\Shader\Public\Shader.h" />
+    <ClInclude Include="Engine\Runtime\Shader\Public\ShaderCore.h" />
+    <ClInclude Include="Engine\Runtime\Shader\Public\ShaderUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />
-    <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_VS_2D.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
-    <FxCompile Include="Engine\Shaders\SimplePixelBase_Shader.hlsl" />
-    <FxCompile Include="Engine\Shaders\SimpleVertexBase_Shader.hlsl" />
+    <FxCompile Include="Engine\Shaders\Default_VS.hlsl" />
+    <FxCompile Include="Engine\Shaders\Default_PS.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_PS_3D_Emit.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_PS_3D_PBR_01.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\LightHelper.hlsli" />

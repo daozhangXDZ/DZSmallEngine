@@ -36,7 +36,7 @@ void StaticMeshSubRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 	mCBDraw->worldInvTranspose = XMMatrixInverse(nullptr, W);
 	MaterialUtil::fillShaderMaterial(mainMaterial, &mCBDraw->material);
 	RHIChangeConstanBuffer(UniFormBuffer, mCBDraw, true);
-	RHISetShaderRessourcesView(0, 1, mMainTexture, EPipeLineFlag::PixelShader);
+	RHISetShaderRessourcesView(0, 1, mMainTexture, EShaderFrequency::SF_Pixel);
 	RHIBindIndexBuffer(mIndexBuffer, 0, DXGI_FORMAT::DXGI_FORMAT_R32_UINT);
 	UINT offset = 0;
 	RHIBindVertexBuffer(mVertexBuffer, 0, 1, offset);
