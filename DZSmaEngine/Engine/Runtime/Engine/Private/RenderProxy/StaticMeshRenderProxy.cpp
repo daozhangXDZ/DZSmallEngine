@@ -3,10 +3,16 @@
 #include "RenderProxy/StaticMeshRenderProxy.h"
 #include <WICTextureLoader.h>
 #include "RHICommandList.h"
+#include "Material/MaterialUtils.h"
 
 StaticMeshSubRenderProxy::StaticMeshSubRenderProxy()
 {
 
+}
+
+void StaticMeshSubRenderProxy::SetupMainMaterial(BaseMaterial * pMainMateria)
+{
+	this->mainMaterial = pMainMateria;
 }
 
 void StaticMeshSubRenderProxy::InitRender()
@@ -28,10 +34,7 @@ void StaticMeshSubRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 	XMMATRIX W = GetWorldMatrix();
 	mCBDraw->world = XMMatrixTranspose(W);
 	mCBDraw->worldInvTranspose = XMMatrixInverse(nullptr, W);
-	mCBDraw->material.Ambient = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-	mCBDraw->material.Diffuse = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-	mCBDraw->material.Reflect = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-	mCBDraw->material.Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+	MaterialUtil::fillShaderMaterial(mainMaterial, &mCBDraw->material);
 	RHIChangeConstanBuffer(UniFormBuffer, mCBDraw, true);
 	RHISetShaderRessourcesView(0, 1, mMainTexture, EPipeLineFlag::PixelShader);
 	RHIBindIndexBuffer(mIndexBuffer, 0, DXGI_FORMAT::DXGI_FORMAT_R32_UINT);

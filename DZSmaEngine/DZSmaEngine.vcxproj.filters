@@ -17,7 +17,6 @@
     <ClCompile Include="Engine\Runtime\Core\Private\CoreUtil\EngineTimer.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\Graphics\Graphics.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\ActorComponent.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\Components\CombineMesh.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CubeMesh.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PrimitiveComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\SceneComponent.cpp" />
@@ -61,6 +60,9 @@
     <ClCompile Include="Engine\Runtime\RHI\Private\VertexElementDesc.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\DirectionLightComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Material\Material.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialUtils.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -68,7 +70,6 @@
     <ClInclude Include="Engine\Runtime\Core\Public\Graphics\Graphics.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\CoreMinimal.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\ActorComponent.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\Components\CombineMesh.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\CubeMesh.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\PrimitiveComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\SceneComponent.h" />
@@ -127,6 +128,10 @@
     <ClInclude Include="Engine\Runtime\Core\Public\Math\MathDefine.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\DirectionLightComponent.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Math\Vector.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\Material.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialOutput.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialInput.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />
@@ -135,5 +140,9 @@
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
     <FxCompile Include="Engine\Shaders\SimplePixelBase_Shader.hlsl" />
     <FxCompile Include="Engine\Shaders\SimpleVertexBase_Shader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Shaders\LightHelper.hlsli" />
+    <None Include="Engine\Shaders\Basic.hlsli" />
   </ItemGroup>
 </Project>

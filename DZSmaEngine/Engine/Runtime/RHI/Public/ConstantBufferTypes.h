@@ -10,9 +10,9 @@ public:
 	// 各种类型灯光允许的最大数目
 	static const int maxLights = 1;
 };
-struct DirectionalLight
+struct ShaderDirectionalLight
 {
-	DirectionalLight() { memset(this, 0, sizeof(DirectionalLight)); }
+	ShaderDirectionalLight() { memset(this, 0, sizeof(ShaderDirectionalLight)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -22,9 +22,9 @@ struct DirectionalLight
 };
 
 // 点光
-struct PointLight
+struct ShaderPointLight
 {
-	PointLight() { memset(this, 0, sizeof(PointLight)); }
+	ShaderPointLight() { memset(this, 0, sizeof(ShaderPointLight)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -40,9 +40,9 @@ struct PointLight
 };
 
 // 聚光灯
-struct SpotLight
+struct ShaderSpotLight
 {
-	SpotLight() { memset(this, 0, sizeof(SpotLight)); }
+	ShaderSpotLight() { memset(this, 0, sizeof(ShaderSpotLight)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -62,9 +62,9 @@ struct SpotLight
 };
 
 // 物体表面材质
-struct Material
+struct ShaderMaterial
 {
-	Material() { memset(this, 0, sizeof(Material)); }
+	ShaderMaterial() { memset(this, 0, sizeof(ShaderMaterial)); }
 
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
@@ -77,7 +77,7 @@ struct CBChangesEveryDrawing
 	//DirectX::XMMATRIX WorldToView;
 	DirectX::XMMATRIX world;
 	DirectX::XMMATRIX worldInvTranspose;
-	Material material;
+	ShaderMaterial material;
 };
 
 struct CBDrawingStates
@@ -105,7 +105,7 @@ struct CBChangesRarely
 	DirectX::XMMATRIX reflection;
 	DirectX::XMMATRIX shadow;
 	DirectX::XMMATRIX refShadow;
-	DirectionalLight dirLight[CEffect::maxLights];
-	PointLight pointLight[CEffect::maxLights];
-	SpotLight spotLight[CEffect::maxLights];
+	ShaderDirectionalLight dirLight[CEffect::maxLights];
+	ShaderPointLight pointLight[CEffect::maxLights];
+	ShaderSpotLight spotLight[CEffect::maxLights];
 };

@@ -6,6 +6,7 @@
 #include "ConstantBufferTypes.h"
 #include "Components/SceneComponent.h"
 #include "RHISources.h"
+#include "Material/Material.h"
 
 class PrimitiveSceneProxy
 {
@@ -26,6 +27,6 @@ public:
 protected:
 	DirectX::XMMATRIX GetWorldMatrix();
 public:
-
+	virtual void SetupMainMaterial(BaseMaterial* pMainMateria);
 	virtual void Draw(RHIUniFormBufferRef UniFormBuffer);
 };

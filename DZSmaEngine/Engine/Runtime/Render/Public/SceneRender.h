@@ -4,14 +4,15 @@
 #include "ViewPortDesc.h"
 #include "RHISources.h"
 #include "RHIState.h"
+#include <map>
 using namespace std;
 class SceneRender
 {
 public:
 	
 	SceneRender() {}
-	virtual void InitRes() {};
-	virtual void Render(std::vector<PrimitiveSceneProxy*>* RenderProxyList) {};
+	virtual void InitRes() =0;
+	virtual void Render(std::vector<PrimitiveSceneProxy*>* RenderProxyList)=0;
 	virtual void InitViewPort(RenderViewBoard ViewBoard) {};
 	virtual void UpdateViewPort(ViewPortDesc* desc, bool isUpdateProj) {}
 
@@ -30,9 +31,24 @@ protected:
 
 
 	RHIRenderTargetRef					mDefaultRenderTarget;
-	RHIDepthTargetRef					mDefaultDepthRes;
-	RHIVertexShaderRef					mDefaultVertexShader;
+	RHIDepthTargetRef					mDefaultDepthRes;	
+	
+	/// <summary>
+	/// 默认的顶点着色，
+	/// 不存放于全局ShaderMap中，只是为了方便绑定
+	/// </summary>
+	RHIVertexShaderRef					mDefaultVertexShader;	
+	
+	/// <summary>
+	/// 默认的像素着色，
+	/// 不存放于全局ShaderMap中，只是为了方便绑定
+	/// </summary>
 	RHIPixelShaderRef					mDefaultPixelShader;
+
+	std::map< string, int>				mVertexShaderMap;
+	std::map< string, int>				mPixelShadeMap;
+	std::vector<RHIVertexShaderRef>     mCurrMaterias_VertexShaderList;
+	std::vector<RHIPixelShaderRef>		mCurrMaterias_PixelShaderList;
 
 	RHIVertexInputElementRef			mDefaultInputElement;
 	RHIVertexLayoutRef					mDefualtInputLayout;

@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include "Components/SceneComponent.h"
 #include "RenderProxy/PrimitiveSceneProxy.h"
+#include "Material/Material.h"
 
 class PrimitiveComponent :public SceneComponent
 {

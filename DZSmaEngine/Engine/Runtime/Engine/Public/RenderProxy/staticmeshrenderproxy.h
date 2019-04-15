@@ -24,10 +24,10 @@ public:
 	std::wstring filePath;
 	std::vector<VertexPosNormalTex> mVertexData;
 	std::vector<DWORD> mIndexData;
-	Material mMaterialDesc;
-
+	BaseMaterial* mainMaterial;
 public:
 	StaticMeshSubRenderProxy();
+	virtual void SetupMainMaterial(BaseMaterial* pMainMateria) override;
 	virtual void Draw(RHIUniFormBufferRef UniFormBuffer)override;
 	virtual void InitRender() override;
 };
@@ -38,7 +38,7 @@ private:
 	RHIShaderResourceViewRef mMainTexture = nullptr;
 public:
 	std::vector<StaticMeshSubRenderProxy*> mSubMeshRenderList;
-	Material mMaterialDesc;
+	std::vector<BaseMaterial*> materialNode;
 	FWString filePath; //L"Data\\Textures\\p1.jpg"
 public:
 	StaticMeshRenderProxy();

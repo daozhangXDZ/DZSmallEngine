@@ -18,9 +18,10 @@ public:
 	std::wstring filePath; //L"Data\\Textures\\p1.jpg"
 	std::vector<VertexPosNormalTex> mVertexData;
 	std::vector<DWORD> mIndexData;
-
+	BaseMaterial* mainMaterial;
 public:
 	SimpleMeshRenderProxy();
 	virtual void InitRender() override;
+	virtual void SetupMainMaterial(BaseMaterial* pMainMateria) override;
 	virtual void Draw(RHIUniFormBufferRef UniFormBuffer)override;
 };

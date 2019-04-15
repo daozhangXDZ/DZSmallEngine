@@ -25,6 +25,8 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\DirectionLightComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Material\Material.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialUtils.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Scene.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\Graphics\Graphics.cpp" />
     <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\Keyboard\KeyboardClass.cpp" />
@@ -35,7 +37,6 @@
     <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\WindowContainer.cpp" />
     <ClCompile Include="Engine\Runtime\EngineApplication\Private\WindowsApplication\WindowsApplicaion.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\ActorComponent.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\Components\CombineMesh.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CubeMesh.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PrimitiveComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\SceneComponent.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\PrimitiveSceneProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\SimpleRenderProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\StaticMeshRenderProxy.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialInput.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\Launch.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\LaunchEngineLoop.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\Windows\LaunchWindows.cpp" />
@@ -84,6 +86,10 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\LightComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\PanelMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\UIMeshCompnent.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\Material.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialInput.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialOutput.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\Material\MaterialUtils.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Scene.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Graphics\Graphics.h" />
     <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineApplication.h" />
@@ -102,7 +108,6 @@
     <ClInclude Include="Engine\Runtime\EngineApplication\Public\WindowsApplication\WindowsWindows.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\BaseEngine.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\ActorComponent.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\Components\CombineMesh.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\CubeMesh.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\PrimitiveComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\SceneComponent.h" />
@@ -184,6 +189,10 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Shaders\Basic.hlsli" />
+    <None Include="Engine\Shaders\LightHelper.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

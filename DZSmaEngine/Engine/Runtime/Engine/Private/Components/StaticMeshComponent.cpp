@@ -98,12 +98,9 @@ PrimitiveSceneProxy * StaticMeshComponent::createRenderProxy()
 {
 	StaticMeshRenderProxy* vMeshRenderProxy = new StaticMeshRenderProxy();
 	vMeshRenderProxy->filePath = this->mainTexturePath;
-	vMeshRenderProxy->mMaterialDesc.Ambient = mMaterilDesc.Ambient;
-	vMeshRenderProxy->mMaterialDesc.Specular = mMaterilDesc.Specular;
-	vMeshRenderProxy->mMaterialDesc.Diffuse = mMaterilDesc.Diffuse;
-	vMeshRenderProxy->mMaterialDesc.Reflect = mMaterilDesc.Reflect;
 	for (int i=0; i< subProxyList.size(); i++)
 	{
+		subProxyList[i]->SetupMainMaterial(this->mMainMaterial);
 		vMeshRenderProxy->mSubMeshRenderList.push_back(subProxyList[i]);
 	}
 	return vMeshRenderProxy;

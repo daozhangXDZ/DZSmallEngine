@@ -48,6 +48,19 @@ void SimpleShadingRender::InitRes()
 #endif
 #endif
 	}
+	std::wstring vAllVertexShader[] = { L"Basic_VS_3D.cso"};
+	std::wstring vAllPixelShader[] = { L"Basic_PS_3D.cso" };
+
+	for (int i=0,len =ARRAYSIZE(vAllPixelShader) ; i < len; i++)
+	{
+		RHIVertexShaderRef vVertexShader = RHICreateVertexShader(shaderfolder + vAllVertexShader[i]);
+		
+	}
+	for (int i = 0, len = ARRAYSIZE(vAllPixelShader); i < len; i++)
+	{
+		RHIPixelShaderRef vVertexShader = RHICreatePixelShader(shaderfolder + vAllPixelShader[i]);
+	}
+
 	mDefaultVertexShader = RHICreateVertexShader(shaderfolder + L"Basic_VS_3D.cso");
 	mDefaultPixelShader = RHICreatePixelShader(shaderfolder + L"Basic_PS_3D.cso");
 

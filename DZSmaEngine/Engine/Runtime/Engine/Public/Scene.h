@@ -7,6 +7,7 @@
 #include "Graphics/Graphics.h"
 #include "ViewPortDesc.h"
 #include <vector>
+#include "Material/Material.h"
 //template<typename T>
 class SceneProxy:public SceneComponent
 {
@@ -38,13 +39,11 @@ protected:
 	void InitLight();
 
 private:
-	void InitExtendMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha);
-	void InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, float pAlpha);
-	void InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, float pAlpha);
-	void InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, float pAlpha);
-	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha);
-	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha, XMFLOAT4 Ambient, XMFLOAT4 Spec, XMFLOAT4 Diffcuse);
-
+	void InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
+	void InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
+	void InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
+	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
+	BaseMaterial* CreateOneMateria(XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection);
 private:
 	std::vector<PrimitiveComponent*>	__ObjList;
 	std::vector<LightComponent*>		__LightList;

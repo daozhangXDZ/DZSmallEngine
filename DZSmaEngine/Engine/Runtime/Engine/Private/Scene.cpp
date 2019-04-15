@@ -1,7 +1,6 @@
 #include "Scene.h"
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
-#include "Components/CombineMesh.h"
 #include "Components/CubeMesh.h"
 #include "Components/PanelMeshComponent.h"
 #include "Components/DirectionLightComponent.h"
@@ -28,7 +27,7 @@ void SceneProxy::InitCamera()
 {
 	mCameraComponent = new BaseCameraComponent();
 	float AspectRatio = mCameraComponent->AspectRatio(800, 600);
-	mCameraComponent->SetProjectionValues(90.0f, AspectRatio, 0.1, 1000.0f);
+	mCameraComponent->SetProjectionValues(90.0f, AspectRatio, 0.1f, 1000.0f);
 	mCameraComponent->SetPosition(0.0f, 0.0f, -1.0f);
 	mCameraComponent->SetLookAtPos(0.0f, 0.0f, 1.0f);
 }
@@ -38,27 +37,67 @@ void SceneProxy::InitMeshObj()
 	__ObjList.clear();
 	try
 	{
-		InitExtendMode(XMFLOAT3(0, -1, 2), XMFLOAT3(0, 0, 0), XMFLOAT3(0.5f, 0.5f, 0.5f), "Data\\Objects\\Nanosuit\\Nanosuit.obj", L"Data\\Textures\\p3.jpg", 1.0f);
-
 		for (int i=1; i<10; i++)
 		{
 			for (int j = 1; j < 10; j++)
 			{
 				float scale = (j + i) % 2 == 0? 1.0f : 2.0f;
-				InitCubeMode(XMFLOAT3(j * 5, 4, i*5.0f), XMFLOAT3(0, 0, 0), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p1.jpg", 1.0f);
-				InitCubeMode(XMFLOAT3(-5 * j, 4, i*5.0f), XMFLOAT3(0, 0, 0), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p2.jpg", 1.0f);
+				InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, i*5.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p1.jpg",
+					CreateOneMateria(
+						XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+						XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+						XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+						XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+					)
+				);
+				InitCubeMode(XMFLOAT3(-5.0f * j, 4.0f, i*5.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(scale, scale, scale), L"Data\\Textures\\p2.jpg",
+					CreateOneMateria(
+						XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+						XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+						XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+						XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+					)
+				);
 			}
 		}
 	
 
 
-		InitCubeMode(XMFLOAT3(0, 0, 50), XMFLOAT3(0, 0, 0), XMFLOAT3(90, 90, 1), L"Data\\Textures\\SampleTextureExam.PNG", 1.0f);
-		InitPanelMode(XMFLOAT3(0, -1, 0), XMFLOAT3(0, 0, 0), XMFLOAT3(10, 1, 10), L"Data\\Textures\\p3.jpg", 1.0f);
+		InitCubeMode(XMFLOAT3(0.0f, 0.0f, 50.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(90.0f, 90.0f, 1.0f), L"Data\\Textures\\SampleTextureExam.PNG",
+			CreateOneMateria(
+				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+				XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+			)
+		);
+		InitPanelMode(XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(10.0f, 1.0f, 10.0f), L"Data\\Textures\\p3.jpg",
+			CreateOneMateria(
+				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+				XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+			)
+		);
 
 		for (int i = 1; i < 10; i++)
 		{
-			InitStaticMesh(XMFLOAT3(20+i*2, 5+i*4, 30), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
-			InitStaticMesh(XMFLOAT3(-20-i*2, 5+i*4, 30), XMFLOAT3(0, 0, 0), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg", 1.0f);
+			InitStaticMesh(XMFLOAT3(20.0f+i*2.0f, 5.0f+i*4.0f, 30.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg",
+				CreateOneMateria(
+					XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+					XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+					XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+				)
+			);
+			InitStaticMesh(XMFLOAT3(-20.0f-i*2.0f, 5.0f+i*4.0f, 30.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.06f, 0.06f, 0.06f), "Data\\Objects\\evr\\SM_MERGED_wood_2.OBJ", L"Data\\Objects\\evr\\Wood4.jpg",
+				CreateOneMateria(
+					XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+					XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+					XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+				)
+			);
 		}
 
 		
@@ -123,43 +162,30 @@ ViewPortDesc SceneProxy::GetMainCameraDesc()
 
 
 ///////////////////////////////---------------------------²âÊÔ´úÂë--------------------------------------///////////////////////////////////////////
-
-void SceneProxy::InitExtendMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha)
-{
-	//CombineMeshComponent* pMeshMode = new CombineMeshComponent(modelPath, mainTexturePath);
-	//pMeshMode->SetPosition(pos.x, pos.y, pos.z);
-	//pMeshMode->SetRotation(rot.x, rot.y, rot.z);
-	//pMeshMode->SetScale(sca.x, sca.y, sca.z);
-	//pMeshMode->Initialize();
-	///*if (currRenderCard)
-	//{
-	//	currRenderCard->SetupPrimitiveSceneProxy(pMeshMode->getCurrRenderProxy());
-	//}*/
-	//AddOneStaticPrimitiveComponent(pMeshMode);
-}
-
-void SceneProxy::InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, float pAlpha)
+void SceneProxy::InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial)
 {
 	CubeMeshComponent* pMeshMode = new CubeMeshComponent(mainTexturePath);
 	pMeshMode->SetPosition(pos.x, pos.y, pos.z);
 	pMeshMode->SetRotation(rot.x, rot.y, rot.z);
 	pMeshMode->SetScale(sca.x, sca.y, sca.z);
+	pMeshMode->mMainMaterial = MainMaterial;
 	pMeshMode->Initialize();
 	AddOneStaticPrimitiveComponent(pMeshMode);
 }
 
-void SceneProxy::InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, float pAlpha)
+void SceneProxy::InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial)
 {
 	PanelMeshComponent* pMeshMode = new PanelMeshComponent(mainTexturePath);
 	pMeshMode->SetPosition(pos.x, pos.y, pos.z);
 	pMeshMode->SetRotation(rot.x, rot.y, rot.z);
 	pMeshMode->SetScale(sca.x, sca.y, sca.z);
+	pMeshMode->mMainMaterial = MainMaterial;
 	pMeshMode->Initialize();
 	AddOneStaticPrimitiveComponent(pMeshMode);
 }
 
 
-void SceneProxy::InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, float pAlpha)
+void SceneProxy::InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial)
 {
 	/*PanelMeshComponent* pMeshMode = new PanelMeshComponent(mainTexturePath);
 	pMeshMode->SetPosition(pos.x, pos.y, pos.z);
@@ -173,20 +199,25 @@ void SceneProxy::InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::w
 	AddOneStaticPrimitiveComponent(pMeshMode);*/
 }
 
-void SceneProxy::InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha)
-{
-	InitStaticMesh(pos, rot, sca, modelPath, mainTexturePath, pAlpha, XMFLOAT4(1.0, 1.0, 1.0, 1.0), XMFLOAT4(1.0, 1.0, 1.0, 1.0), XMFLOAT4(0.0, 0.0, 0.0, 1.0));
-}
 
-void SceneProxy::InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, float pAlpha, XMFLOAT4 Ambient, XMFLOAT4 Spec, XMFLOAT4 Diffcuse)
+void SceneProxy::InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, BaseMaterial* MainMaterial)
 {
 	StaticMeshComponent* pMeshMode = new StaticMeshComponent(modelPath,mainTexturePath);
 	pMeshMode->SetPosition(pos.x, pos.y, pos.z);
 	pMeshMode->SetRotation(rot.x, rot.y, rot.z);
 	pMeshMode->SetScale(sca.x, sca.y, sca.z);
+	pMeshMode->mMainMaterial = MainMaterial;
 	pMeshMode->Initialize();
-	pMeshMode->mMaterilDesc.Ambient = Ambient;
-	pMeshMode->mMaterilDesc.Diffuse = Diffcuse;
-	pMeshMode->mMaterilDesc.Specular = Spec;
+	
 	AddOneStaticPrimitiveComponent(pMeshMode);
+}
+
+BaseMaterial * SceneProxy::CreateOneMateria(XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection)
+{
+	BaseMaterial* vOutMaterial = new BaseMaterial();
+	vOutMaterial->AmbientNode->fill(Ambient);
+	vOutMaterial->DiffuseNode->fill(Diffcuse);
+	vOutMaterial->SpecularNode->fill(Specular);
+	vOutMaterial->ReflectNode->fill(reflection);
+	return vOutMaterial;
 }

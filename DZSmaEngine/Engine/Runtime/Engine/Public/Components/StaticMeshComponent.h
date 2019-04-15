@@ -16,7 +16,7 @@ public:
 	std::wstring mainTexturePath;
 	std::wstring normalTexturePath;
 
-	Material mMaterilDesc;
+	BaseMaterial* mMainMaterial;
 private: 
 	//多个小模型
 	std::vector<StaticMeshSubRenderProxy*> subProxyList;
