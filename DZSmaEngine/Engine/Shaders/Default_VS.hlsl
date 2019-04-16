@@ -1,17 +1,17 @@
 #include "Basic.hlsli"
 
 // 顶点着色器(3D)
+// 顶点着色器
 VertexPosHWNormalTex main(VertexPosNormalTex vIn)
 {
     VertexPosHWNormalTex vOut;
     
     matrix viewProj = mul(gView, gProj);
-    float4 posW = mul(float4(vIn.PosL, 1.0f), gWorld);
-    float3 normalW = mul(vIn.NormalL, (float3x3) gWorldInvTranspose);
+    vector posW = mul(float4(vIn.PosL, 1.0f), gWorld);
 
-    vOut.PosH = mul(posW, viewProj);
     vOut.PosW = posW.xyz;
-    vOut.NormalW = normalW;
+    vOut.PosH = mul(posW, viewProj);
+    vOut.NormalW = mul(vIn.NormalL, (float3x3) gWorldInvTranspose);
     vOut.Tex = vIn.Tex;
     return vOut;
 }

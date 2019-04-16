@@ -1,11 +1,5 @@
 #include "D3D11/D3D11DynamicRHI.h"
 
-
-void D3D11DynamicRHI::InitRender()
-{
-	DynamicRHI::InitRender();
-};
-
 void D3D11DynamicRHI::Tick()
 {
 	DynamicRHI::Tick();

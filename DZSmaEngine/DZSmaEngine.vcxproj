@@ -64,6 +64,8 @@
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11TextureSample.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11VertexBuffer.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ViewPort.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\VertexElementDesc.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\WinD3D11RHI.cpp" />
@@ -130,6 +132,8 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11RHIResources.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIDefine.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalUniform.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHISources.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIState.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIUtil.h" />
@@ -149,14 +153,6 @@
     <ClInclude Include="Engine\Runtime\Tool\Public\String\StringConverter.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-    </FxCompile>
     <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -171,14 +167,6 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Engine\Shaders\Basic_VS_2D.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>

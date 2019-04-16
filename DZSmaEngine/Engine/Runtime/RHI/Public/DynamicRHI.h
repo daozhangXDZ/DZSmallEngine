@@ -12,11 +12,11 @@
 class DynamicRHI
 {
 public:
-	virtual void InitRender()
+	void InitRender()
 	{
 		InitRenderDevice();
-	
 	}
+
 
 	virtual void Tick()
 	{
@@ -26,6 +26,8 @@ public:
 	{
 
 	};
+
+
 protected:
 	virtual void InitRenderDevice() = 0;
 	virtual void BeginDrawViewPort() = 0;
@@ -115,7 +117,7 @@ public:
 	/**
 	 * 创建着色器资源视图
 	 */
-	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString filePath) = 0;
+	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString mainTextureFilePath) = 0;
 	/**
 	 * 设置着色器资源视图
 	 */

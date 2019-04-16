@@ -3,13 +3,13 @@
 class SimpleShadingRender :public SceneRender
 {
 public:
-	virtual void InitRes()override;
-	virtual void Render(std::vector<PrimitiveSceneProxy*>* RenderProxyList) override;
-	virtual void UpdateViewPort(ViewPortDesc* desc, bool isUpdateProj)override;
+	virtual void InitRes(RHICommandListImmediate* RHICMDList)override;
+	virtual void Render(RHICommandListImmediate* RHICMDList, std::vector<PrimitiveSceneProxy*>* RenderProxyList) override;
+	virtual void UpdateViewPort(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc, bool isUpdateProj)override;
 protected:
-	void RenderBasePass(std::vector<PrimitiveSceneProxy*>* RenderProxyList);
-	void UpdateViewPortViewMat(ViewPortDesc* desc)override;
-	void UpdateViewPortProjMat(ViewPortDesc* desc)override;
+	void RenderBasePass(RHICommandListImmediate* RHICMDList,  std::vector<PrimitiveSceneProxy*>* RenderProxyList);
+	void UpdateViewPortViewMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
+	void UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
 private:
 	CBChangesEveryFrame vFrameCSB;
 	CBChangesOnResize vResizeCSB;

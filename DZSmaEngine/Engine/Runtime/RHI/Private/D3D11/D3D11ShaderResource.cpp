@@ -4,11 +4,11 @@
 #include <WICTextureLoader.h>
 using namespace DirectX;
 
-RHIShaderResourceViewRef D3D11DynamicRHI::CreateShaderResourcesView(FWString filePath)
+RHIShaderResourceViewRef D3D11DynamicRHI::CreateShaderResourcesView(FWString mainTextureFilePath)
 {
 	RHID3D11ShaderResViewRef ResTarget = new RHID3D11ShaderResourceView();
 	HRESULT hr;
-	const WCHAR * vLPPath = filePath.c_str();
+	const WCHAR * vLPPath = mainTextureFilePath.c_str();
 	hr = DirectX::CreateWICTextureFromFile(
 		md3d11Device.Get(), 
 		vLPPath, 

@@ -32,7 +32,7 @@ void PrimitiveSceneProxy::SetupMainMaterial(BaseMaterial * pMainMateria)
 {
 }
 
-void PrimitiveSceneProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
+void PrimitiveSceneProxy::Draw(RHICommandListImmediate* pRHICmdList)
 {
 
 }

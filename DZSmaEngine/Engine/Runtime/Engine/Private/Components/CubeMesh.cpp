@@ -2,18 +2,17 @@
 #include "RenderProxy/SimpleRenderProxy.h"
 #include "Geometry.h"
 
-CubeMeshComponent::CubeMeshComponent(FWString& pPath)
+CubeMeshComponent::CubeMeshComponent()
 {
-	this->pPath = pPath;
+
 }
 
 PrimitiveSceneProxy* CubeMeshComponent::createRenderProxy()
 {
 	SimpleMeshRenderProxy* proxy = new SimpleMeshRenderProxy();
-	Geometry::MeshData<VertexPosNormalTex, DWORD> meshdatt;
-	meshdatt = Geometry::CreateBox<VertexPosNormalTex, DWORD>();
+	Geometry::MeshData<VertexPosNormalTangentTex, DWORD> meshdatt;
+	meshdatt = Geometry::CreateBox<VertexPosNormalTangentTex, DWORD>();
 	proxy->SetupMainMaterial(mMainMaterial);
-	proxy->filePath = this->pPath;
 	proxy->mIndexData = meshdatt.indexVec;
 	proxy->mVertexData = meshdatt.vertexVec;
 	return proxy;

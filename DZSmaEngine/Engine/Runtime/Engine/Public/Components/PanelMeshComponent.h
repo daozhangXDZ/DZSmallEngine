@@ -10,13 +10,9 @@
 class PanelMeshComponent :public PrimitiveComponent
 {
 
-private:
-	FWString pPath;
-
 public:
 	PanelMeshComponent() {};
 
-	PanelMeshComponent(FWString& pPath);
 	BaseMaterial* mMainMaterial;
 protected:
 	virtual PrimitiveSceneProxy* createRenderProxy() override;

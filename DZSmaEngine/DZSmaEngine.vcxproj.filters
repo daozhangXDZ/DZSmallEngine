@@ -66,6 +66,8 @@
     <ClCompile Include="Engine\Runtime\Shader\Private\shader.cpp" />
     <ClCompile Include="Engine\Runtime\Shader\Private\ShaderUtils.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\WindowsPlatform\GameTimer.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -140,10 +142,10 @@
     <ClInclude Include="Engine\Runtime\Shader\Public\ShaderCore.h" />
     <ClInclude Include="Engine\Runtime\Shader\Public\ShaderUtils.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalUniform.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Engine\Shaders\Basic_PS_2D.hlsl" />
-    <FxCompile Include="Engine\Shaders\Basic_VS_2D.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
     <FxCompile Include="Engine\Shaders\Default_VS.hlsl" />
     <FxCompile Include="Engine\Shaders\Default_PS.hlsl" />

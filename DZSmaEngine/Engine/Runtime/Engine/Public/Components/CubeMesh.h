@@ -10,12 +10,8 @@
 class CubeMeshComponent:public PrimitiveComponent
 {
 
-private:
-	FWString pPath;
 public:
-	CubeMeshComponent() = delete;
-
-	CubeMeshComponent(FWString& pPath);
+	CubeMeshComponent();
 	BaseMaterial* mMainMaterial;
 protected:
 	virtual PrimitiveSceneProxy* createRenderProxy() override;

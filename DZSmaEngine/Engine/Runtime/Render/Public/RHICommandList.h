@@ -1,15 +1,85 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "EngineGlobal.h"
+#include "RHIGlobalState.h"
+#include "RHIGlobalUniform.h"
 class RHICommandListBase
 {
+protected:
+	/**
+	 * RHI缓冲区
+	 */
+	RHIGlobalUniform*					mUniformBuffer = nullptr;
+	RHIGlobalState*						mRenderState = nullptr;
+	RHIRenderTargetRef					mDefaultRenderTarget = nullptr;
+	RHIDepthTargetRef					mDefaultDepthRes = nullptr;
 
+
+	
+public:
+	RHICommandListBase()
+	{
+		if (mUniformBuffer == nullptr)
+		{
+			mUniformBuffer = new RHIGlobalUniform();
+			mUniformBuffer->Init();
+		}
+		if (mRenderState == nullptr)
+		{
+			mRenderState = new RHIGlobalState();
+			mRenderState->Init();
+		}
+
+		mDefaultRenderTarget = GDynamicRHI->CreateRenderTarget(800, 600);
+		mDefaultDepthRes = GDynamicRHI->CreateDepthTarget();
+		GDynamicRHI->SetRenderTarget(mDefaultRenderTarget);
+		GDynamicRHI->SetDepthTarget(mDefaultDepthRes);
+		GDynamicRHI->OMRenderTarget(mDefaultRenderTarget, mDefaultDepthRes);
+	}
+
+	RHIGlobalUniform* GetGlobalUniForm()
+	{
+		return mUniformBuffer;
+	}
+
+	RHIGlobalState* GetGlobalRHIState()
+	{
+		return mRenderState;
+	}
+
+	RHIRenderTargetRef GetDefaultRendertarget()
+	{
+		return mDefaultRenderTarget;
+	}
+
+	RHIDepthTargetRef GetDefaultDepthtarget()
+	{
+		return mDefaultDepthRes;
+	}
+
+	~RHICommandListBase()
+	{
+		if (mDefaultRenderTarget)
+		{
+			delete mDefaultRenderTarget;
+			mDefaultRenderTarget = nullptr;
+		}
+		if (mRenderState)
+		{
+			delete mRenderState;
+			mRenderState = nullptr;
+		}
+	}
 };
 
 
 class RHICommandListImmediate:public RHICommandListBase
 {
+public:
+	RHICommandListImmediate() :RHICommandListBase()
+	{
 
+	}
 };
 
 /// <summary>
@@ -173,9 +243,9 @@ inline void RHIOMPInputLayout(RHIVertexLayoutRef ResTarget)
 /**
  * 创建着色器资源视图
  */
-inline RHIShaderResourceViewRef RHICreateShaderResourcesView(FWString filePath)
+inline RHIShaderResourceViewRef RHICreateShaderResourcesView(FWString mainTextureFilePath)
 {
-	return GDynamicRHI->CreateShaderResourcesView(filePath);
+	return GDynamicRHI->CreateShaderResourcesView(mainTextureFilePath);
 }
 /**
  * 设置着色器资源视图

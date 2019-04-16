@@ -65,16 +65,20 @@ struct ShaderSpotLight
 struct ShaderMaterial
 {
 	ShaderMaterial() { memset(this, 0, sizeof(ShaderMaterial)); }
-
+	int materialType;
+	// 是否使用Diff
+	int diffTextureUsed;
+	// 是否使用normal纹理
+	int normalTextureUsed;
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
 	DirectX::XMFLOAT4 Specular; // w = 镜面反射强度
 	DirectX::XMFLOAT4 Reflect;
+	float Pad;
 };
 
 struct CBChangesEveryDrawing
 {
-	//DirectX::XMMATRIX WorldToView;
 	DirectX::XMMATRIX world;
 	DirectX::XMMATRIX worldInvTranspose;
 	ShaderMaterial material;
@@ -82,9 +86,14 @@ struct CBChangesEveryDrawing
 
 struct CBDrawingStates
 {
-	int isReflection;
-	int isShadow;
-	DirectX::XMFLOAT3 pad;
+	// 是否反射
+	int reflectionEnabled;
+	// 是否折射
+	int refractionEnabled;
+	// 是否阴影
+	int isShadowed;
+	// 折射率
+	float eta;	
 };
 
 struct CBChangesEveryFrame

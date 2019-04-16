@@ -15,9 +15,9 @@ SimpleMeshRenderProxy::SimpleMeshRenderProxy()
 
 void SimpleMeshRenderProxy::InitRender()
 {
-	mMainTexture = RHICreateShaderResourcesView(filePath);
+	
 	mVertexBuffer = RHICreateVertexBuffer(mVertexData.data(),
-		sizeof(VertexPosNormalTex),
+		sizeof(VertexPosNormalTangentTex),
 		mVertexData.size()
 	);
 	mIndexBuffer = RHICreateIndexBuffer(
@@ -34,7 +34,7 @@ void SimpleMeshRenderProxy::SetupMainMaterial(BaseMaterial * pMainMateria)
 }
 
 
-void SimpleMeshRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
+void SimpleMeshRenderProxy::Draw(RHICommandListImmediate* pRHICmdList)
 {
 	XMMATRIX W = GetWorldMatrix();
 	mCBDraw->world = XMMatrixTranspose(W);
@@ -43,8 +43,15 @@ void SimpleMeshRenderProxy::Draw(RHIUniFormBufferRef UniFormBuffer)
 	RHIOMVSShader(mainMaterial->mVertexShader);
 	RHIOMPSShader(mainMaterial->mPixelShader);
 	RHIOMPInputLayout(mainMaterial->mInputLayout);
-	RHIChangeConstanBuffer(UniFormBuffer,mCBDraw,true);
-	RHISetShaderRessourcesView(0,1,mMainTexture,EShaderFrequency::SF_Pixel);
+	RHIChangeConstanBuffer(pRHICmdList->GetGlobalUniForm()->GetRHIDrawBuffer(),mCBDraw,true);
+	if (mainMaterial->mMainTexture != nullptr)
+	{
+		RHISetShaderRessourcesView(0, 1, mainMaterial->mMainTexture, EShaderFrequency::SF_Pixel);
+	}
+	if (mainMaterial->mNormalTexture != nullptr)
+	{
+		RHISetShaderRessourcesView(1, 1, mainMaterial->mNormalTexture, EShaderFrequency::SF_Pixel);
+	}
 	RHIBindIndexBuffer(mIndexBuffer,0,DXGI_FORMAT::DXGI_FORMAT_R32_UINT);
 	UINT offset = 0;
 	RHIBindVertexBuffer(mVertexBuffer,0,1, offset);

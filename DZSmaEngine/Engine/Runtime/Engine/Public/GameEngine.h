@@ -34,11 +34,12 @@ public:
 		mSceneProxy->Tick(0.1f);
 		if (CurrRender == nullptr)
 		{
+			RHICMDList = new RHICommandListImmediate();
 			CurrRender = SceneRender::GetShaderRender();
-			CurrRender->InitRes();
+			CurrRender->InitRes(RHICMDList);
 		}
-		CurrRender->Render(staticRenderProxy);
-		CurrRender->UpdateViewPort(&(mSceneProxy->GetMainCameraDesc()),true);
+		CurrRender->Render(RHICMDList,staticRenderProxy);
+		CurrRender->UpdateViewPort(RHICMDList,&(mSceneProxy->GetMainCameraDesc()),true);
 	};
 
 	virtual void Exit() final override 
@@ -86,4 +87,5 @@ private:
 	SceneProxy* mSceneProxy;
 	SceneRender* CurrRender;
 	std::vector<PrimitiveSceneProxy*>* staticRenderProxy;
+	RHICommandListImmediate* RHICMDList;
 };

@@ -25,7 +25,9 @@
 
 4、GamePlayer结构......etc
 
+## 更新目录说明：
 
+![](./Doc/DOCContent/Material_Normal_Mask.PNG)
 
 ## 大概目录截图
 

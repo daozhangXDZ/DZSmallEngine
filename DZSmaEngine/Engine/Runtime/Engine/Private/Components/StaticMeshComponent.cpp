@@ -3,11 +3,10 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 
-StaticMeshComponent::StaticMeshComponent(const std::string & modelPath, const std::wstring & mainTexturePath)
+StaticMeshComponent::StaticMeshComponent(const std::string & modelPath)
 {
 	try
 	{
-		this->mainTexturePath = mainTexturePath;
 		if (!this->LoadModel(modelPath))
 			return;
 
@@ -22,11 +21,11 @@ void StaticMeshComponent::Tick(float dt)
 {
 }
 
-bool StaticMeshComponent::LoadModel(const std::string & filePath)
+bool StaticMeshComponent::LoadModel(const std::string & mainTextureFilePath)
 {
 	Assimp::Importer importer;
 
-	const aiScene* pScene = importer.ReadFile(filePath,
+	const aiScene* pScene = importer.ReadFile(mainTextureFilePath,
 		aiProcess_Triangulate |
 		aiProcess_ConvertToLeftHanded);
 
@@ -58,12 +57,12 @@ StaticMeshSubRenderProxy * StaticMeshComponent::ProcessMesh(aiMesh * mesh, const
 {
 	// Data to fill
 	StaticMeshSubRenderProxy* vSubProxy = new StaticMeshSubRenderProxy();
-	std::vector<VertexPosNormalTex> vertices;
+	std::vector<VertexPosNormalTangentTex> vertices;
 	std::vector<DWORD> indices;
 	//Get vertices
 	for (UINT i = 0; i < mesh->mNumVertices; i++)
 	{
-		VertexPosNormalTex vertex;
+		VertexPosNormalTangentTex vertex;
 
 		vertex.pos.x = mesh->mVertices[i].x;
 		vertex.pos.y = mesh->mVertices[i].y;
@@ -74,7 +73,6 @@ StaticMeshSubRenderProxy * StaticMeshComponent::ProcessMesh(aiMesh * mesh, const
 			vertex.tex.x = (float)mesh->mTextureCoords[0][i].x;
 			vertex.tex.y = (float)mesh->mTextureCoords[0][i].y;
 		}
-
 		vertices.push_back(vertex);
 	}
 
@@ -88,7 +86,6 @@ StaticMeshSubRenderProxy * StaticMeshComponent::ProcessMesh(aiMesh * mesh, const
 	}
 	vSubProxy->mVertexData = vertices;
 	vSubProxy->mIndexData = indices;
-	vSubProxy->filePath = this->mainTexturePath;
 	return vSubProxy;
 }
 
@@ -97,7 +94,6 @@ StaticMeshSubRenderProxy * StaticMeshComponent::ProcessMesh(aiMesh * mesh, const
 PrimitiveSceneProxy * StaticMeshComponent::createRenderProxy()
 {
 	StaticMeshRenderProxy* vMeshRenderProxy = new StaticMeshRenderProxy();
-	vMeshRenderProxy->filePath = this->mainTexturePath;
 	for (int i=0; i< subProxyList.size(); i++)
 	{
 		subProxyList[i]->SetupMainMaterial(this->mMainMaterial);

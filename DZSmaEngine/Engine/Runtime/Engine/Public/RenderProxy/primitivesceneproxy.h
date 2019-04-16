@@ -29,5 +29,5 @@ protected:
 	DirectX::XMMATRIX GetWorldMatrix();
 public:
 	virtual void SetupMainMaterial(BaseMaterial* pMainMateria);
-	virtual void Draw(RHIUniFormBufferRef UniFormBuffer);
+	virtual void Draw(RHICommandListImmediate* pRHICmdList);
 };

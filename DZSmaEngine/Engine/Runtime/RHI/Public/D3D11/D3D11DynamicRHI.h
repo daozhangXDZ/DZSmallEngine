@@ -16,8 +16,6 @@ using namespace DirectX;
 class D3D11DynamicRHI : public DynamicRHI
 {
 public:
-	
-	virtual void InitRender() override;
 	virtual void Tick() override;
 	virtual void Exit() override;
 
@@ -26,7 +24,6 @@ protected:
 	/// 开启DX设备和交换链
 	/// </summary>
 	virtual void InitRenderDevice() override;
-
 	virtual void BeginDrawViewPort() override {};
 	virtual void EndDrawViewPort() override {};	
 
@@ -114,7 +111,7 @@ public:
 	/**
 	 * 创建着色器资源视图
 	 */
-	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString filePath) override;
+	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString mainTextureFilePath) override;
 	/**
 	 * 设置着色器资源视图
 	 */

@@ -43,6 +43,10 @@ struct SpotLight
 // 物体表面材质
 struct Material
 {
+    int materialType;
+    int gDiffTextureUsed;
+	// 是否使用normal纹理
+    int gNormalTextureUsed;
     float4 Ambient;
     float4 Diffuse;
     float4 Specular; // w = SpecPower

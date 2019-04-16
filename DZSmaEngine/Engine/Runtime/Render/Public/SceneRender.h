@@ -11,10 +11,10 @@ class SceneRender
 public:
 	
 	SceneRender() {}
-	virtual void InitRes() =0;
-	virtual void Render(std::vector<PrimitiveSceneProxy*>* RenderProxyList)=0;
-	virtual void InitViewPort(RenderViewBoard ViewBoard) {};
-	virtual void UpdateViewPort(ViewPortDesc* desc, bool isUpdateProj) {}
+	virtual void InitRes(RHICommandListImmediate* RHICMDList) =0;
+	virtual void Render(RHICommandListImmediate* RHICMDList,std::vector<PrimitiveSceneProxy*>* RenderProxyList)=0;
+	virtual void InitViewPort(RHICommandListImmediate* RHICMDList, RenderViewBoard ViewBoard) {};
+	virtual void UpdateViewPort(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc, bool isUpdateProj) {}
 
 public:
 	static SceneRender* GetShaderRender();
@@ -23,42 +23,7 @@ public:
 
 
 protected:
-	virtual void UpdateViewPortViewMat(ViewPortDesc* desc) = 0;
+	virtual void UpdateViewPortViewMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc) = 0;
 
-	virtual void UpdateViewPortProjMat(ViewPortDesc* desc) = 0;
-
-protected:
-
-
-	RHIRenderTargetRef					mDefaultRenderTarget;
-	RHIDepthTargetRef					mDefaultDepthRes;	
-	
-	/// <summary>
-	/// 默认的顶点着色，
-	/// 不存放于全局ShaderMap中，只是为了方便绑定
-	/// </summary>
-	RHIVertexShaderRef					mDefaultVertexShader;	
-	
-	/// <summary>
-	/// 默认的像素着色，
-	/// 不存放于全局ShaderMap中，只是为了方便绑定
-	/// </summary>
-	RHIPixelShaderRef					mDefaultPixelShader;
-
-
-	RHIVertexInputElementRef			mDefaultInputElement;
-
-	RHIVertexLayoutRef					mDefualtInputLayout;
-
-	RHIRasterizerStateRef				mDefaultRasState;
-	RHIDepthStencilStateRef				mDefaultDepthState;
-	RHIBlendStateRef					mDefaultBlendState;
-	RHISampleStateRef					mDefaultTextureSampleState;
-
-	//默认缓冲区数据资源
-	RHIUniFormBufferRef					mCBStates;
-	RHIUniFormBufferRef					mCBFrame;
-	RHIUniFormBufferRef					mCBOnResize;
-	RHIUniFormBufferRef					mCBRarely;
-	RHIUniFormBufferRef					mCBDraw;	
+	virtual void UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc) = 0;
 };

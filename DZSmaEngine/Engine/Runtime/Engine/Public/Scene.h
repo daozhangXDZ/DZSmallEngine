@@ -39,14 +39,10 @@ protected:
 	void InitLight();
 
 private:
-	void InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
-	void InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
-	void InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
-	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, std::wstring mainTexturePath, BaseMaterial* MainMaterial);
-	BaseMaterial* CreateOneMateria(
-		std::wstring pVSName,std::wstring pPSName,
-		XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection);
-	BaseMaterial* CreateOneMateria(XMFLOAT4 Ambient, XMFLOAT4 Diffcuse, XMFLOAT4 Specular, XMFLOAT4 reflection);
+	void InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca,  BaseMaterial* MainMaterial);
+	void InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca,  BaseMaterial* MainMaterial);
+	void InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca,  BaseMaterial* MainMaterial);
+	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, BaseMaterial* MainMaterial);
 private:
 	std::vector<PrimitiveComponent*>	__ObjList;
 	std::vector<LightComponent*>		__LightList;

@@ -17,5 +17,3 @@ void RHIExit()
 {
 	GDynamicRHI->Exit();
 }
-
-
