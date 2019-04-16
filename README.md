@@ -27,7 +27,7 @@
 
 ## 更新目录说明：
 
-![](./Doc/DOCContent/Material_Normal_Mask.PNG)
+DOCCont
 
 ## 大概目录截图
 
