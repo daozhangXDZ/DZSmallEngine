@@ -47,10 +47,12 @@ struct Material
     int gDiffTextureUsed;
 	// 是否使用normal纹理
     int gNormalTextureUsed;
+    int padX;//对齐啊对齐啊对齐
     float4 Ambient;
     float4 Diffuse;
     float4 Specular; // w = SpecPower
     float4 Reflect;
+    float Pad;
 };
 
 

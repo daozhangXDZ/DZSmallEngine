@@ -70,6 +70,8 @@ struct ShaderMaterial
 	int diffTextureUsed;
 	// 是否使用normal纹理
 	int normalTextureUsed;
+	// 
+	int padX;
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
 	DirectX::XMFLOAT4 Specular; // w = 镜面反射强度

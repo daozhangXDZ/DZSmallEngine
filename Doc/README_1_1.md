@@ -4,7 +4,7 @@
 
 0. 5:   Complety
 
-   ![](./DOCContent/Material_Normal_Mask.PNG)
+   ![](./DOCContent/Material_Normal_BugE.PNG)
 
 加入：材质，和缓冲区管理【待优化和扩展】
 

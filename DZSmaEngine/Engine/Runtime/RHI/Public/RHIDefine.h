@@ -53,3 +53,9 @@ enum EShaderPlatform
 	SP_NumPlatforms = 28,
 	SP_NumBits = 5,
 };
+
+enum ETextureSrcFormat
+{
+	PNG = 0,
+	DDS = 1,
+};

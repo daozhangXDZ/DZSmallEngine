@@ -64,6 +64,7 @@
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11TextureSample.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11VertexBuffer.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ViewPort.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\DDSTextureLoader.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Engine\Runtime\Shader\Private\shader.cpp" />
     <ClCompile Include="Engine\Runtime\Shader\Private\ShaderUtils.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ConsoleLog.cpp" />
+    <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\DXTrace.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ErrorLogger.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\String\StringConverter.cpp" />
   </ItemGroup>
@@ -131,6 +133,7 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11DynamicRHI.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11RHIResources.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\DDSTextureLoader.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIDefine.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalUniform.h" />
@@ -149,6 +152,7 @@
     <ClInclude Include="Engine\Runtime\Shader\Public\ShaderUtils.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\COMException.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\ConsoleLog.h" />
+    <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\DXTrace.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\ErrorLogger.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\String\StringConverter.h" />
   </ItemGroup>

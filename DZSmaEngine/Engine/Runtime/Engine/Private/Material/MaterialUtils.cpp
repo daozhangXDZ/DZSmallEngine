@@ -33,13 +33,20 @@ BaseMaterial * MaterialUtil::CreateOneMateria(MaterialType materialType, std::ws
 		vOutMaterial->mPixelShader = ShaderUtils::GetShaderResource(pPSName)->getPixelShader();
 
 	}
+	ETextureSrcFormat srcForm = ETextureSrcFormat::PNG;
 	if (pMainTextureFilePath != L"")
 	{
-		vOutMaterial->mMainTexture = RHICreateShaderResourcesView(pMainTextureFilePath);
+		
+		if (pMainTextureFilePath.find(L".dds") != -1)
+			srcForm = ETextureSrcFormat::DDS;
+		vOutMaterial->mMainTexture = RHICreateShaderResourcesView(pMainTextureFilePath, srcForm);
 	}
+	srcForm = ETextureSrcFormat::PNG;
 	if (pNormalTextureFilePath != L"")
 	{
-		vOutMaterial->mNormalTexture = RHICreateShaderResourcesView(pNormalTextureFilePath);
+		if (pNormalTextureFilePath.find(L".dds") != -1)
+			srcForm = ETextureSrcFormat::DDS;
+		vOutMaterial->mNormalTexture = RHICreateShaderResourcesView(pNormalTextureFilePath, srcForm);
 	}
 	return vOutMaterial;
 }

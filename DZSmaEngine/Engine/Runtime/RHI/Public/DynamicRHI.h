@@ -117,7 +117,7 @@ public:
 	/**
 	 * 创建着色器资源视图
 	 */
-	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString mainTextureFilePath) = 0;
+	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString mainTextureFilePath, ETextureSrcFormat srcFormat) = 0;
 	/**
 	 * 设置着色器资源视图
 	 */
@@ -157,4 +157,6 @@ public:
 	int view_width = 800;
 	int view_height = 600;
 	ViewPortDesc	mViewPortDesc;
+	UINT			m4xMsaaQuality;
+	bool			mEnable4xMsaa;
 };

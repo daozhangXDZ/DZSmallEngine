@@ -2,19 +2,31 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 #include <WICTextureLoader.h>
+#include "DDSTextureLoader.h"
 using namespace DirectX;
 
-RHIShaderResourceViewRef D3D11DynamicRHI::CreateShaderResourcesView(FWString mainTextureFilePath)
+RHIShaderResourceViewRef D3D11DynamicRHI::CreateShaderResourcesView(FWString mainTextureFilePath, ETextureSrcFormat srcFormat)
 {
 	RHID3D11ShaderResViewRef ResTarget = new RHID3D11ShaderResourceView();
 	HRESULT hr;
 	const WCHAR * vLPPath = mainTextureFilePath.c_str();
-	hr = DirectX::CreateWICTextureFromFile(
-		md3d11Device.Get(), 
-		vLPPath, 
-		nullptr, 
-		ResTarget->mShaderResView.GetAddressOf()
-	);
+	switch (srcFormat)
+	{
+	case PNG:
+		hr = DirectX::CreateWICTextureFromFile(
+			md3d11Device.Get(),
+			vLPPath,
+			nullptr,
+			ResTarget->mShaderResView.GetAddressOf()
+		);
+		break;
+	case DDS:
+		hr = CreateDDSTextureFromFile(md3d11Device.Get(), vLPPath, nullptr, ResTarget->mShaderResView.GetAddressOf());
+		break;
+	default:
+		
+		break;
+	}
 	COM_ERROR_IF_FAILED(hr, "Failed to create wic texture from file.");
 	return ResTarget;
 }

@@ -111,7 +111,7 @@ public:
 	/**
 	 * 创建着色器资源视图
 	 */
-	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString mainTextureFilePath) override;
+	virtual RHIShaderResourceViewRef CreateShaderResourcesView(FWString mainTextureFilePath, ETextureSrcFormat srcFormat) override;
 	/**
 	 * 设置着色器资源视图
 	 */
@@ -146,6 +146,7 @@ private:
 	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device;
 	Microsoft::WRL::ComPtr< ID3D11DeviceContext >		md3d11DeviceContext;
 	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain;	
+	
 };
 
 

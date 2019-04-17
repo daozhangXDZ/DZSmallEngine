@@ -68,6 +68,8 @@
     <ClCompile Include="Engine\Runtime\Core\Private\WindowsPlatform\GameTimer.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\DDSTextureLoader.cpp" />
+    <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\DXTrace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -144,6 +146,8 @@
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalUniform.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\DDSTextureLoader.h" />
+    <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\DXTrace.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />

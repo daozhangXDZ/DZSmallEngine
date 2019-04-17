@@ -11,7 +11,7 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
         texColor = gDiffuseMap.Sample(gSam, pIn.Tex);
     }
     [flatten]
-    if (gMaterial.materialType == 1)
+    if (gMaterial.materialType)
     {
         clip(texColor.a - 0.1f);
     }
@@ -49,7 +49,7 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
         spec += S;
     }
     float4 litColor = texColor * (ambient + diffuse) + spec;
-    if (gMaterial.materialType == 2)
+    if (gMaterial.materialType)
     {
         litColor.a = texColor.a * gMaterial.Diffuse.a;
     }

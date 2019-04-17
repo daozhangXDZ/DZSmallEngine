@@ -12,13 +12,13 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
         // 提前进行裁剪，对不符合要求的像素可以避免后续运算
        
     }
-    if(gMaterial.materialType == 1)
+    if(gMaterial.materialType - 1)
     {
         clip(texColor.a - 0.1f);
     }
     float4 litColor = texColor;
 
-    if (gMaterial.materialType == 2)
+    if (gMaterial.materialType - 2)
     {
         litColor.a = texColor.a * gMaterial.Diffuse.a;
     }

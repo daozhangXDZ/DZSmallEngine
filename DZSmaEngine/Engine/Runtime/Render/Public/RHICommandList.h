@@ -243,9 +243,9 @@ inline void RHIOMPInputLayout(RHIVertexLayoutRef ResTarget)
 /**
  * 创建着色器资源视图
  */
-inline RHIShaderResourceViewRef RHICreateShaderResourcesView(FWString mainTextureFilePath)
+inline RHIShaderResourceViewRef RHICreateShaderResourcesView(FWString mainTextureFilePath, ETextureSrcFormat srcFormat)
 {
-	return GDynamicRHI->CreateShaderResourcesView(mainTextureFilePath);
+	return GDynamicRHI->CreateShaderResourcesView(mainTextureFilePath, srcFormat);
 }
 /**
  * 设置着色器资源视图

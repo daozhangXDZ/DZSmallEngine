@@ -43,6 +43,7 @@ void SimpleMeshRenderProxy::Draw(RHICommandListImmediate* pRHICmdList)
 	RHIOMVSShader(mainMaterial->mVertexShader);
 	RHIOMPSShader(mainMaterial->mPixelShader);
 	RHIOMPInputLayout(mainMaterial->mInputLayout);
+	RHISetPrimitiveTology(PrimitiveTopology::TRIANGLELIST);
 	RHIChangeConstanBuffer(pRHICmdList->GetGlobalUniForm()->GetRHIDrawBuffer(),mCBDraw,true);
 	if (mainMaterial->mMainTexture != nullptr)
 	{
