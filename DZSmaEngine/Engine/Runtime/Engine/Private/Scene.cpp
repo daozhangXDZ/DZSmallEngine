@@ -121,8 +121,8 @@ void SceneProxy::InitMeshObj()
 					L"Data\\Textures\\p2.jpg", L"Data\\Textures\\p2_NORM.png",
 					L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
 					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f),
 					XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
 				)
 			);
