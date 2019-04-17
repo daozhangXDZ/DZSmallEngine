@@ -34,8 +34,8 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 	{
 		vRarelyCSB.reflection = XMMatrixTranspose(XMMatrixReflect(XMVectorSet(0.0f, 0.0f, -1.0f, 10.0f)));
 		// 环境光
-		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-		vRarelyCSB.dirLight[0].Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
+		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vRarelyCSB.dirLight[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 		vRarelyCSB.dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
 		vRarelyCSB.dirLight[0].Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
 		// 灯光
@@ -69,12 +69,12 @@ void SimpleShadingRender::RenderBasePass(RHICommandListImmediate* RHICMDList, st
 	RHISetBlendState(RHICMDList->GetGlobalRHIState()->GetDefaultBlendState());
 	RHISetTextureSample(RHICMDList->GetGlobalRHIState()->GetDefaultTextureSampleState());
 	{
-		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f+dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f + dtZ);
+		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f + dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f);
 		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
 		dtZ += speed;
-		if (dtZ > 1.0f || dtZ< 0.0f)
+		if (dtZ > 0.5f || dtZ < -0.5f)
 		{
-			speed = -1*speed;
+			speed = -1 * speed;
 		}
 	}
 

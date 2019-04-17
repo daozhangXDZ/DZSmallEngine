@@ -88,40 +88,44 @@ void SceneProxy::InitMeshObj()
 	__ObjList.clear();
 	try
 	{
-		for (int i = 1; i < 10; i++)
+		 //²ÄÖÊ²âÊÔ
 		{
-			for (int j = 1; j < 10; j++)
-			{
-				float scale = (j + i) % 2 == 0 ? 1.0f : 2.0f;
-				//ÓÃÀ´²âÊÔ
-				MaterialType oT = (j + i) % 2 == 0 ? MaterialType::Opera : MaterialType::Mask;
-				std::wstring MainT = (j + i) % 2 == 0 ? L"Data\\Textures\\p1.jpg": L"Data\\Textures\\p2_alpha.png";
-	
-				//oT = MaterialType::Mask;
-				InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, i*5.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(scale, scale, scale),
-					MaterialUtil::CreateOneMateria(
-						oT,
-						MainT,L"",
-						L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
-						XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
-						XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
-						XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
-						XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
-					)
-				);
-
-				InitCubeMode(XMFLOAT3(-5.0f * j, 4.0f, i*5.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(scale, scale, scale),
-					MaterialUtil::CreateOneMateria(
-						MaterialType::Opera,
-						L"Data\\Textures\\p2.jpg", L"Data\\Textures\\p2_NORM.png",
-						L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
-						XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-						XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
-						XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
-						XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
-					)
-				);
-			}
+			int j = -1;
+			InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
+				MaterialUtil::CreateOneMateria(
+					MaterialType::Opera,
+					L"Data\\Textures\\p1.jpg", L"",
+					L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
+					XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+					XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+					XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+				)
+			);
+			j+=1;
+			InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
+				MaterialUtil::CreateOneMateria(
+					MaterialType::Mask,
+					L"Data\\Textures\\p2_alpha.png", L"",
+					L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
+					XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
+					XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+					XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+				)
+			);
+			j += 1;
+			InitCubeMode(XMFLOAT3(5.0f * j, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
+				MaterialUtil::CreateOneMateria(
+					MaterialType::Opera,
+					L"Data\\Textures\\p2.jpg", L"Data\\Textures\\p2_NORM.png",
+					L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
+					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+					XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
+				)
+			);
 		}
 
 

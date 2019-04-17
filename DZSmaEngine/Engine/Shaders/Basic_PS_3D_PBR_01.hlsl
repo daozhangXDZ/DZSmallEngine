@@ -5,11 +5,12 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
 {
     // 若不使用纹理，则使用默认白色
     float4 texColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
-
+    [flatten]
     if (gMaterial.gDiffTextureUsed)
     {
         texColor = gDiffuseMap.Sample(gSam, pIn.Tex);
     }
+    [flatten]
     if (gMaterial.materialType == 1)
     {
         clip(texColor.a - 0.1f);
@@ -23,6 +24,7 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
 
     // 法线映射
     float3 normalMapSample = float3(0.0f, 0.0f, 1.0f);
+    [flatten]
     if (gMaterial.gNormalTextureUsed)
     {
         normalMapSample = gNormalMap.Sample(gSam, pIn.Tex).rgb;
