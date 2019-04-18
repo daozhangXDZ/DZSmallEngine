@@ -48,6 +48,14 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
         diffuse += D;
         spec += S;
     }
+    // [unroll]
+    //for (i = 0; i < 3; ++i)
+    //{
+    //    ComputePointLight(gMaterial, gPointLight[i], pIn.PosW, bumpedNormalW, toEyeW, A, D, S);
+    //    ambient += A;
+    //    diffuse += D;
+    //    spec += S;
+    //}
     float4 litColor = texColor * (ambient + diffuse) + spec;
     if (gMaterial.materialType)
     {

@@ -122,8 +122,8 @@ void SceneProxy::InitMeshObj()
 					L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
 					XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f),
 					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-					XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f),
-					XMFLOAT4()
+					XMFLOAT4(0.2f, 0.2f, 0.2f, 80.0f),
+					XMFLOAT4(0.2f, 0.2f, 0.2f, 80.0f)
 				)
 			);
 		}

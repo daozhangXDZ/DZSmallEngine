@@ -8,8 +8,11 @@ class CEffect
 {
 public:
 	// 各种类型灯光允许的最大数目
-	static const int maxLights = 1;
+	static const int maxDireLights = 5;
+	static const int maxPointLights = 1000;
+	static const int maxSpotLights = 1000;
 };
+
 struct ShaderDirectionalLight
 {
 	ShaderDirectionalLight() { memset(this, 0, sizeof(ShaderDirectionalLight)); }
@@ -116,7 +119,7 @@ struct CBChangesRarely
 	DirectX::XMMATRIX reflection;
 	DirectX::XMMATRIX shadow;
 	DirectX::XMMATRIX refShadow;
-	ShaderDirectionalLight dirLight[CEffect::maxLights];
-	ShaderPointLight pointLight[CEffect::maxLights];
-	ShaderSpotLight spotLight[CEffect::maxLights];
+	ShaderDirectionalLight dirLight[CEffect::maxDireLights];
+	ShaderPointLight pointLight[CEffect::maxPointLights];
+	ShaderSpotLight spotLight[CEffect::maxSpotLights];
 };
