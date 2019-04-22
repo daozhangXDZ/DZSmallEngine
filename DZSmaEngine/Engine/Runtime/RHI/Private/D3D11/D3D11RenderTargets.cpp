@@ -2,21 +2,27 @@
 #include "LogUtil/COMException.h"
 #include "LogUtil/ErrorLogger.h"
 
+//D3D11DynamicRHI::CreateTexture2D()
+//{
+//
+//	this->md3d11Device->CreateTexture2D()
+//}
 
-RHIRenderTargetRef D3D11DynamicRHI::CreateRenderTarget(uint32 width, uint32 height)
-{
-	RHID3D11RenderTargetRef vRenderTarget = new RHID3D11RenderTarget();
-	HRESULT hr;
-	hr = this->mdxgiSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), 
-		vRenderTarget->GetTextureNativeAddress()
-	);
-	///////////////////////////////------------CreateRenderTargetView------------///////////////////////////////////////////
-	hr = this->md3d11Device->CreateRenderTargetView(
-		vRenderTarget->GetBackBuffer(), NULL,
-		vRenderTarget->GetRTNativeAddress()
-	);
-	return vRenderTarget;
-}
+//需要将这个分离到渲染贴图，视口，中去
+//RHIRenderTargetRef D3D11DynamicRHI::CreateRenderTarget(uint32 width, uint32 height)
+//{
+//	RHID3D11RenderTargetRef vRenderTarget = new RHID3D11RenderTarget();
+//	HRESULT hr;
+//	hr = this->mdxgiSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), 
+//		vRenderTarget->GetTextureNativeAddress()
+//	);
+//	///////////////////////////////------------CreateRenderTargetView------------///////////////////////////////////////////
+//	hr = this->md3d11Device->CreateRenderTargetView(
+//		vRenderTarget->GetBackBuffer(), NULL,
+//		vRenderTarget->GetRTNativeAddress()
+//	);
+//	return vRenderTarget;
+//}
 
 void D3D11DynamicRHI::SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource)
 {

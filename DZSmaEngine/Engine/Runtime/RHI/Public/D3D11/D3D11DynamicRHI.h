@@ -142,7 +142,7 @@ public:
 	virtual void SetUniFormBuffer(RHIComputerShader shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)  final override;
 	virtual void SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)	final override;
 
-private:
+public:
 	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device;
 	Microsoft::WRL::ComPtr< ID3D11DeviceContext >		md3d11DeviceContext;
 	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain;	

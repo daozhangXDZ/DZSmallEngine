@@ -86,6 +86,7 @@
     <ClInclude Include="Engine\Runtime\Core\Public\HAL\Platform.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Math\MathDefine.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Math\Vector.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\PixelFormat.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\WindowsPlatform.h" />
     <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\DeviceInput.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\CameraComponent.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11DynamicRHI.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11RHIResources.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11ViewPort.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\DDSTextureLoader.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIDefine.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />

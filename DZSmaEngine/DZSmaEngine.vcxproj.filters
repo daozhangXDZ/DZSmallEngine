@@ -148,6 +148,8 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\DDSTextureLoader.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\DXTrace.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11ViewPort.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\PixelFormat.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />

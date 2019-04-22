@@ -302,3 +302,87 @@ public:
 };
 typedef D3D11UniFormBuffer* D3D11UniFormBufferRef;
 
+
+
+//////////////////////////////////////-----------ÎÆÀí×ÊÔ´-----------////////////////////////////////////
+/** Texture base class. */
+class D3D11TextureBase
+{
+public:
+	D3D11TextureBase(class D3D11DynamicRHI* InD3DRHI, ID3D11Resource* InRes, ID3D11ShaderResourceView* InShaderResourceView,
+		ID3D11RenderTargetView* InRT, ID3D11DepthStencilView* InDepthview
+		)
+		:D3DRHI(InD3DRHI),Resource(InRes),ShaderResourceView(InShaderResourceView)
+		,RenderTargetView(InRT),DepthStencilView(InDepthview)
+	{
+
+	}
+
+	ID3D11RenderTargetView* GetRenderTargetView() const
+	{
+		return RenderTargetView.Get();
+	}
+
+	ID3D11DepthStencilView* GetDepthStencilView() const
+	{
+		return DepthStencilView.Get();
+	}
+
+	ID3D11Resource* GetResource()
+	{
+		return Resource.Get();
+	}
+
+	ID3D11ShaderResourceView* GetShaderResourceView()
+	{
+		return ShaderResourceView.Get();
+	}
+
+
+protected:
+	D3D11DynamicRHI* D3DRHI;
+
+	Microsoft::WRL::ComPtr<ID3D11Resource> Resource;
+
+	/** A shader resource view of the texture. */
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShaderResourceView;
+
+	/** A render targetable view of the texture. */
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RenderTargetView;
+
+	/** A depth-stencil targetable view of the texture. */
+	Microsoft::WRL::ComPtr <ID3D11DepthStencilView> DepthStencilView;
+};
+
+
+class D3D11BaseTexture2D : public RHITexture2D
+{
+public:
+	D3D11BaseTexture2D(uint32 InSizeX, uint32 InSizeY, uint32 InSizeZ, uint32 InNumMips, uint32 InNumSamples, EPixelFormat InFormat, FName InTextureName)
+		: RHITexture2D(InSizeX, InSizeY, InNumMips, InNumSamples, InFormat,InTextureName)
+	{}
+	uint32 GetSizeZ() const { return 0; }
+};
+
+
+
+
+template<typename BaseResourceType>
+class TD3D11Texture2D : public BaseResourceType, public D3D11TextureBase
+{
+public:
+	TD3D11Texture2D(class D3D11DynamicRHI* InD3DRHI,
+		ID3D11Texture2D* InResource,
+		ID3D11ShaderResourceView* InShaderResourceView,
+		ID3D11RenderTargetView* InRT, ID3D11DepthStencilView* InDepthview,
+		uint32 InSizeX, uint32 InSizeY, uint32 InNumMips, uint32 InNumSamples, EPixelFormat InFormat, FName InTextureName)
+		:
+		BaseResourceType(InSizeX, InSizeY, InNumMips, InNumSamples, InFormat, InTextureName),
+		D3D11TextureBase(InD3DRHI,InResource,InShaderResourceView,InRT,InDepthview)
+	{
+
+	}
+};
+
+typedef TD3D11Texture2D<RHITexture>              D3D11Texture;
+typedef TD3D11Texture2D<D3D11BaseTexture2D>      D3D11Texture2D;
