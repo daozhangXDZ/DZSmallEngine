@@ -290,7 +290,7 @@ typedef RHID3D11IndexBuffer* RHID3D11IndexBufferParamRef;
 /**
  * 
  */
-class D3D11UniFormBuffer :public RHIUniFormBuffer
+class RHID3D11UniFormBuffer :public RHIUniFormBuffer
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mBuffer;
@@ -300,13 +300,18 @@ public:
 	bool isBindVS = false;
 	bool isBindPS = false;
 };
-typedef D3D11UniFormBuffer* D3D11UniFormBufferRef;
+typedef RHID3D11UniFormBuffer* RHID3D11UniFormBufferRef;
 
 
 
 //////////////////////////////////////-----------纹理资源-----------////////////////////////////////////
+
+class D3D11BaseShaderResource : public IRefCountedObject
+{
+
+};
 /** Texture base class. */
-class D3D11TextureBase
+class D3D11TextureBase:public D3D11BaseShaderResource
 {
 public:
 	D3D11TextureBase(class D3D11DynamicRHI* InD3DRHI, ID3D11Resource* InRes, ID3D11ShaderResourceView* InShaderResourceView,
@@ -328,15 +333,9 @@ public:
 		return DepthStencilView.Get();
 	}
 
-	ID3D11Resource* GetResource()
-	{
-		return Resource.Get();
-	}
-
-	ID3D11ShaderResourceView* GetShaderResourceView()
-	{
-		return ShaderResourceView.Get();
-	}
+	ID3D11Resource* GetResource() const { return Resource.Get(); }
+	ID3D11ShaderResourceView* GetShaderResourceView() const { return ShaderResourceView.Get(); }
+	D3D11BaseShaderResource* GetBaseShaderResource() const { return BaseShaderResource; }
 
 
 protected:
@@ -352,6 +351,9 @@ protected:
 
 	/** A depth-stencil targetable view of the texture. */
 	Microsoft::WRL::ComPtr <ID3D11DepthStencilView> DepthStencilView;
+
+	/** Pointer to the base shader resource. Usually the object itself, but not for texture references. */
+	D3D11BaseShaderResource* BaseShaderResource;
 };
 
 
@@ -382,7 +384,113 @@ public:
 	{
 
 	}
+
+	ID3D11Texture2D* GetResource() const { return (ID3D11Texture2D*)D3D11TextureBase::GetResource(); }
+	/** FRHITexture override.  See FRHITexture::GetNativeResource() */
+	virtual void* GetNativeResource() const override final
+	{
+		return GetResource();
+	}
+	virtual void* GetNativeShaderResourceView() const override final
+	{
+		return GetShaderResourceView();
+	}
+	virtual void* GetTextureBaseRHI() override final
+	{
+		return static_cast<D3D11TextureBase*>(this);
+	}
+
+	// IRefCountedObject interface.
+	virtual uint32 AddRef() const
+	{
+		return RHIResource::AddRef();
+	}
+	virtual uint32 Release() const
+	{
+		return RHIResource::Release();
+	}
+	virtual uint32 GetRefCount() const
+	{
+		return RHIResource::GetRefCount();
+	}
 };
 
-typedef TD3D11Texture2D<RHITexture>              D3D11Texture;
-typedef TD3D11Texture2D<D3D11BaseTexture2D>      D3D11Texture2D;
+typedef TD3D11Texture2D<RHITexture>              RHID3D11Texture;
+typedef TD3D11Texture2D<D3D11BaseTexture2D>      RHID3D11Texture2D;
+
+
+/////////////////////////////////---------------转换-------------------------/////////////////////////////////////////
+
+/** Given a pointer to a RHI texture that was created by the D3D11 RHI, returns a pointer to the FD3D11TextureBase it encapsulates. */
+FORCEINLINE D3D11TextureBase* GetD3D11TextureFromRHITexture(RHITexture* Texture)
+{
+	if (!Texture)
+	{
+		return NULL;
+	}
+	D3D11TextureBase* Result((D3D11TextureBase*)Texture->GetTextureBaseRHI());
+	return Result;
+}
+
+
+
+template<class T>
+struct TD3D11ResourceTraits
+{
+};
+
+template<>
+struct TD3D11ResourceTraits<RHIVertexInputElement>
+{
+	typedef D3DInputElement TConcreteType;
+};
+
+template<>
+struct TD3D11ResourceTraits<RHIVertexShader>
+{
+	typedef RHID3D11VertexShader TConcreteType;
+};
+
+
+template<>
+struct TD3D11ResourceTraits<RHIPixelShader>
+{
+	typedef RHID3D11PixelShader TConcreteType;
+};
+
+
+template<>
+struct TD3D11ResourceTraits<RHITexture>
+{
+	typedef RHID3D11Texture TConcreteType;
+};
+template<>
+struct TD3D11ResourceTraits<RHITexture2D>
+{
+	typedef RHID3D11Texture2D TConcreteType;
+};
+
+template<>
+struct TD3D11ResourceTraits<RHIUniFormBuffer>
+{
+	typedef RHID3D11UniFormBuffer TConcreteType;
+};
+template<>
+struct TD3D11ResourceTraits<RHIIndexBuffer>
+{
+	typedef RHID3D11IndexBuffer TConcreteType;
+};
+
+template<>
+struct TD3D11ResourceTraits<RHIVertexBuffer>
+{
+	typedef RHID3D11VertexBuffer TConcreteType;
+};
+
+template<>
+struct TD3D11ResourceTraits<RHIShaderResourceView>
+{
+	typedef RHID3D11ShaderResourceView TConcreteType;
+};
+
+

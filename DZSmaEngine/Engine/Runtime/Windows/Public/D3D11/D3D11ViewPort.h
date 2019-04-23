@@ -1,5 +1,5 @@
 #pragma once
-#include "RHISources.h"
+#include "D3D11RHIResources.h"
 #include "D3D11DynamicRHI.h"
 #include "PixelFormat.h"
 class RHID3D11ViewPort :public RHIViewPort
@@ -19,6 +19,8 @@ public:
 	 * 获取后背缓冲区的BackBuffer 的RenderTarget
 	 */
 	virtual void* GetNativeBackBufferRT() const override;
+
+	RHID3D11Texture2D* GetBackBuffer() const { return BackBuffer; }
 public:
 	D3D11DynamicRHI*								D3DRHI;
 	HWND											WindowHandle;
@@ -26,5 +28,11 @@ public:
 	uint32											ViewSizeY;
 	EPixelFormat									PreferredPixelFormat;
 	Microsoft::WRL::ComPtr < IDXGISwapChain	>		SwapChain;
-	D3D11Texture2D* BackBuffer;
+	RHID3D11Texture2D* BackBuffer;
+};
+
+template<>
+struct TD3D11ResourceTraits<RHIViewPort>
+{
+	typedef RHID3D11ViewPort TConcreteType;
 };

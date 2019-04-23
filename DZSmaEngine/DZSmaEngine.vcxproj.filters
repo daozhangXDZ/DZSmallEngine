@@ -74,6 +74,7 @@
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WinD3D11RHI.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WindowsD3D11ViewPort.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Command.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -156,6 +157,8 @@
     <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\D3D11State.h" />
     <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\D3D11ViewPort.h" />
     <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\DDSTextureLoader.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\Container\Array.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\HAL\ThreadSafeCounter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />

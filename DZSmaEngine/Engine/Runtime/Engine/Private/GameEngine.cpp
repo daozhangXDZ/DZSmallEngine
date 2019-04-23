@@ -3,8 +3,6 @@ void GameEngine::Init()
 {
 	mSceneProxy = new SceneProxy();
 	mSceneProxy->initScene();
-
-
 	{
 		staticRenderProxy = new std::vector<PrimitiveSceneProxy *>();
 		std::vector<PrimitiveComponent*> primitiveComList = mSceneProxy->GetScenePrimitive();
@@ -15,7 +13,7 @@ void GameEngine::Init()
 			staticRenderProxy->push_back(vProxy);
 		}
 	}
-	//GEngineApliation->Register_input(this);
+	EngineApplication::get()->Register_input(this);
 };
 
 void GameEngine::Tick(float dt)
@@ -80,7 +78,8 @@ EngineWindow* GameEngine::CreateGameWindow()
 	windows->titleDesc = "EngingMain";
 	windows->WindowsClassName = "EngineMainWindows";
 	EngineApplication::get()->AddWindow(windows, true);
-	GDynamicRHI->RHICreateViewport(windows->GetOSHandle(), windows->width, windows->height, false, EPixelFormat::PF_B8G8R8A8);
+	windows->SetWindowMode(false);
 	windows->OpenWindow();
+	EngineApplication::get()->Tick(0.0f);
 	return windows;
 }

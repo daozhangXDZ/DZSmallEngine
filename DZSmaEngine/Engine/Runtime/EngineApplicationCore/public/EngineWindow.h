@@ -1,44 +1,30 @@
 #pragma once
 #include "GeneralApplication/GeneralWindow.h"
 #include "GeneralApplication/GeneralApplication.h"
+#include "RHISources.h"
 
 class EngineWindow
 {
 
 public:
-	void SetNativeWindow(GeneralWindow* InNativeWindow)
-	{
-		nativeWindow = InNativeWindow;
-	}
+	void SetNativeWindow(GeneralWindow* InNativeWindow);
+	bool Run();
+	void Exit();
 
-	bool Run()
-	{
-		return nativeWindow->RunWindows();
-	}
-	void Exit()
-	{
-		nativeWindow->Close();
-	}
+	void SetWindowMode(bool isFullScreen);
 
-	void OpenWindow()
-	{
-		nativeWindow->Open();
-	}
+	void OpenWindow();
 
-	void** GetOSHandle()
-	{
-		return nativeWindow->GetHWD();
-	}
+	void** GetOSHandle();
+	void Register_input(IDeviceInput_Receiver* pReceive);
 
-	void Register_input(IDeviceInput_Receiver* pReceive)
-	{
-		if (nativeWindow != nullptr)
-		{
-			nativeWindow->Register_input(pReceive);
-		}
-	}
+	RHIViewPortRef getViewPortRHI();
+
+
+
 private:
 	GeneralWindow* nativeWindow;
+	RHIViewPortRef ViewPortRHI;
 
 public:
 	int width;
@@ -46,4 +32,5 @@ public:
 	FString title;
 	FString WindowsClassName;
 	FString titleDesc;
+
 };

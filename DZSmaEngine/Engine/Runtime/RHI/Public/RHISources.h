@@ -13,9 +13,34 @@ public:
 	virtual uint32 GetRefCount() const = 0;
 };
 
+/**
+ * 渲染资源基类（完成计数）
+ */
 class RHIResource
 {
+public:
+	FORCEINLINE uint32 AddRef() const
+	{
+		int32 NewValue = NumRefs.Increment();
+		return uint32(NewValue);
+	}
+	FORCEINLINE uint32 Release() const
+	{
+		int32 NewValue = NumRefs.Decrement();
+		if (NewValue == 0)
+		{
+			delete this;
+		}
+		return uint32(NewValue);
+	}
+	FORCEINLINE uint32 GetRefCount() const
+	{
+		int32 CurrentValue = NumRefs.GetValue();
+		return uint32(CurrentValue);
+	}
 
+private:
+	mutable FThreadSafeCounter NumRefs;
 };
 
 /////////////////////////////////纹理资源/////////////////////////////////////////
@@ -30,6 +55,24 @@ public:
 		:NumMips(InNumMips),NumSamples(InNumSamples),Format(InFormat),TextureName(InTextureName)
 	{
 
+	}
+
+	virtual void* GetNativeShaderResourceView() const
+	{
+		// Override this in derived classes to expose access to the native texture resource
+		return nullptr;
+	}
+
+	virtual void* GetNativeResource() const
+	{
+		// Override this in derived classes to expose access to the native texture resource
+		return nullptr;
+	}
+
+	virtual void* GetTextureBaseRHI()
+	{
+		// Override this in derived classes to expose access to the native texture resource
+		return nullptr;
 	}
 
 private:
@@ -74,21 +117,69 @@ typedef RHITexture*				RHITextureRef;
 //////////////////////////////////////////////////////////////////////////
 
 /// <summary>
-/// 渲染目标抽象
+/// 渲染目标视图
 /// </summary>
 /// <seealso cref="RHIResource" />
 class RHIRenderTarget :public RHIResource
 {
+public:
+	RHIRenderTarget() :
+		Texture(NULL),
+		MipIndex(0)
+	{
 
+	}
+
+	RHIRenderTarget(const RHIRenderTarget& Other) :
+		Texture(Other.Texture),
+		MipIndex(Other.MipIndex)
+	{
+
+	}
+
+	explicit RHIRenderTarget(RHITextureParamRef InTexture) :
+		Texture(InTexture),
+		MipIndex(0)
+	{
+
+	}
+
+
+public:
+	RHITextureParamRef Texture;
+	uint32 MipIndex;
 };
 
 typedef RHIRenderTarget* RHIRenderTargetRef;
 typedef RHIRenderTarget* RHIRenderTargetParamRef;
 
 
+
+/**
+ * 深度视图
+ */
 class RHIDepthTarget :public RHIResource
 {
+public:
+	RHITextureParamRef Texture;
+public:
+	RHIDepthTarget() :
+		Texture(NULL)
+	{
 
+	}
+
+	RHIDepthTarget(const RHIRenderTarget& Other) :
+		Texture(Other.Texture)
+	{
+
+	}
+
+	explicit RHIDepthTarget(RHITextureParamRef InTexture) :
+		Texture(InTexture)
+	{
+
+	}
 };
 
 typedef RHIDepthTarget* RHIDepthTargetRef;
@@ -200,3 +291,5 @@ public:
 
 typedef RHIViewPort* RHIViewPortRef;
 typedef RHIViewPort* RHIViewPortParamRef;
+
+

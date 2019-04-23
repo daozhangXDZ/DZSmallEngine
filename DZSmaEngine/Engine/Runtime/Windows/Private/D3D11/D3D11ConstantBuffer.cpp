@@ -5,7 +5,7 @@
 
  RHIUniFormBufferRef D3D11DynamicRHI::CreateUniFormBuffer(void* Content, UniFormLayout* layout)
 {
-	 D3D11UniFormBufferRef vUniFormBuffer = new D3D11UniFormBuffer();
+	 RHID3D11UniFormBufferRef vUniFormBuffer = new RHID3D11UniFormBuffer();
 	 D3D11_BUFFER_DESC desc;
 	 desc.Usage = D3D11_USAGE_DYNAMIC;
 	 desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -23,7 +23,7 @@
 
 void  D3D11DynamicRHI::SetUniFormBuffer(RHIVertexShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)
 {
-	D3D11UniFormBufferRef vUniFormBuffer = static_cast<D3D11UniFormBuffer*>(ResTarget);
+	RHID3D11UniFormBufferRef vUniFormBuffer = static_cast<RHID3D11UniFormBuffer*>(ResTarget);
 	md3d11DeviceContext->VSSetConstantBuffers(BufferIndex, 1, vUniFormBuffer->mBuffer.GetAddressOf());
 	vUniFormBuffer->vertecShader = shader;
 	vUniFormBuffer->bindVSIndex = BufferIndex;
@@ -37,7 +37,7 @@ void  D3D11DynamicRHI::SetUniFormBuffer(RHIComputerShader shader, RHIUniFormBuff
 
 void  D3D11DynamicRHI::SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)
 {
-	D3D11UniFormBufferRef vUniFormBuffer = static_cast<D3D11UniFormBuffer*>(ResTarget);
+	RHID3D11UniFormBufferRef vUniFormBuffer = static_cast<RHID3D11UniFormBuffer*>(ResTarget);
 	md3d11DeviceContext->PSSetConstantBuffers(BufferIndex, 1, vUniFormBuffer->mBuffer.GetAddressOf());
 	vUniFormBuffer->pixelShader = shader;
 	vUniFormBuffer->bindPSIndex = BufferIndex;
@@ -47,7 +47,7 @@ void  D3D11DynamicRHI::SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBuff
 
 void D3D11DynamicRHI::ApplyConstantBuffer(RHIUniFormBufferRef ResTarget, void * pData, bool isReBind)
 {
-	D3D11UniFormBufferRef vUniFormBuffer = static_cast<D3D11UniFormBuffer*>(ResTarget);
+	RHID3D11UniFormBufferRef vUniFormBuffer = static_cast<RHID3D11UniFormBuffer*>(ResTarget);
 	D3D11_MAPPED_SUBRESOURCE vSubResource;
 	HRESULT hr = md3d11DeviceContext->Map(vUniFormBuffer->mBuffer.Get(), 0, D3D11_MAP::D3D11_MAP_WRITE_DISCARD, 0, &vSubResource);
 	if (FAILED(hr))

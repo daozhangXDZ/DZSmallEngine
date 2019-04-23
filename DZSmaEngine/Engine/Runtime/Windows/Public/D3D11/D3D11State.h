@@ -1,4 +1,5 @@
 #pragma once
+#include "D3D11RHIResources.h"
 #include "RHIState.h"
 #include  <d3d11.h>
 #include <wrl/client.h>
@@ -84,3 +85,25 @@ public:
 };
 typedef RHID3D11SampleState* RHID3D11SampleStateRef;
 typedef RHID3D11SampleState* RHID3D11SampleStateParamRef;
+
+
+template<>
+struct TD3D11ResourceTraits<RHISampleState>
+{
+	typedef RHID3D11SampleState TConcreteType;
+};
+template<>
+struct TD3D11ResourceTraits<RHIRasterizerState>
+{
+	typedef RHID3D11RasterizerState TConcreteType;
+};
+template<>
+struct TD3D11ResourceTraits<RHIDepthStencilState>
+{
+	typedef RHID3D11DepthStencilState TConcreteType;
+};
+template<>
+struct TD3D11ResourceTraits<RHIBlendState>
+{
+	typedef RHID3D11BlendState TConcreteType;
+};

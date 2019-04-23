@@ -30,23 +30,24 @@ public:
 
 protected:
 	virtual void InitRenderDevice() = 0;
-	virtual void BeginDrawViewPort() = 0;
-	virtual void EndDrawViewPort() = 0;
+
 
 public:
 
 	virtual RHIViewPortRef RHICreateViewport(void* WindowHandle, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) =0;
 	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen) = 0;
 	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) = 0;
+	virtual void BeginDrawViewPort(RHIViewPortParamRef ViewportRHI, RHITextureParamRef RenderTarget) = 0;
+	virtual void EndDrawViewPort(RHIViewPortParamRef ViewportRHI, bool bPresent, bool bLockToVsync) = 0;
 
+	virtual RHIDepthTargetRef CreateDepthTarget(EPixelFormat PixelFormat) = 0;
 	//////////////////////////////////////////////////////////////////////////
 		
 	/// <summary>
 	/// Sets the render target.
 	/// </summary>
 	/// <param name="RenderTargetResource">The render target resource.</param>
-	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource) = 0;
-	virtual void SetDepthTarget(RHIDepthTargetParamRef DepthTargetResource) = 0;
+	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource, RHIDepthTargetParamRef DepthTargetParam) = 0;
 	/// <summary>
 	/// ∑÷≈‰‰÷»æƒø±Í
 	/// </summary>
@@ -160,4 +161,7 @@ public:
 	ViewPortDesc	mViewPortDesc;
 	UINT			m4xMsaaQuality;
 	bool			mEnable4xMsaa;
+
+public:
+	RHIViewPortParamRef DrawingViewport;
 };

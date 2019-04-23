@@ -24,20 +24,24 @@ protected:
 	/// 开启DX设备和交换链
 	/// </summary>
 	virtual void InitRenderDevice() override;
-	virtual void BeginDrawViewPort() override {};
-	virtual void EndDrawViewPort() override {};	
+	
 
 public:
+	template<typename TRHIType>
+	static FORCEINLINE typename TD3D11ResourceTraits<TRHIType>::TConcreteType* ResourceCast(TRHIType* Resource)
+	{
+		return static_cast<typename TD3D11ResourceTraits<TRHIType>::TConcreteType*>(Resource);
+	}
 
 	virtual RHIViewPortRef RHICreateViewport(void* WindowHandle, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) final override;
 	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen) final override;
 	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) final override;
-
+	virtual void BeginDrawViewPort(RHIViewPortParamRef ViewportRHI, RHITextureParamRef RenderTarget) override;
+	virtual void EndDrawViewPort(RHIViewPortParamRef ViewportRHI, bool bPresent, bool bLockToVsync) override;
 	/// <summary>
 	/// 设置渲染目标
 	/// </summary>
-	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource) override;
-	virtual void SetDepthTarget(RHIDepthTargetParamRef DepthTargetResource) override;
+	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource, RHIDepthTargetParamRef DepthTargetParam) override;
 	/// <summary>
 	/// 分配渲染目标
 	/// </summary>
@@ -143,12 +147,16 @@ public:
 	virtual void SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)	final override;
 
 public:
+	virtual RHIDepthTargetRef CreateDepthTarget(EPixelFormat PixelFormat) final override;
+
+public:
 	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device = nullptr;
 	Microsoft::WRL::ComPtr< ID3D11DeviceContext >		md3d11DeviceContext = nullptr;
 	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain = nullptr;
 	Microsoft::WRL::ComPtr<IDXGIFactory1>				dxgiFactory1 = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>		CurrentRenderTargets;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>		CurrentDepthStencilTarget;
+
 };
 
 

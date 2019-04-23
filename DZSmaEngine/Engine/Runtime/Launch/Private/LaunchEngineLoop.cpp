@@ -99,7 +99,7 @@ int FEngineLoop::Tick()
 	RHITick();
 	EngineApplication::get()->Tick(GWorldTime->DeltaTime());
 	GEngine->Tick(GWorldTime->DeltaTime());
-	if (GetMoviePlayer()->WaitForMovieToFinish())
+	if (!GetMoviePlayer()->WaitForMovieToFinish())
 	{
 		GWorldTime->Stop();
 		Exit();

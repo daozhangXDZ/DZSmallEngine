@@ -5,7 +5,7 @@
 #include "D3D11/D3D11ViewPort.h"
 #include "LogUtil/DXTrace.h"
 
-extern D3D11Texture2D* GetSwapChainSurface(D3D11DynamicRHI* D3DRHI, EPixelFormat PixelFormat, IDXGISwapChain* SwapChain);
+extern RHID3D11Texture2D* GetSwapChainSurface(D3D11DynamicRHI* D3DRHI, EPixelFormat PixelFormat, IDXGISwapChain* SwapChain);
 
 
 
@@ -51,6 +51,7 @@ RHID3D11ViewPort::RHID3D11ViewPort(class D3D11DynamicRHI* InD3DRHI, HWND InWindo
 	// ¿ÉÒÔ½ûÖ¹alt+enterÈ«ÆÁ
 	InD3DRHI->dxgiFactory1->MakeWindowAssociation(WindowHandle, DXGI_MWA_NO_ALT_ENTER | DXGI_MWA_NO_WINDOW_CHANGES);
 	BackBuffer = GetSwapChainSurface(D3DRHI, InPreferredPixelFormat, InD3DRHI->mdxgiSwapChain.Get());
+	SwapChain = InD3DRHI->mdxgiSwapChain;
 }
 
 
@@ -108,6 +109,26 @@ void D3D11DynamicRHI::RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 Siz
 }
 
 void D3D11DynamicRHI::RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat)
+{
+
+}
+
+
+void D3D11DynamicRHI::BeginDrawViewPort(RHIViewPortParamRef ViewportRHI, RHITextureParamRef RenderTarget)
+{
+	RHID3D11ViewPort* Viewport = ResourceCast(ViewportRHI);
+
+	DrawingViewport = Viewport;
+
+	if (RenderTarget == NULL)
+	{
+		RenderTarget = Viewport->GetBackBuffer();
+	}
+	RHIRenderTarget* View = new RHIRenderTarget(RenderTarget);
+	SetRenderTarget(View, nullptr);
+}
+
+void D3D11DynamicRHI::EndDrawViewPort(RHIViewPortParamRef ViewportRHI, bool bPresent, bool bLockToVsync)
 {
 
 }

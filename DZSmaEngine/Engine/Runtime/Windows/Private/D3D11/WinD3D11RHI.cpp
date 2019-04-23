@@ -3,9 +3,6 @@
 void D3D11DynamicRHI::Tick()
 {
 	DynamicRHI::Tick();
-	BeginDrawViewPort();
-	
-	EndDrawViewPort();
 };
 
 void D3D11DynamicRHI::Exit()

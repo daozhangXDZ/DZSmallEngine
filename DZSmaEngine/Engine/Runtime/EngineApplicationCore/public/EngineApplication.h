@@ -17,15 +17,20 @@ public:
 	void Tick(float dt);
 
 	void DrawWindows();
+	void Register_input(IDeviceInput_Receiver* pReceive);
 
 private:
 	void TickApplication(float dt);
 
 	void PrivateDrawWindows();
 
+	
+
 private:
 	IDeviceInput_Receiver* currInputReceive;
 	GeneralApplication* currApplicationMisc = nullptr;
+	/** List of active modal windows.  The last item in the list is the top-most modal window */
+	TArray<EngineWindow*> ActiveModalWindows;
 
 	/** Application singleton */
 	static EngineApplication* CurrentApplication;

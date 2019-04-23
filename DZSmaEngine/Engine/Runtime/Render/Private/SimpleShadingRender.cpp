@@ -27,12 +27,15 @@ void SimpleShadingRender::UpdateViewPortProjMat(RHICommandListImmediate* RHICMDL
 	RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIResizeBuffer(),  &vResizeCSB, true);
 }
 
+void SimpleShadingRender::SetCommandDepthBuffer()
+{
+	GDynamicRHI->SetRenderTarget(nullptr, GDynamicRHI->CreateDepthTarget(EPixelFormat::PF_D24));
+	
+}
+
 
 void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 {
-	RHISetRenderTarget(RHICMDList->GetDefaultRendertarget());
-	RHISetDepthTarget(RHICMDList->GetDefaultDepthtarget());
-	RHIOMRenderTarget();
 	//初始化灯光相关渲染资源
 	{
 		vRarelyCSB.reflection = XMMatrixTranspose(XMMatrixReflect(XMVectorSet(0.0f, 0.0f, -1.0f, 10.0f)));
@@ -54,7 +57,8 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 		}
 		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
 	}
-	RHIOMViewPort(800.0f, 600.0f);
+	SetCommandDepthBuffer();
+	RHIOMRenderTarget();
 }
 
 
@@ -69,8 +73,9 @@ void SimpleShadingRender::RenderBasePass(RHICommandListImmediate* RHICMDList, st
 	
 	static float dtZ;
 	static float speed = 0.0001f;
-	RHIClearRMT(RHICMDList->GetDefaultRendertarget());
-	RHIClearDepthView(RHICMDList->GetDefaultDepthtarget());
+	RHIOMViewPort(800.0f, 600.0f);
+	RHIClearRMT();
+	RHIClearDepthView();
 	RHISetRasterizerState(RHICMDList->GetGlobalRHIState()->GetRHIDefaultRasState());
 	RHISetDepthState(RHICMDList->GetGlobalRHIState()->GetDefaultDepthState());
 	RHISetBlendState(RHICMDList->GetGlobalRHIState()->GetDefaultBlendState());

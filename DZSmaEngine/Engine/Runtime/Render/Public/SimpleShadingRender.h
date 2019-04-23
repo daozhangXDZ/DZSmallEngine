@@ -10,6 +10,7 @@ protected:
 	void RenderBasePass(RHICommandListImmediate* RHICMDList,  std::vector<PrimitiveSceneProxy*>* RenderProxyList);
 	void UpdateViewPortViewMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
 	void UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
+	void SetCommandDepthBuffer();
 private:
 	CBChangesEveryFrame vFrameCSB;
 	CBChangesOnResize vResizeCSB;

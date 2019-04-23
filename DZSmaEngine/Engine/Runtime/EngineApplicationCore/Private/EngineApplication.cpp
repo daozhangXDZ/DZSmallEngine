@@ -1,4 +1,6 @@
 #include "EngineApplication.h"
+#include "RHISources.h"
+#include "EngineGlobal.h"
 
 EngineApplication* EngineApplication::CurrentApplication = nullptr;
 
@@ -38,6 +40,7 @@ GeneralWindow* EngineApplication::MakeWindow(EngineWindow* InSlateWindow, const 
 	vGWinDesc->titleDesc = InSlateWindow->titleDesc;
 	currApplicationMisc->InitializeWindow(vGWin, vGWinDesc, nullptr, bShowImmediately);
 	InSlateWindow->SetNativeWindow(vGWin);
+	ActiveModalWindows.push_back(InSlateWindow);
 	return vGWin;
 }
 
@@ -59,5 +62,21 @@ void EngineApplication::TickApplication(float dt)
 
 void EngineApplication::PrivateDrawWindows()
 {
+	for (int i=0; i < ActiveModalWindows.size(); i++)
+	{
+		GDynamicRHI->BeginDrawViewPort(ActiveModalWindows[i]->getViewPortRHI(), nullptr);
 
+	}
+}
+
+
+void EngineApplication::Register_input(IDeviceInput_Receiver* pReceive)
+{
+	for (int i=0; i< ActiveModalWindows.size(); i++)
+	{
+		if (ActiveModalWindows[i] != nullptr)
+		{
+			ActiveModalWindows[i]->Register_input(pReceive);
+		}
+	}
 }

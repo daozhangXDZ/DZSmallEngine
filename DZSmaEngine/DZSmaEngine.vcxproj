@@ -23,6 +23,7 @@
     <ClCompile Include="Engine\Check\Source.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\CoreUtil\EngineTimer.cpp" />
     <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineApplication.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineWindow.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\DirectionLightComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
@@ -83,11 +84,13 @@
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WindowsD3D11ViewPort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Runtime\Core\Public\Container\Array.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\CoreMinimal.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\CoreUtil\EngineTimer.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\GeneralPlaform\GeneralPlaform.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\HAL\Platform.h" />
+    <ClInclude Include="Engine\Runtime\Core\Public\HAL\ThreadSafeCounter.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Math\MathDefine.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Math\Vector.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\PixelFormat.h" />
