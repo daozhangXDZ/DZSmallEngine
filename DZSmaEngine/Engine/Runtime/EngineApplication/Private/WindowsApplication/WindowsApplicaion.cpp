@@ -1,12 +1,25 @@
 #include "WindowsApplication/WindowsApplicaion.h"
 #include "WindowsApplication/WindowsWindows.h"
 
-GeneralWindow* WindowsApplication::MakerWindow(EngineWindowDesc* desc)
+GeneralWindow* WindowsApplication::MakerWindow()
 {
 	return new WindowsWindow;
 }
 
-void WindowsApplication::OpenWindow(GeneralWindow * pWin)
+void WindowsApplication::InitializeWindow(GeneralWindow* InWindow, GeneralWindowDesc* InDefinition, GeneralWindow* InParent, const bool bShowImmediately)
 {
-	return;
+	WindowsWindow* Window = dynamic_cast<WindowsWindow*>(InWindow);
+	if (Window)
+	{
+		Window->InitWindows(InDefinition);
+	}
+}
+
+void WindowsApplication::OpenWindow(GeneralWindow * InWindow)
+{
+	WindowsWindow* Window = dynamic_cast<WindowsWindow*>(InWindow);
+	if (Window)
+	{
+		
+	}
 }

@@ -7,7 +7,7 @@
 class WindowsWindow :public WindowContainer, public GeneralWindow
 {
 public:
-	virtual void	InitWindows(EngineWindowDesc* desc)override
+	virtual void	InitWindows(GeneralWindowDesc* desc)override
 	{
 		this->render_window.Initialize(this, *currAppIns, desc->title, desc->WindowsClassName, desc->width, desc->height);
 	};

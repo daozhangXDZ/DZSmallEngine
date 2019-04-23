@@ -34,19 +34,33 @@ protected:
 	virtual void EndDrawViewPort() = 0;
 
 public:
+
+	virtual RHIViewPortRef RHICreateViewport(void* WindowHandle, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) =0;
+	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen) = 0;
+	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) = 0;
+
+	//////////////////////////////////////////////////////////////////////////
+		
 	/// <summary>
-	/// 创建渲染目标
+	/// Sets the render target.
 	/// </summary>
-	virtual RHIRenderTargetRef CreateRenderTarget(uint32 width, uint32 height) = 0;
+	/// <param name="RenderTargetResource">The render target resource.</param>
 	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource) = 0;
-
-
-	virtual RHIDepthTargetRef CreateDepthTarget() = 0;
 	virtual void SetDepthTarget(RHIDepthTargetParamRef DepthTargetResource) = 0;
 	/// <summary>
 	/// 分配渲染目标
 	/// </summary>
-	virtual void OMRenderTarget(RHIRenderTargetRef RenTarRef, RHIDepthTargetRef defRef) = 0;
+	virtual void CommitRenderTargetsAndUAVs() = 0;
+
+	/// <summary>
+	/// 清理RenderTarget
+	/// </summary>
+	virtual void ClearRMT() = 0;
+	/// <summary>
+	/// Clears the depth view.
+	/// </summary>
+	/// <param name="DepthTargetResource">The depth target resource.</param>
+	virtual void ClearDepthView() = 0;
 
 	/// <summary>
 	/// 分配视口
@@ -57,19 +71,6 @@ public:
 	virtual RHIDepthStencilStateRef CreateDepthStencilState() = 0;
 	virtual RHIRasterizerStateRef CreaRasterizerState() = 0;
 	virtual RHISampleStateRef CreaTextureSampleState() = 0;
-
-	//////////////////////////////////清理////////////////////////////////////////
-
-	/// <summary>
-	/// 清理RenderTarget
-	/// </summary>
-	virtual void ClearRMT(RHIRenderTargetParamRef RenderTargetResource) = 0;
-	/// <summary>
-	/// Clears the depth view.
-	/// </summary>
-	/// <param name="DepthTargetResource">The depth target resource.</param>
-	virtual void ClearDepthView(RHIDepthTargetParamRef DepthTargetResource) = 0;
-
 
 	//////////////////////////////////状态分配////////////////////////////////////////
 	virtual void SetPrimitiveTology(PrimitiveTopology pDrawType) = 0;

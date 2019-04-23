@@ -1,11 +1,11 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "EngineWindowDesc.h"
+#include "GeneralWindowDesc.h"
 #include "DeviceInput.h"
 class GeneralWindow
 {
 public:
-	virtual void	InitWindows(EngineWindowDesc* desc) {};
+	virtual void	InitWindows(GeneralWindowDesc* desc) {};
 	virtual void**  GetHWD() { return nullptr; };
 	virtual bool	RunWindows() { return false; };
 	virtual void    Open() {};

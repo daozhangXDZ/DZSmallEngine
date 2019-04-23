@@ -8,79 +8,18 @@
 class GameEngine :public BaseEngine, public IDeviceInput_Receiver
 {
 public:
-	virtual void Init() final override
-	{
-		mSceneProxy = new SceneProxy();
-		mSceneProxy->initScene();
+	virtual void Init() final override;
 
+	virtual void Tick(float dt) final override;
 
-		{
-			staticRenderProxy = new std::vector<PrimitiveSceneProxy *>();
-			std::vector<PrimitiveComponent*> primitiveComList = mSceneProxy->GetScenePrimitive();
-			for (int i = 0; i < primitiveComList.size(); i++)
-			{
-				PrimitiveSceneProxy* vProxy = primitiveComList[i]->getCurrRenderProxy();
-				vProxy->InitRender();
-				staticRenderProxy->push_back(vProxy);
-			}
-		}
-		GEngineApliation->Register_input(this);
-	};
-
-	virtual void Tick(float dt) final override
-	{
-		if (staticRenderProxy == nullptr)
-			return;
-		mSceneProxy->Tick(0.1f);
-		if (CurrRender == nullptr)
-		{
-			RHICMDList = new RHICommandListImmediate();
-			CurrRender = SceneRender::GetShaderRender();
-			CurrRender->InitRes(RHICMDList);
-		}
-		CurrRender->Render(RHICMDList,staticRenderProxy);
-		CurrRender->UpdateViewPort(RHICMDList,&(mSceneProxy->GetMainCameraDesc()),true);
-	};
-
-	virtual void Exit() final override 
-	{
-		
-	}
-
+	virtual void Exit() final override;
 
 public:
-	virtual void receive_KeyBode(EnKeyCode keyOne) 
-	{
-		switch (keyOne)
-		{
-		case W:
-			mSceneProxy->GetCamera()->AdjustPosition(mSceneProxy->GetCamera()->GetForwardVector() * mCameraSpeed);
-			break;
-		case S:
-			mSceneProxy->GetCamera()->AdjustPosition(mSceneProxy->GetCamera()->GetBackwardVector() * mCameraSpeed);
-			break;
-		case A:
-			mSceneProxy->GetCamera()->AdjustPosition(mSceneProxy->GetCamera()->GetLeftVector() * mCameraSpeed);
-			break;
-		case D:
-			mSceneProxy->GetCamera()->AdjustPosition(mSceneProxy->GetCamera()->GetRightVector() * mCameraSpeed);
-			break;
-		case Z:
-			mSceneProxy->GetCamera()->AdjustPosition(0.0, -mCameraSpeed,0.0);
-			break;
-		case SPACE:
-			mSceneProxy->GetCamera()->AdjustPosition(0.0, mCameraSpeed, 0.0);
-			break;
-		default:
-			break;
-		}
-	};
+	virtual void receive_KeyBode(EnKeyCode keyOne);
 
-	virtual void receive_MouseMove(float x, float y) 
-	{
-		mSceneProxy->GetCamera()->AdjustRotation(y * 0.01f, x * 0.01f, 0);
-	};
+	virtual void receive_MouseMove(float x, float y);
 
+	static  EngineWindow* CreateGameWindow();
 
 private:
 	float mCameraSpeed = 0.005;

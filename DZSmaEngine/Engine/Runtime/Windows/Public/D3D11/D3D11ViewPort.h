@@ -19,7 +19,6 @@ public:
 	 * 获取后背缓冲区的BackBuffer 的RenderTarget
 	 */
 	virtual void* GetNativeBackBufferRT() const override;
-
 public:
 	D3D11DynamicRHI*								D3DRHI;
 	HWND											WindowHandle;
@@ -27,5 +26,5 @@ public:
 	uint32											ViewSizeY;
 	EPixelFormat									PreferredPixelFormat;
 	Microsoft::WRL::ComPtr < IDXGISwapChain	>		SwapChain;
-	FD3D11Texture2D BackBuffer;
+	D3D11Texture2D* BackBuffer;
 };

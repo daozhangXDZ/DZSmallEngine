@@ -30,11 +30,11 @@ public:
 			mRenderState->Init();
 		}
 
-		mDefaultRenderTarget = GDynamicRHI->CreateRenderTarget(800, 600);
-		mDefaultDepthRes = GDynamicRHI->CreateDepthTarget();
+		/*	mDefaultRenderTarget = GDynamicRHI->CreateRenderTarget(800, 600);
+			mDefaultDepthRes = GDynamicRHI->CreateDepthTarget();*/
 		GDynamicRHI->SetRenderTarget(mDefaultRenderTarget);
 		GDynamicRHI->SetDepthTarget(mDefaultDepthRes);
-		GDynamicRHI->OMRenderTarget(mDefaultRenderTarget, mDefaultDepthRes);
+		//GDynamicRHI->OMRenderTarget(mDefaultRenderTarget, mDefaultDepthRes);
 	}
 
 	RHIGlobalUniform* GetGlobalUniForm()
@@ -82,23 +82,27 @@ public:
 	}
 };
 
+
+class RHICommandList :public RHICommandListBase
+{
+public:
+	RHICommandList() :RHICommandListBase()
+	{
+
+	}
+};
+
 /// <summary>
 	/// 创建渲染目标
 	/// </summary>
-inline RHIRenderTargetRef RHICreateRenderTarget(uint32 width, uint32 height)
+inline RHIRenderTargetRef RHICreateRenderTarget(RHITextureParamRef NewRenderTarget, RHITextureParamRef NewDepthStencilTarget, bool bWritableBarrier = false)
 {
-	return GDynamicRHI->CreateRenderTarget(width, height);
+	
 }
 
 inline void RHISetRenderTarget(RHIRenderTargetParamRef RenderTargetResource)
 {
 	GDynamicRHI->SetRenderTarget(RenderTargetResource);
-}
-
-
-inline RHIDepthTargetRef RHICreateDepthTarget()
-{
-	return GDynamicRHI->CreateDepthTarget();
 }
 
 inline void RHISetDepthTarget(RHIDepthTargetParamRef DepthTargetResource)
@@ -109,9 +113,9 @@ inline void RHISetDepthTarget(RHIDepthTargetParamRef DepthTargetResource)
 /// <summary>
 /// 分配渲染目标
 /// </summary>
-inline void RHIOMRenderTarget(RHIRenderTargetRef RenTarRef, RHIDepthTargetRef defRef)
+inline void RHIOMRenderTarget()
 {
-	GDynamicRHI->OMRenderTarget(RenTarRef, defRef);
+	GDynamicRHI->CommitRenderTargetsAndUAVs();
 }
 
 /// <summary>
@@ -148,7 +152,7 @@ inline RHISampleStateRef RHICreaTextureSampleState()
 /// </summary>
 inline void RHIClearRMT(RHIRenderTargetParamRef RenderTargetResource)
 {
-	GDynamicRHI->ClearRMT(RenderTargetResource);
+	GDynamicRHI->ClearRMT();
 }
 /// <summary>
 /// Clears the depth view.
@@ -156,7 +160,7 @@ inline void RHIClearRMT(RHIRenderTargetParamRef RenderTargetResource)
 /// <param name="DepthTargetResource">The depth target resource.</param>
 inline void RHIClearDepthView(RHIDepthTargetParamRef DepthTargetResource)
 {
-	GDynamicRHI->ClearDepthView(DepthTargetResource);
+	GDynamicRHI->ClearDepthView();
 }
 
 

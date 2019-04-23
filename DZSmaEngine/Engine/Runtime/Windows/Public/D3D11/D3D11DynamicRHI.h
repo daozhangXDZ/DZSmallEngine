@@ -28,19 +28,30 @@ protected:
 	virtual void EndDrawViewPort() override {};	
 
 public:
-	/// <summary>
-	/// 创建渲染目标
-	/// </summary>
-	virtual RHIRenderTargetRef CreateRenderTarget(uint32 width, uint32 height) override;
-	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource) override;
-	
 
-	virtual RHIDepthTargetRef CreateDepthTarget() override;
+	virtual RHIViewPortRef RHICreateViewport(void* WindowHandle, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) final override;
+	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen) final override;
+	virtual void RHIResizeViewport(RHIViewPortParamRef Viewport, uint32 SizeX, uint32 SizeY, bool bIsFullscreen, EPixelFormat PreferredPixelFormat) final override;
+
+	/// <summary>
+	/// 设置渲染目标
+	/// </summary>
+	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource) override;
 	virtual void SetDepthTarget(RHIDepthTargetParamRef DepthTargetResource) override;
 	/// <summary>
 	/// 分配渲染目标
 	/// </summary>
-	virtual void OMRenderTarget(RHIRenderTargetRef RenTarRef, RHIDepthTargetRef defRef) override;
+	virtual void CommitRenderTargetsAndUAVs() override;
+
+	/// <summary>
+	/// 清理RenderTarget
+	/// </summary>
+	virtual void ClearRMT() override;
+	/// <summary>
+	/// Clears the depth view.
+	/// </summary>
+	/// <param name="DepthTargetResource">The depth target resource.</param>
+	virtual void ClearDepthView() override;
 	
 	/// <summary>
 	/// 分配视口
@@ -52,17 +63,6 @@ public:
 	virtual RHIRasterizerStateRef CreaRasterizerState() override;
 	virtual RHISampleStateRef CreaTextureSampleState() override;
 	
-	//////////////////////////////////清理////////////////////////////////////////
-
-	/// <summary>
-	/// 清理RenderTarget
-	/// </summary>
-	virtual void ClearRMT(RHIRenderTargetParamRef RenderTargetResource) override;
-	/// <summary>
-	/// Clears the depth view.
-	/// </summary>
-	/// <param name="DepthTargetResource">The depth target resource.</param>
-	virtual void ClearDepthView(RHIDepthTargetParamRef DepthTargetResource) override;
 	
 
 	//////////////////////////////////状态分配////////////////////////////////////////
@@ -143,10 +143,12 @@ public:
 	virtual void SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)	final override;
 
 public:
-	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device;
-	Microsoft::WRL::ComPtr< ID3D11DeviceContext >		md3d11DeviceContext;
-	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain;	
-	
+	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device = nullptr;
+	Microsoft::WRL::ComPtr< ID3D11DeviceContext >		md3d11DeviceContext = nullptr;
+	Microsoft::WRL::ComPtr < IDXGISwapChain	>			mdxgiSwapChain = nullptr;
+	Microsoft::WRL::ComPtr<IDXGIFactory1>				dxgiFactory1 = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>		CurrentRenderTargets;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>		CurrentDepthStencilTarget;
 };
 
 

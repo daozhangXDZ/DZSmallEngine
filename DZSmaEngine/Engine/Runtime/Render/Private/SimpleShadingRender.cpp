@@ -32,7 +32,7 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 {
 	RHISetRenderTarget(RHICMDList->GetDefaultRendertarget());
 	RHISetDepthTarget(RHICMDList->GetDefaultDepthtarget());
-	RHIOMRenderTarget(RHICMDList->GetDefaultRendertarget(), RHICMDList->GetDefaultDepthtarget());
+	RHIOMRenderTarget();
 	//初始化灯光相关渲染资源
 	{
 		vRarelyCSB.reflection = XMMatrixTranspose(XMMatrixReflect(XMVectorSet(0.0f, 0.0f, -1.0f, 10.0f)));

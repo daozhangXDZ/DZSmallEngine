@@ -1,76 +1,33 @@
 #pragma once
 #include "EngineWindow.h"
 #include "EngineApplicationMIisc.h"
-#include "EngineWindowDesc.h"
 #include "GeneralApplication/DeviceInput.h"
 class EngineApplication
 {
 public:
-	EngineApplication() :isStartApp(false) {}
-	static EngineApplication* get()
-	{
-		return new EngineApplication();
-	}
+	EngineApplication();
+	static EngineApplication* get();
 
-	void StartApplication()
-	{
-		currApplication = new EApplicationMisc();
-		isStartApp = true;
-	}
+	void Start();
 
-	void InitRender() 
-	{
-		if (mainWindows == nullptr)
-		{
-			mainWindowsDesc = new EngineWindowDesc();
-			mainWindowsDesc->width = 800;
-			mainWindowsDesc->height = 600;
-			mainWindowsDesc->title = "EngineMainWindows";
-			mainWindowsDesc->titleDesc = "EngingMain";
-			mainWindowsDesc->WindowsClassName = "EngineMainWindows";
-			mainWindows = EngineWindow::MakeWindows(currApplication,mainWindowsDesc);
-			mainWindows->InitRender();
-			
-		}
-	}
+	void AddWindow(EngineWindow* InEngineWindows, const bool bShowImmediately = true);
 
-	void OpenEngineWindow()
-	{
-		mainWindows->OpenWindow();
-		if (currInputReceive != nullptr)
-		{
-			mainWindows->Register_input(currInputReceive);
-		}	
-	}
+	GeneralWindow* MakeWindow(EngineWindow* InSlateWindow, const bool bShowImmediately);
 
-	bool Run()
-	{
-		return mainWindows->Run();
-	}
+	void Tick(float dt);
 
-	void Exit()
-	{
-		mainWindows->Exit();
-	}
+	void DrawWindows();
 
-	void** GetCurrMainHWD()
-	{
-		return mainWindows->GetOSHandle();
-	}
+private:
+	void TickApplication(float dt);
 
-	void Register_input(IDeviceInput_Receiver* pReceive)
-	{
-		if (mainWindows != nullptr)
-		{
-			mainWindows->Register_input(pReceive);
-		}
-		currInputReceive = pReceive;
-	}
-	
+	void PrivateDrawWindows();
+
 private:
 	IDeviceInput_Receiver* currInputReceive;
-	EngineWindowDesc* mainWindowsDesc = nullptr;
-	GeneralApplication* currApplication = nullptr;
-	EngineWindow* mainWindows = nullptr;
+	GeneralApplication* currApplicationMisc = nullptr;
+
+	/** Application singleton */
+	static EngineApplication* CurrentApplication;
 	bool isStartApp = false;
 };

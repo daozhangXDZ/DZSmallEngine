@@ -31,23 +31,10 @@
     <ClCompile Include="Engine\Runtime\Launch\Private\Windows\LaunchWindows.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\Launch.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\LaunchEngineLoop.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\AdapterReader.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11Depth.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11Device.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11RenderTargets.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11State.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11TextureSample.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ViewPort.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\WinD3D11RHI.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\DynamicRHI.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ConsoleLog.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ErrorLogger.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\String\StringConverter.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11Shader.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11PrimitiveTopology.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11VertexBuffer.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11IndexBuffer.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ConstantBuffer.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\PrimitiveSceneProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\SimpleRenderProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\StaticMeshRenderProxy.cpp" />
@@ -55,7 +42,6 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SceneRender.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SimpleShadingRender.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\D3D11ShaderResource.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\VertexElementDesc.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
@@ -68,8 +54,26 @@
     <ClCompile Include="Engine\Runtime\Core\Private\WindowsPlatform\GameTimer.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
-    <ClCompile Include="Engine\Runtime\RHI\Private\D3D11\DDSTextureLoader.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\DXTrace.cpp" />
+    <ClCompile Include="Engine\Runtime\MoviePlayer\Private\DefaultGameMoviePlayer.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\GameEngine.cpp" />
+    <ClCompile Include="Engine\Runtime\MoviePlayer\Private\MoviePlayer.cpp" />
+    <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineApplication.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\AdapterReader.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11ConstantBuffer.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Device.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11IndexBuffer.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11PrimitiveTopology.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Shader.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11ShaderResource.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11State.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11TextureSample.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11VertexBuffer.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11ViewPort.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\DDSTextureLoader.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WinD3D11RHI.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WindowsD3D11ViewPort.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Command.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -97,11 +101,7 @@
     <ClInclude Include="Engine\Runtime\EngineApplication\Public\EngineApplicationMIisc.h" />
     <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineApplication.h" />
     <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineWindow.h" />
-    <ClInclude Include="Engine\Runtime\EngineApplicationCore\public\EngineWindowDesc.h" />
     <ClInclude Include="Engine\Runtime\Launch\Public\LaunchEngineLoop.h" />
-    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\AdapterReader.h" />
-    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11DynamicRHI.h" />
-    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11RHIResources.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\DynamicRHI.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHI.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\COMException.h" />
@@ -115,7 +115,6 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\PanelMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SceneRender.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SimpleShadingRender.h" />
-    <ClInclude Include="Engine\Runtime\Render\Public\RHICommandList.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\ConstantBufferTypes.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\VertexElementDesc.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\Geometry.h" />
@@ -127,7 +126,6 @@
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIDefine.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIUtil.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIState.h" />
-    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11State.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\GeneralPlaform\GeneralPlaform.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\HAL\Platform.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\WindowsPlatform.h" />
@@ -146,10 +144,18 @@
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalUniform.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHIGlobalState.h" />
-    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\DDSTextureLoader.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\DXTrace.h" />
-    <ClInclude Include="Engine\Runtime\RHI\Public\D3D11\D3D11ViewPort.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\PixelFormat.h" />
+    <ClInclude Include="Engine\Runtime\MoviePlayer\Public\MoviePlayer.h" />
+    <ClInclude Include="Engine\Runtime\EngineApplication\Public\GeneralApplication\GeneralWindowDesc.h" />
+    <ClInclude Include="Engine\Runtime\MoviePlayer\Public\DefaultGameMoviePlayer.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\RHICommandList.h" />
+    <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\AdapterReader.h" />
+    <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\D3D11DynamicRHI.h" />
+    <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\D3D11RHIResources.h" />
+    <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\D3D11State.h" />
+    <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\D3D11ViewPort.h" />
+    <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\DDSTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />

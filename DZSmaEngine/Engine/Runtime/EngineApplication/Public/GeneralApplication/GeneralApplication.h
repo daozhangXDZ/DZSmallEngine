@@ -1,16 +1,20 @@
 #pragma once
 #include "GeneralWindow.h"
-#include "EngineWindowDesc.h"
+#include "GeneralWindowDesc.h"
 class GeneralApplication
 {
 public:
-	virtual GeneralWindow* MakerWindow(EngineWindowDesc* desc)
+
+	virtual GeneralWindow* MakerWindow()
 	{
 		return nullptr;
 	}
 
+	virtual void InitializeWindow(GeneralWindow* Window, GeneralWindowDesc* InDefinition, GeneralWindow* InParent, const bool bShowImmediately) { }
+
+
 	virtual void OpenWindow(GeneralWindow * pWin)
 	{
-		return;
+	
 	}
 };

@@ -68,6 +68,8 @@ private:
 	uint32 SizeY;
 };
 
+typedef RHITexture*              RHITextureParamRef;
+typedef RHITexture*				RHITextureRef;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -195,3 +197,6 @@ public:
 	 */
 	virtual void* GetNativeBackBufferRT() const { return nullptr; }
 };
+
+typedef RHIViewPort* RHIViewPortRef;
+typedef RHIViewPort* RHIViewPortParamRef;

@@ -1,5 +1,6 @@
 #pragma 
 #include "RHISources.h"
+#include "RHICommandList.h"
 class RHIUtil
 {
 public:

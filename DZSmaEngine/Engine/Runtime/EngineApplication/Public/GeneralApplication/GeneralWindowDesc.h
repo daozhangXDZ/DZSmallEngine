@@ -1,6 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
-struct EngineWindowDesc
+struct GeneralWindowDesc
 {
 public:
 	int width;

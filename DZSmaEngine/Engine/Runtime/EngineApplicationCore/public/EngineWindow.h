@@ -6,9 +6,9 @@ class EngineWindow
 {
 
 public:
-	void InitRender()
+	void SetNativeWindow(GeneralWindow* InNativeWindow)
 	{
-		nativeWindow->InitWindows(currDesc);
+		nativeWindow = InNativeWindow;
 	}
 
 	bool Run()
@@ -37,18 +37,13 @@ public:
 			nativeWindow->Register_input(pReceive);
 		}
 	}
-
-
-public:
-	static EngineWindow* MakeWindows(GeneralApplication* misc, EngineWindowDesc* desc)
-	{
-		EngineWindow* pw = new EngineWindow();
-		pw->currDesc = desc;
-		pw->nativeWindow = misc->MakerWindow(desc);
-		return pw;
-	};
-
 private:
 	GeneralWindow* nativeWindow;
-	EngineWindowDesc* currDesc;
+
+public:
+	int width;
+	int height;
+	FString title;
+	FString WindowsClassName;
+	FString titleDesc;
 };
