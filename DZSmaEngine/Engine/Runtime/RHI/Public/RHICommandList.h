@@ -30,10 +30,11 @@ public:
 			mRenderState->Init();
 		}
 
+		mDefaultRenderTarget = new RHIRenderTarget();
+		mDefaultDepthRes = new RHIDepthTarget();
 		/*	mDefaultRenderTarget = GDynamicRHI->CreateRenderTarget(800, 600);
 			mDefaultDepthRes = GDynamicRHI->CreateDepthTarget();*/
-		GDynamicRHI->SetRenderTarget(mDefaultRenderTarget);
-		GDynamicRHI->SetDepthTarget(mDefaultDepthRes);
+		
 		//GDynamicRHI->OMRenderTarget(mDefaultRenderTarget, mDefaultDepthRes);
 	}
 
