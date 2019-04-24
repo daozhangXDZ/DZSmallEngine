@@ -1,4 +1,5 @@
-#include "Basic.hlsli"
+#include "Common/Basic.hlsli"
+#include "Common/BasicLayout.hlsli"
 
 // 顶点着色器(3D)
 // 顶点着色器

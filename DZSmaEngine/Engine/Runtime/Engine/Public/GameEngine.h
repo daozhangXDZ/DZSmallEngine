@@ -22,7 +22,7 @@ public:
 	static  EngineWindow* CreateGameWindow();
 
 private:
-	float mCameraSpeed = 0.005;
+	float mCameraSpeed = 0.005f;
 	SceneProxy* mSceneProxy;
 	SceneRender* CurrRender;
 	std::vector<PrimitiveSceneProxy*>* staticRenderProxy;

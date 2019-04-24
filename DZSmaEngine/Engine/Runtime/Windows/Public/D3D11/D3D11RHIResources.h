@@ -202,13 +202,7 @@ public:
 };
 typedef D3DInputElement* D3DInputElementParamRef;
 
-/**
- * 绘制方式
- */
-enum PrimitiveTopology
-{
-	TRIANGLELIST = 0,
-};
+;
 
 //////////////////////////////////缓璁去资源////////////////////////////////////////
 class RHID3D11VertexBuffer:public RHIVertexBuffer

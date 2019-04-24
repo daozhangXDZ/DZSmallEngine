@@ -75,6 +75,10 @@
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WindowsD3D11ViewPort.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Command.cpp" />
     <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineWindow.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\DepthRender.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\PipelineStateCache.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\BasePassRender.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -159,6 +163,8 @@
     <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\DDSTextureLoader.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Container\Array.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\HAL\ThreadSafeCounter.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\DepthRender.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\PipelineStateCache.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
@@ -167,9 +173,12 @@
     <FxCompile Include="Engine\Shaders\Basic_PS_3D_Emit.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_PS_3D_PBR_01.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_Depth_VS.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_Depth_PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\Shaders\LightHelper.hlsli" />
-    <None Include="Engine\Shaders\Basic.hlsli" />
+    <None Include="Engine\Shaders\Common\Basic.hlsli" />
+    <None Include="Engine\Shaders\Common\LightHelper.hlsli" />
+    <None Include="Engine\Shaders\Common\BasicLayout.hlsli" />
   </ItemGroup>
 </Project>

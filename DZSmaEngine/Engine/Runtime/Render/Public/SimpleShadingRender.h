@@ -7,6 +7,7 @@ public:
 	virtual void Render(RHICommandListImmediate* RHICMDList, std::vector<PrimitiveSceneProxy*>* RenderProxyList) override;
 	virtual void UpdateViewPort(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc, bool isUpdateProj)override;
 protected:
+	void RenderDepth(RHICommandListImmediate* RHICMDList, std::vector<PrimitiveSceneProxy*>* RenderProxyList);
 	void RenderBasePass(RHICommandListImmediate* RHICMDList,  std::vector<PrimitiveSceneProxy*>* RenderProxyList);
 	void UpdateViewPortViewMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
 	void UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;

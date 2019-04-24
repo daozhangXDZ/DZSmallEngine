@@ -26,12 +26,13 @@ void ShaderUtils::InitCombileAllShader()
 #endif
 #endif
 	}
-	std::wstring vAllVertexShader[] = { L"Basic_VS_3D.cso" };
+	std::wstring vAllVertexShader[] = { L"Basic_VS_3D.cso" ,L"Basic_Depth_VS.cso"};
 	std::wstring vAllPixelShader[] = { 
 		L"Basic_PS_3D.cso" 
 		,L"Basic_PS_3D_Emit.cso" 
 		,L"Basic_PS_3D_PBR_01.cso" 
-		,L"Basic_PS_2D.cso" };
+		,L"Basic_PS_2D.cso" 
+		,L"Basic_Depth_PS.cso"};
 
 	ShaderResource *VComShader;
 	for (int i = 0, len = ARRAYSIZE(vAllVertexShader); i < len; i++)

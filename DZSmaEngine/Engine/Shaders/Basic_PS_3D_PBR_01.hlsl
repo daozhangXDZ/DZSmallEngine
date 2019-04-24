@@ -1,5 +1,5 @@
-#include "Basic.hlsli"
-
+#include "Common/Basic.hlsli"
+#include "Common/BasicLayout.hlsli"
 // ÏñËØ×ÅÉ«Æ÷(3D)
 float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
 {

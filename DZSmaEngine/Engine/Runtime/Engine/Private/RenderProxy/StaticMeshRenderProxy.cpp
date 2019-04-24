@@ -19,11 +19,11 @@ void StaticMeshSubRenderProxy::InitRender()
 {
 	mVertexBuffer = RHICreateVertexBuffer(mVertexData.data(),
 		sizeof(VertexPosNormalTangentTex),
-		mVertexData.size()
+		(UINT)mVertexData.size()
 	);
 	mIndexBuffer = RHICreateIndexBuffer(
 		mIndexData.data(),
-		mIndexData.size()
+		(UINT)mIndexData.size()
 	);
 }
 

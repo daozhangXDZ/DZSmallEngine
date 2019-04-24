@@ -54,8 +54,11 @@
     <ClCompile Include="Engine\Runtime\Launch\Private\Windows\LaunchWindows.cpp" />
     <ClCompile Include="Engine\Runtime\MoviePlayer\Private\DefaultGameMoviePlayer.cpp" />
     <ClCompile Include="Engine\Runtime\MoviePlayer\Private\MoviePlayer.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\BasePassRender.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\DepthRender.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SceneRender.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SimpleShadingRender.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\PipelineStateCache.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
@@ -76,6 +79,7 @@
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Shader.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11ShaderResource.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11State.cpp" />
+    <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Texture.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11TextureSample.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11VertexBuffer.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11ViewPort.cpp" />
@@ -136,6 +140,8 @@
     <ClInclude Include="Engine\Runtime\Launch\Public\LaunchEngineLoop.h" />
     <ClInclude Include="Engine\Runtime\MoviePlayer\Public\DefaultGameMoviePlayer.h" />
     <ClInclude Include="Engine\Runtime\MoviePlayer\Public\MoviePlayer.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\DepthRender.h" />
+    <ClInclude Include="Engine\Runtime\RHI\Public\PipelineStateCache.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHICommandList.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SceneRender.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SimpleShadingRender.h" />
@@ -168,6 +174,33 @@
     <ClInclude Include="Engine\Runtime\Windows\Public\D3D11\DDSTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Engine\Shaders\Common\BasicLayout.hlsli">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <FileType>Document</FileType>
+    </None>
+    <FxCompile Include="Engine\Shaders\Basic_Depth_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Engine\Shaders\Basic_Depth_VS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -203,8 +236,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\Shaders\Basic.hlsli" />
-    <None Include="Engine\Shaders\LightHelper.hlsli" />
+    <None Include="Engine\Shaders\Common\Basic.hlsli" />
+    <None Include="Engine\Shaders\Common\LightHelper.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

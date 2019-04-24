@@ -23,3 +23,5 @@ void D3D11DynamicRHI::SetTextureSample(RHISampleStateParamRef TextureSamParam)
 	this->md3d11DeviceContext->PSSetSamplers(0, 1, 
 		pstate);
 }
+
+

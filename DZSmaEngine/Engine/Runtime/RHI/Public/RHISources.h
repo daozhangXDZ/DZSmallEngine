@@ -1,8 +1,15 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "PixelFormat.h"
+#include "RHIState.h"
 
-
+/**
+ * 绘制方式
+ */
+enum PrimitiveTopology
+{
+	TRIANGLELIST = 0,
+};
 /** 引用计数类型接口 */
 class IRefCountedObject
 {
@@ -113,6 +120,9 @@ private:
 
 typedef RHITexture*              RHITextureParamRef;
 typedef RHITexture*				RHITextureRef;
+
+typedef RHITexture2D*              RHITexture2DParamRef;
+typedef RHITexture2D*				RHITexture2DRef;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -293,3 +303,45 @@ typedef RHIViewPort* RHIViewPortRef;
 typedef RHIViewPort* RHIViewPortParamRef;
 
 
+/**
+ * 作为一个渲染资源的组合结构供给Pipeline使用
+ * TODO：后面加入将CS，GS，HS
+ */
+struct RHIBoundShaderStateInput
+{
+	/**
+	 * 顶点布局
+	 */
+	RHIVertexLayoutRef mVertexLayout;
+	RHIVertexShaderRef mVertexShader;
+	RHIPixelShaderRef  mPixelShader;
+public:
+	RHIBoundShaderStateInput() :mVertexShader(nullptr), mPixelShader(nullptr), mVertexLayout(nullptr)
+	{
+
+	}
+
+	RHIBoundShaderStateInput(RHIVertexShaderParamRef InVertexShader, RHIPixelShaderParamRef InPixelShader,RHIVertexLayoutParamRef InVertexLayout)
+		:mVertexShader(InVertexShader), mPixelShader(InPixelShader),mVertexLayout(InVertexLayout)
+	{
+
+	}
+};
+
+/**
+ * 渲染管线初始化结构
+ */
+class RHIGraphicsPipelineStateInitializer
+{
+public:
+	RHIBoundShaderStateInput		BoundShaderState;
+	RHIBlendStateParamRef			BlendState;
+	RHIRasterizerStateParamRef		RasterizerState;
+	RHIDepthStencilStateParamRef	DepthStencilState;
+	/**
+	 * 是否带有输出的渲染目标
+	 */
+	uint32							RenderTargetsEnabled;
+	EPixelFormat					RenderTargetFormat;
+	PrimitiveTopology				mPrimitiveToPology;
+};

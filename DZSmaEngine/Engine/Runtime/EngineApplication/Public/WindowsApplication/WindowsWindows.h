@@ -43,7 +43,7 @@ public:
 				{
 					if (me.GetType() == MouseEvent::EventType::RAW_MOVE)
 					{
-						mInputReceive->receive_MouseMove(me.GetPosX(), me.GetPosY());
+						mInputReceive->receive_MouseMove((float)me.GetPosX(), (float)me.GetPosY());
 					}
 				}
 			}

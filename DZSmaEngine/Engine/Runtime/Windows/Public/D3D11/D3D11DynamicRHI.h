@@ -146,6 +146,11 @@ public:
 	virtual void SetUniFormBuffer(RHIComputerShader shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)  final override;
 	virtual void SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex)	final override;
 
+
+	////////////////////////////////Œ∆¿Ì//////////////////////////////////////////
+	virtual RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags) final override;
+
+
 public:
 	virtual RHIDepthTargetRef CreateDepthTarget(EPixelFormat PixelFormat) final override;
 

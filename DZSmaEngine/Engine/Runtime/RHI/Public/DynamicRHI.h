@@ -155,6 +155,13 @@ public:
 	virtual void SetUniFormBuffer(RHIComputerShader shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex) = 0;
 	virtual void SetUniFormBuffer(RHIPixelShaderRef shader, RHIUniFormBufferParamRef ResTarget, UINT BufferIndex) = 0;
 
+	//////////////////////////////////////////////////////////////////////////
+	/**
+	 * 
+	 */
+	virtual RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)=0;
+
+
 public:
 	int view_width = 800;
 	int view_height = 600;
