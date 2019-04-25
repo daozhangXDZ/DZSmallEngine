@@ -24,6 +24,8 @@ void SimpleShadingRender::RenderBasePass(RHICommandListImmediate* RHICMDList, st
 	for (int i = 0; i < RenderProxyList->size(); i++)
 	{
 		PrimitiveSceneProxy* vItemRender = (*RenderProxyList)[i];
+		
+		RHISetPrimitiveTology(PrimitiveTopology::TRIANGLELIST);
 		vItemRender->Draw(RHICMDList);
 	}
 	RHIPresent();

@@ -166,6 +166,10 @@
     <ClInclude Include="Engine\Runtime\Core\Public\HAL\ThreadSafeCounter.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\DepthRender.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\PipelineStateCache.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\StaticMesh.h" />
+    <ClInclude Include="Engine\Runtime\RenderCore\Public\RenderResource.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\StaticMeshVertexBuffer.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\DrawingPolicy.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />

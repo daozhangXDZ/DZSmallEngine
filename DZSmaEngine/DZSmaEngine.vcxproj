@@ -138,10 +138,14 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\simplerenderproxy.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\staticmeshrenderproxy.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
+    <ClInclude Include="Engine\Runtime\Engine\Public\StaticMesh.h" />
     <ClInclude Include="Engine\Runtime\Launch\Public\LaunchEngineLoop.h" />
     <ClInclude Include="Engine\Runtime\MoviePlayer\Public\DefaultGameMoviePlayer.h" />
     <ClInclude Include="Engine\Runtime\MoviePlayer\Public\MoviePlayer.h" />
+    <ClInclude Include="Engine\Runtime\RenderCore\Public\RenderResource.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\DepthRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\DrawingPolicy.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\StaticMeshVertexBuffer.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\PipelineStateCache.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\RHICommandList.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SceneRender.h" />
@@ -301,7 +305,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Engine\Runtime\Windows\Public;$(ProjectDir)Engine\Runtime\MoviePlayer\Public;$(ProjectDir)Engine\Runtime\Shader\Public;$(ProjectDir)Engine\Runtime\Render\Public;$(ProjectDir)Engine\Runtime\RHI\Public;$(ProjectDir)Engine\Runtime\Engine\Public;$(ProjectDir)Engine\Runtime\Launch\Public;$(ProjectDir)Engine\Runtime\EngineApplicationCore\Public;$(ProjectDir)Engine\Runtime\EngineApplication\Public;$(ProjectDir)Engine\Runtime\Core\Public;$(ProjectDir)Engine\Runtime\Platform\Public;$(ProjectDir)Engine\Runtime\Tool\Public;$(ProjectDir)Third\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Engine\Runtime\RenderCore\Public;$(ProjectDir)Engine\Runtime\Windows\Public;$(ProjectDir)Engine\Runtime\MoviePlayer\Public;$(ProjectDir)Engine\Runtime\Shader\Public;$(ProjectDir)Engine\Runtime\Render\Public;$(ProjectDir)Engine\Runtime\RHI\Public;$(ProjectDir)Engine\Runtime\Engine\Public;$(ProjectDir)Engine\Runtime\Launch\Public;$(ProjectDir)Engine\Runtime\EngineApplicationCore\Public;$(ProjectDir)Engine\Runtime\EngineApplication\Public;$(ProjectDir)Engine\Runtime\Core\Public;$(ProjectDir)Engine\Runtime\Platform\Public;$(ProjectDir)Engine\Runtime\Tool\Public;$(ProjectDir)Third\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Third\Libs\Any;$(ProjectDir)Third\Libs\x64\Debug;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
   </PropertyGroup>

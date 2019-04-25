@@ -4,6 +4,7 @@
 #include "ViewPortDesc.h"
 #include "RHISources.h"
 #include "RHIState.h"
+#include "DepthRender.h"
 #include <map>
 using namespace std;
 class SceneRender
@@ -26,4 +27,7 @@ protected:
 	virtual void UpdateViewPortViewMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc) = 0;
 
 	virtual void UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc) = 0;
+
+public:
+	TArray<DepthRenderPolicy> WholeSceneShadowDepthDrawList;
 };
