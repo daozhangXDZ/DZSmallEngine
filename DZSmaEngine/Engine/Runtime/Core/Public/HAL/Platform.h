@@ -45,3 +45,10 @@ typedef FPlatformTypes::SSIZE_T SSIZE_T;
 typedef FPlatformTypes::TYPE_OF_NULL	TYPE_OF_NULL;
 /// The type of the C++ nullptr keyword.
 typedef FPlatformTypes::TYPE_OF_NULLPTR	TYPE_OF_NULLPTR;
+
+
+// If we don't have a platform-specific define for the TEXT macro, define it now.
+#if !defined(TEXT)
+#define TEXT_PASTE(x) L ## x
+#define TEXT(x) TEXT_PASTE(x)
+#endif

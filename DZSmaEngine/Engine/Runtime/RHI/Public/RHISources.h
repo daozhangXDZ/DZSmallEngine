@@ -2,14 +2,8 @@
 #include "CoreMinimal.h"
 #include "PixelFormat.h"
 #include "RHIState.h"
+#include "RHIDefine.h"
 
-/**
- * 绘制方式
- */
-enum PrimitiveTopology
-{
-	TRIANGLELIST = 0,
-};
 /** 引用计数类型接口 */
 class IRefCountedObject
 {

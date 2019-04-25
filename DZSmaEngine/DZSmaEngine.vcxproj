@@ -62,6 +62,7 @@
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\Geometry.cpp" />
+    <ClCompile Include="Engine\Runtime\RHI\Private\RHIUtil.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\VertexElementDesc.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\DynamicRHI.cpp" />
     <ClCompile Include="Engine\Runtime\Shader\Private\shader.cpp" />
