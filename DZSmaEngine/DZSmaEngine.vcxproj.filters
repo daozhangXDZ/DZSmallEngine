@@ -12,8 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Check\CheckEngineUnit.cpp" />
-    <ClCompile Include="Engine\Check\Source.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\CoreUtil\EngineTimer.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\Graphics\Graphics.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\ActorComponent.cpp" />
@@ -35,9 +33,6 @@
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ConsoleLog.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\LogUtil\ErrorLogger.cpp" />
     <ClCompile Include="Engine\Runtime\Tool\Private\String\StringConverter.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\PrimitiveSceneProxy.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\SimpleRenderProxy.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\StaticMeshRenderProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Scene.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SceneRender.cpp" />
@@ -80,6 +75,10 @@
     <ClCompile Include="Engine\Runtime\Render\Private\BasePassRender.cpp" />
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\D3D11Texture.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIUtil.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\DrawingPolicy.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\PrimitiveSceneProxy.cpp" />
+    <ClCompile Include="Engine\Check\Private\SceneBasePase_Check.cpp" />
+    <ClCompile Include="Engine\Check\Private\TestRenderPipelineUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -114,9 +113,6 @@
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\ConsoleLog.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\LogUtil\ErrorLogger.h" />
     <ClInclude Include="Engine\Runtime\Tool\Public\String\StringConverter.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\primitivesceneproxy.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\simplerenderproxy.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\staticmeshrenderproxy.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Scene.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\PanelMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\SceneRender.h" />
@@ -166,18 +162,22 @@
     <ClInclude Include="Engine\Runtime\Core\Public\HAL\ThreadSafeCounter.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\DepthRender.h" />
     <ClInclude Include="Engine\Runtime\RHI\Public\PipelineStateCache.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\StaticMesh.h" />
     <ClInclude Include="Engine\Runtime\RenderCore\Public\RenderResource.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\StaticMeshVertexBuffer.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\DrawingPolicy.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\StaticMesh.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\PrimitiveSceneInfo.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\primitivesceneproxy.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\ISceneRenderInterface.h" />
+    <ClInclude Include="Engine\Check\Public\SceneBasePase_Check.h" />
+    <ClInclude Include="Engine\Check\Public\TestRenderPipelineUtil.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\BasePassRender.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
     <FxCompile Include="Engine\Shaders\Default_VS.hlsl" />
     <FxCompile Include="Engine\Shaders\Default_PS.hlsl" />
-    <FxCompile Include="Engine\Shaders\Basic_PS_3D_Emit.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl" />
-    <FxCompile Include="Engine\Shaders\Basic_PS_3D_PBR_01.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_Depth_VS.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_Depth_PS.hlsl" />
   </ItemGroup>

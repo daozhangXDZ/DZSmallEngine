@@ -42,8 +42,8 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 		// 环境光
 		for (int i =0; i< CEffect::maxDireLights; i++)
 		{
-			vRarelyCSB.dirLight[i].Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 0.5f);
-			vRarelyCSB.dirLight[i].Diffuse = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+			vRarelyCSB.dirLight[i].Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 2.0f);
+			vRarelyCSB.dirLight[i].Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
 			vRarelyCSB.dirLight[i].Specular = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
 			vRarelyCSB.dirLight[i].Direction = XMFLOAT3(-0.577f, -0.577f, 0.577f);
 		}
@@ -58,13 +58,31 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
 	}
 	SetCommandDepthBuffer();
-	RHIOMRenderTarget();
+	{
+		mDepthTexture = RHICreateTexture2D(800, 600, PF_R8G8B8A8, 1, 1, ETextureCreateFlags::TexCreate_RenderTargetable);
+	}
+	mDepthDrawPolicy.Init();
+	mBasePaseDrawPolicy.Init();
 }
 
 
 
-void SimpleShadingRender::Render(RHICommandListImmediate* RHICMDList, std::vector<PrimitiveSceneProxy*>* RenderProxyList)
+void SimpleShadingRender::Render(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderProxyList)
 {
+	// 测试 TODO 获取Light
+	{
+		static float dtZ;
+		static float speed = 0.0002f;
+		vRarelyCSB.dirLight[0].Diffuse = XMFLOAT4(0.5f + dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f);
+		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
+		dtZ += speed;
+		if (dtZ > 0.5f || dtZ < -0.5f)
+		{
+			speed = -1 * speed;
+		}
+	}
+	RHIOMRenderTarget();
 	RenderDepth(RHICMDList, RenderProxyList);
 	RenderBasePass(RHICMDList,RenderProxyList);
+	RHIPresent();
 }

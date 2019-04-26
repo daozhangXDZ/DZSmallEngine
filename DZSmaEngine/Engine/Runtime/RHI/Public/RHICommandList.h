@@ -6,9 +6,6 @@
 class RHICommandListBase
 {
 protected:
-	/**
-	 * RHI»º³åÇø
-	 */
 	RHIGlobalUniform*					mUniformBuffer = nullptr;
 	RHIGlobalState*						mRenderState = nullptr;
 public:
@@ -338,3 +335,10 @@ inline RHIVertexInputElementRef RHICreateRHIInputElement(const D3D11_INPUT_ELEME
 //{
 //	GDynamicRHI->ApplyConstantBuffer(UniForm, pData, isNeedApply);
 //}
+
+
+
+RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)
+{
+	GDynamicRHI->RHICreateTexture2D(SizeX, SizeY, Format, NumMips, NumSamples, Flags);
+}

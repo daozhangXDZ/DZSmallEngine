@@ -1,15 +1,9 @@
 #pragma once
-#include "RHISources.h"
-#include "StaticMesh.h"
 #include "DrawingPolicy.h"
-/**
- * …Ó∂»‰÷»æ≤ﬂ¬‘
- */
-class DepthRenderPolicy:public MeshDrawPolicy
+class BasePaseDrawPolicy :public MeshDrawPolicy
 {
 public:
 	RHIGraphicsPipelineStateInitializer gr;
-
 public:
 	virtual void Init();
 	virtual void PreDraw(RHICommandListImmediate* RHICMDList, PrimitiveSceneInfo* component) override;

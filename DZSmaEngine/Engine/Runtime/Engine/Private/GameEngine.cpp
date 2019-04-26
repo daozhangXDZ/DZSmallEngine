@@ -1,25 +1,17 @@
 #include "GameEngine.h"
+#include "TestRenderPipelineUtil.h"
+
+
 void GameEngine::Init()
 {
-	mSceneProxy = new SceneProxy();
+	TestRenderPipelineUtil::InitCheckScene();
+	mSceneProxy = currCheckScene;
 	mSceneProxy->initScene();
-	{
-		staticRenderProxy = new std::vector<PrimitiveSceneProxy *>();
-		std::vector<PrimitiveComponent*> primitiveComList = mSceneProxy->GetScenePrimitive();
-		for (int i = 0; i < primitiveComList.size(); i++)
-		{
-			PrimitiveSceneProxy* vProxy = primitiveComList[i]->getCurrRenderProxy();
-			vProxy->InitRender();
-			staticRenderProxy->push_back(vProxy);
-		}
-	}
 	EngineApplication::get()->Register_input(this);
 };
 
 void GameEngine::Tick(float dt)
 {
-	if (staticRenderProxy == nullptr)
-		return;
 	mSceneProxy->Tick(0.1f);
 	if (CurrRender == nullptr)
 	{
@@ -27,7 +19,7 @@ void GameEngine::Tick(float dt)
 		CurrRender = SceneRender::GetShaderRender();
 		CurrRender->InitRes(RHICMDList);
 	}
-	CurrRender->Render(RHICMDList, staticRenderProxy);
+	CurrRender->Render(RHICMDList, mSceneProxy);
 	CurrRender->UpdateViewPort(RHICMDList, &(mSceneProxy->GetMainCameraDesc()), true);
 };
 

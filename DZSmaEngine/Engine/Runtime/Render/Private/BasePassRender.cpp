@@ -1,32 +1,55 @@
 #include "SimpleShadingRender.h"
+#include "BasePassRender.h"
+#include "PipelineStateCache.h"
+#include "ShaderUtils.h"
+#include "Material/MaterialUtils.h"
 
-void SimpleShadingRender::RenderBasePass(RHICommandListImmediate* RHICMDList, std::vector<PrimitiveSceneProxy*>* RenderProxyList)
+void BasePaseDrawPolicy::Init()
 {
-	static float dtZ;
-	static float speed = 0.0001f;
+	gr.BlendState = RHICreateBlendState();
+	gr.DepthStencilState = RHICreateDepthStencilState();
+	gr.RasterizerState = RHICreaRasterizerState();
+	gr.mPrimitiveToPology = PrimitiveTopology::TRIANGLELIST;
+	gr.BoundShaderState.mVertexShader = ShaderUtils::GetShaderResource(L"Basic_VS_3D.cso")->getVertexShader();
+	gr.BoundShaderState.mPixelShader = ShaderUtils::GetShaderResource(L"Basic_PS_3D.cso")->getPixelShader();
+	RHIVertexInputElementRef Element = RHICreateRHIInputElement(VertexPosNormalTangentTex::inputLayout
+		, ARRAYSIZE(VertexPosNormalTangentTex::inputLayout));
+	gr.BoundShaderState.mVertexLayout = RHICreateInputLayout(Element, gr.BoundShaderState.mVertexShader);
+}
+
+
+void BasePaseDrawPolicy::SetupShaderState(RHICommandListImmediate * RHICMDList)
+{
+	MeshDrawPolicy::SetupShaderState(RHICMDList);
 	RHIOMViewPort(800.0f, 600.0f);
 	RHIClearRMT();
 	RHIClearDepthView();
-	RHISetRasterizerState(RHICMDList->GetGlobalRHIState()->GetRHIDefaultRasState());
-	RHISetDepthState(RHICMDList->GetGlobalRHIState()->GetDefaultDepthState());
-	RHISetBlendState(RHICMDList->GetGlobalRHIState()->GetDefaultBlendState());
-	RHISetTextureSample(RHICMDList->GetGlobalRHIState()->GetDefaultTextureSampleState());
+	SetGraphicsPipelineState(RHICMDList, gr);
+}
+
+
+void BasePaseDrawPolicy::PreDraw(RHICommandListImmediate * RHICMDList, PrimitiveSceneInfo * component)
+{
+	MeshDrawPolicy::PreDraw(RHICMDList, component);
+	if (component->materia->mMainTexture != nullptr)
 	{
-		vRarelyCSB.dirLight[0].Ambient = XMFLOAT4(0.5f + dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f);
-		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
-		dtZ += speed;
-		if (dtZ > 0.5f || dtZ < -0.5f)
-		{
-			speed = -1 * speed;
-		}
+		RHISetShaderRessourcesView(0, 1, component->materia->mMainTexture, EShaderFrequency::SF_Pixel);
+	}
+	if (component->materia->mNormalTexture != nullptr)
+	{
+		RHISetShaderRessourcesView(1, 1, component->materia->mNormalTexture, EShaderFrequency::SF_Pixel);
 	}
 
-	for (int i = 0; i < RenderProxyList->size(); i++)
+}
+
+
+
+void SimpleShadingRender::RenderBasePass(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderScene)
+{
+	mBasePaseDrawPolicy.SetupShaderState(RHICMDList);
+	for (int i = 0; i < RenderScene->GetDepthSceneInfoList().size(); i++)
 	{
-		PrimitiveSceneProxy* vItemRender = (*RenderProxyList)[i];
-		
-		RHISetPrimitiveTology(PrimitiveTopology::TRIANGLELIST);
-		vItemRender->Draw(RHICMDList);
-	}
-	RHIPresent();
+		mBasePaseDrawPolicy.PreDraw(RHICMDList, RenderScene->GetBaseSceneInfoList()[i]);
+		mBasePaseDrawPolicy.DrawMesh(RHICMDList, RenderScene->GetBaseSceneInfoList()[i]);
+	}	
 }

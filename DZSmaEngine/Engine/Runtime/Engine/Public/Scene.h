@@ -8,44 +8,40 @@
 #include "ViewPortDesc.h"
 #include <vector>
 #include "Material/Material.h"
+#include "ISceneRenderInterface.h"
 //template<typename T>
-class SceneProxy:public SceneComponent
+class SceneProxy :public SceneComponent, public ISceneRenderInterface
 {
 public:
 	SceneProxy();
 
 	~SceneProxy() {};
 
-	bool initScene();
-	
+	virtual bool initScene();
+
 	virtual void Tick(float dt) override;
 
 	void AddOneStaticPrimitiveComponent(PrimitiveComponent* obj);
-	
+
 	void AddOneDynamicPrimitiveComponent(PrimitiveComponent* obj);
 
 	std::vector<PrimitiveComponent*> GetScenePrimitive();
 
 	ViewPortDesc GetMainCameraDesc();
 
-	BaseCameraComponent* GetCamera()
-	{
-		return mCameraComponent;
-	}
+	virtual	TArray<PrimitiveSceneInfo*> GetDepthSceneInfoList() override;
+	virtual TArray<PrimitiveSceneInfo*> GetBaseSceneInfoList() override;
+
+	BaseCameraComponent* GetCamera();
 
 protected:
-	void InitCamera();
-	void InitMeshObj();
-	void InitLight();
-
-private:
-	void InitCubeMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca,  BaseMaterial* MainMaterial);
-	void InitPanelMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca,  BaseMaterial* MainMaterial);
-	void InitSphereMode(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca,  BaseMaterial* MainMaterial);
-	void InitStaticMesh(XMFLOAT3 pos, XMFLOAT3 rot, XMFLOAT3 sca, std::string modelPath, BaseMaterial* MainMaterial);
-private:
 	std::vector<PrimitiveComponent*>	__ObjList;
 	std::vector<LightComponent*>		__LightList;
 	BaseCameraComponent* mCameraComponent;
 	ViewPortDesc mViewPortdesc;
+
+	TArray<PrimitiveSceneInfo*>			SceneDepthInfo;
+	TArray<PrimitiveSceneInfo*>			SceneRenderInfo;
 };
+
+extern SceneProxy* currCheckScene;

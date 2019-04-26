@@ -15,12 +15,14 @@ void SetGraphicsPipelineState(RHICommandListImmediate* RHICmdList,
 	const RHIGraphicsPipelineStateInitializer& Initializer
 )
 {
+	RHISetPrimitiveTology(Initializer.mPrimitiveToPology);
 	RHISetRasterizerState(Initializer.RasterizerState);
 	RHISetDepthState(Initializer.DepthStencilState);
 	RHISetBlendState(Initializer.BlendState);
 	RHIOMPInputLayout(Initializer.BoundShaderState.mVertexLayout);
 	RHIOMVSShader(Initializer.BoundShaderState.mVertexShader);
 	RHIOMPSShader(Initializer.BoundShaderState.mPixelShader);
+	
 }
 
 /**

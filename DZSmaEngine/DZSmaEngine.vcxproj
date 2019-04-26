@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Check\CheckEngineUnit.cpp" />
-    <ClCompile Include="Engine\Check\Source.cpp" />
+    <ClCompile Include="Engine\Check\Private\SceneBasePase_Check.cpp" />
+    <ClCompile Include="Engine\Check\Private\TestRenderPipelineUtil.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\CoreUtil\EngineTimer.cpp" />
     <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineApplication.cpp" />
     <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineWindow.cpp" />
@@ -44,9 +44,7 @@
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PrimitiveComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\SceneComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\StaticMeshComponent.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\PrimitiveSceneProxy.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\SimpleRenderProxy.cpp" />
-    <ClCompile Include="Engine\Runtime\Engine\Private\RenderProxy\StaticMeshRenderProxy.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\PrimitiveSceneProxy.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\MaterialInput.cpp" />
     <ClCompile Include="Engine\Runtime\Core\Private\WindowsPlatform\GameTimer.cpp" />
     <ClCompile Include="Engine\Runtime\Launch\Private\Launch.cpp" />
@@ -56,6 +54,7 @@
     <ClCompile Include="Engine\Runtime\MoviePlayer\Private\MoviePlayer.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\BasePassRender.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\DepthRender.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\DrawingPolicy.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SceneRender.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SimpleShadingRender.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\PipelineStateCache.cpp" />
@@ -89,6 +88,7 @@
     <ClCompile Include="Engine\Runtime\Windows\Private\D3D11\WindowsD3D11ViewPort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Check\Public\TestRenderPipelineUtil.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Container\Array.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\CoreMinimal.h" />
@@ -134,11 +134,13 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\Components\StaticMeshComponent.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\EngineGlobal.h" />
     <ClInclude Include="Engine\Runtime\Engine\Public\GameEngine.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\primitivesceneproxy.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\simplerenderproxy.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\RenderProxy\staticmeshrenderproxy.h" />
+    <ClInclude Include="Engine\Check\Public\SceneBasePase_Check.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\BasePassRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\ISceneRenderInterface.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\primitivesceneproxy.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
-    <ClInclude Include="Engine\Runtime\Engine\Public\StaticMesh.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\PrimitiveSceneInfo.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\StaticMesh.h" />
     <ClInclude Include="Engine\Runtime\Launch\Public\LaunchEngineLoop.h" />
     <ClInclude Include="Engine\Runtime\MoviePlayer\Public\DefaultGameMoviePlayer.h" />
     <ClInclude Include="Engine\Runtime\MoviePlayer\Public\MoviePlayer.h" />
@@ -207,16 +209,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Engine\Shaders\Basic_PS_3D_Emit.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Engine\Shaders\Basic_PS_3D_PBR_01.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -305,7 +297,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Engine\Runtime\RenderCore\Public;$(ProjectDir)Engine\Runtime\Windows\Public;$(ProjectDir)Engine\Runtime\MoviePlayer\Public;$(ProjectDir)Engine\Runtime\Shader\Public;$(ProjectDir)Engine\Runtime\Render\Public;$(ProjectDir)Engine\Runtime\RHI\Public;$(ProjectDir)Engine\Runtime\Engine\Public;$(ProjectDir)Engine\Runtime\Launch\Public;$(ProjectDir)Engine\Runtime\EngineApplicationCore\Public;$(ProjectDir)Engine\Runtime\EngineApplication\Public;$(ProjectDir)Engine\Runtime\Core\Public;$(ProjectDir)Engine\Runtime\Platform\Public;$(ProjectDir)Engine\Runtime\Tool\Public;$(ProjectDir)Third\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Engine\Check\Public;$(ProjectDir)Engine\Runtime\RenderCore\Public;$(ProjectDir)Engine\Runtime\Windows\Public;$(ProjectDir)Engine\Runtime\MoviePlayer\Public;$(ProjectDir)Engine\Runtime\Shader\Public;$(ProjectDir)Engine\Runtime\Render\Public;$(ProjectDir)Engine\Runtime\RHI\Public;$(ProjectDir)Engine\Runtime\Engine\Public;$(ProjectDir)Engine\Runtime\Launch\Public;$(ProjectDir)Engine\Runtime\EngineApplicationCore\Public;$(ProjectDir)Engine\Runtime\EngineApplication\Public;$(ProjectDir)Engine\Runtime\Core\Public;$(ProjectDir)Engine\Runtime\Platform\Public;$(ProjectDir)Engine\Runtime\Tool\Public;$(ProjectDir)Third\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Third\Libs\Any;$(ProjectDir)Third\Libs\x64\Debug;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
   </PropertyGroup>

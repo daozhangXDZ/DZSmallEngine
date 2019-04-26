@@ -4,7 +4,6 @@
 #include "SceneRender.h"
 #include "GeneralApplication/DeviceInput.h"
 #include "EngineGlobal.h"
-
 class GameEngine :public BaseEngine, public IDeviceInput_Receiver
 {
 public:
@@ -25,6 +24,6 @@ private:
 	float mCameraSpeed = 0.005f;
 	SceneProxy* mSceneProxy;
 	SceneRender* CurrRender;
-	std::vector<PrimitiveSceneProxy*>* staticRenderProxy;
 	RHICommandListImmediate* RHICMDList;
 };
+
