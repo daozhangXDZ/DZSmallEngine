@@ -48,7 +48,7 @@ typedef FPlatformTypes::TYPE_OF_NULLPTR	TYPE_OF_NULLPTR;
 
 
 // If we don't have a platform-specific define for the TEXT macro, define it now.
-#if !defined(TEXT)
+//#if !defined(TEXT)
 #define TEXT_PASTE(x) L ## x
-#define TEXT(x) TEXT_PASTE(x)
-#endif
+//#define TEXT(x) TEXT_PASTE(x)
+//#endif

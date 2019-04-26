@@ -79,6 +79,7 @@
     <ClCompile Include="Engine\Runtime\Render\Private\PrimitiveSceneProxy.cpp" />
     <ClCompile Include="Engine\Check\Private\SceneBasePase_Check.cpp" />
     <ClCompile Include="Engine\Check\Private\TestRenderPipelineUtil.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\DebugPassRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Engine\Check\Public\SceneBasePase_Check.h" />
     <ClInclude Include="Engine\Check\Public\TestRenderPipelineUtil.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\BasePassRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\DebugPassRender.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Basic_VS_3D.hlsl" />
@@ -180,6 +182,8 @@
     <FxCompile Include="Engine\Shaders\Basic_PS_3D.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_Depth_VS.hlsl" />
     <FxCompile Include="Engine\Shaders\Basic_Depth_PS.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_2D_VS.hlsl" />
+    <FxCompile Include="Engine\Shaders\Basic_2D_PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\Common\Basic.hlsli" />

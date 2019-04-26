@@ -1,12 +1,22 @@
 #include "D3D11/D3D11DynamicRHI.h"
 
-RHITexture2DRef D3D11DynamicRHI::RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)
+
+DXGI_FORMAT D3D11DynamicRHI::GetPlatformTextureResourceFormat(DXGI_FORMAT InFormat, uint32 InFlags)
+{
+	// DX 11 Shared textures must be B8G8R8A8_UNORM
+	if (InFlags & TexCreate_Shared)
+	{
+		return DXGI_FORMAT_B8G8R8A8_UNORM;
+	}
+	return InFormat;
+}
+
+
+RHITexture2DRef D3D11DynamicRHI::CreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)
 {
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> vTextureResource;
 	D3D11_TEXTURE2D_DESC textureDesc;
 	HRESULT result;
-	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
-	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
 	ZeroMemory(&textureDesc, sizeof(textureDesc));
 
 	//默认视图
@@ -15,7 +25,7 @@ RHITexture2DRef D3D11DynamicRHI::RHICreateTexture2D(uint32 SizeX, uint32 SizeY, 
 	D3D11_SRV_DIMENSION ShaderResourceViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	//是否带SRGB(伽马灰度)
 	const bool bSRGB = (Flags & TexCreate_SRGB) != 0;
-	const DXGI_FORMAT PlatformResourceFormat = (DXGI_FORMAT)GPixelFormats[Format].PlatformFormat;
+	const DXGI_FORMAT PlatformResourceFormat = GetPlatformTextureResourceFormat((DXGI_FORMAT)GPixelFormats[Format].PlatformFormat,Flags);
 	const DXGI_FORMAT PlatformShaderResourceFormat = FindShaderResourceDXGIFormat(PlatformResourceFormat, bSRGB);
 	const DXGI_FORMAT PlatformRenderTargetFormat = FindShaderResourceDXGIFormat(PlatformResourceFormat, bSRGB);
 	//默认绑定了Shader资源
@@ -42,6 +52,8 @@ RHITexture2DRef D3D11DynamicRHI::RHICreateTexture2D(uint32 SizeX, uint32 SizeY, 
 	textureDesc.ArraySize = 1;
 	//TODO格式
 	textureDesc.Format = PlatformResourceFormat;
+	
+	//DXGI_FORMAT_R32G32B32A32_FLOAT
 	textureDesc.SampleDesc.Count = 1;
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
 	textureDesc.BindFlags = BindFlags;

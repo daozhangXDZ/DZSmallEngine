@@ -20,9 +20,6 @@ void DepthRenderPolicy::Init()
 void DepthRenderPolicy::SetupShaderState(RHICommandListImmediate * RHICMDList)
 {
 	MeshDrawPolicy::SetupShaderState(RHICMDList);
-	RHIOMViewPort(800.0f, 600.0f);
-	RHIClearRMT();
-	RHIClearDepthView();
 	SetGraphicsPipelineState(RHICMDList, gr);
 }
 
@@ -34,7 +31,19 @@ void DepthRenderPolicy::PreDraw(RHICommandListImmediate * RHICMDList, PrimitiveS
 
 void SimpleShadingRender::RenderDepth(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderScene)
 {
-	
+	if (mDepthTexture == nullptr)
+	{
+		mDepthTexture = RHICreateTexture2D(800, 600, PF_R32G32B32A32_UINT, 1, 1,
+			ETextureCreateFlags::TexCreate_RenderTargetable |TexCreate_ShaderResource|TexCreate_Shared);
+		DepthRenderTargetViewParam = new RHIRenderTarget(mDepthTexture);
+		
+	}
+	RHIClearRMT();
+	RHIClearDepthView();
+	/*RHISetRenderTarget(DepthRenderTargetViewParam, nullptr);
+	RHIOMRenderTarget();
+	RHIClearRMT();
+	RHIClearDepthView();*/
 	mDepthDrawPolicy.SetupShaderState(RHICMDList);
 	for (int i=0; i< RenderScene->GetDepthSceneInfoList().size(); i++)
 	{

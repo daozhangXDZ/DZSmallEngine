@@ -226,6 +226,11 @@ inline void RHISetShaderRessourcesView(int stIndex, int num, RHIShaderResourceVi
 	GDynamicRHI->SetShaderRessourcesView(stIndex, num, ResTarget, bindShaderType);
 }
 
+inline void RHISetShaderRessourcesView(int stIndex, int num, void* NativeShaderResourceView, EShaderFrequency bindShaderType)
+{
+	GDynamicRHI->SetShaderRessourcesView(stIndex, num, NativeShaderResourceView, bindShaderType);
+}
+
 
 inline RHIVertexBufferRef RHICreateVertexBuffer(void* data, UINT descSize, UINT numVertices)
 {
@@ -338,7 +343,7 @@ inline RHIVertexInputElementRef RHICreateRHIInputElement(const D3D11_INPUT_ELEME
 
 
 
-RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)
+inline RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)
 {
-	GDynamicRHI->RHICreateTexture2D(SizeX, SizeY, Format, NumMips, NumSamples, Flags);
+	return GDynamicRHI->CreateTexture2D(SizeX, SizeY, Format, NumMips, NumSamples, Flags);
 }

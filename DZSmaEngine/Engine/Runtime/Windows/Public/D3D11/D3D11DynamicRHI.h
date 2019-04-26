@@ -120,6 +120,7 @@ public:
 	 * 设置着色器资源视图
 	 */
 	virtual void SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EShaderFrequency bindShaderType)override;
+	virtual void SetShaderRessourcesView(int stIndex, int num, void* NativeShaderResourceView, EShaderFrequency bindShaderType)override;
 
 	virtual RHIVertexBufferRef CreateVertexBuffer(void*data, UINT descSize, UINT numVertices)override;
 	virtual RHIIndexBufferRef CreateIndexBuffer(DWORD * pMemData, UINT numIndices) override;
@@ -148,11 +149,12 @@ public:
 
 
 	////////////////////////////////纹理//////////////////////////////////////////
-	virtual RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags) final override;
+	virtual RHITexture2DRef CreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags) final override;
 
 
 public:
 	virtual RHIDepthTargetRef CreateDepthTarget(EPixelFormat PixelFormat) final override;
+	static DXGI_FORMAT GetPlatformTextureResourceFormat(DXGI_FORMAT InFormat, uint32 InFlags);
 
 public:
 	Microsoft::WRL::ComPtr< ID3D11Device >				md3d11Device = nullptr;

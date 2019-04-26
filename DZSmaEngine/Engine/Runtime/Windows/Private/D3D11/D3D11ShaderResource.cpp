@@ -56,3 +56,24 @@ void D3D11DynamicRHI::SetShaderRessourcesView(int stIndex, int num, RHIShaderRes
 	}
 	
 }
+void D3D11DynamicRHI::SetShaderRessourcesView(int stIndex, int num, void* NativeShaderResourceView, EShaderFrequency bindShaderType)
+{
+	switch (bindShaderType)
+	{
+	case EShaderFrequency::SF_Vertex:
+	{
+		this->md3d11DeviceContext->VSSetShaderResources(
+			stIndex, num,
+			(ID3D11ShaderResourceView**)&NativeShaderResourceView);
+	}
+	break;
+
+	case EShaderFrequency::SF_Pixel:
+	{
+		this->md3d11DeviceContext->PSSetShaderResources(
+			stIndex, num,
+			(ID3D11ShaderResourceView**)&NativeShaderResourceView);
+	}
+	break;
+	}
+}

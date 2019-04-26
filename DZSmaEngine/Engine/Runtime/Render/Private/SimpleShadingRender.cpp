@@ -58,11 +58,9 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
 	}
 	SetCommandDepthBuffer();
-	{
-		mDepthTexture = RHICreateTexture2D(800, 600, PF_R8G8B8A8, 1, 1, ETextureCreateFlags::TexCreate_RenderTargetable);
-	}
 	mDepthDrawPolicy.Init();
 	mBasePaseDrawPolicy.Init();
+	mDebugPassPolicy.Init();
 }
 
 
@@ -82,7 +80,13 @@ void SimpleShadingRender::Render(RHICommandListImmediate* RHICMDList, ISceneRend
 		}
 	}
 	RHIOMRenderTarget();
+	RHIOMViewPort(800.0f, 600.0f);
+	RHIClearRMT();
+	RHIClearDepthView();
+
 	RenderDepth(RHICMDList, RenderProxyList);
+
 	RenderBasePass(RHICMDList,RenderProxyList);
+	RenderDebug(RHICMDList);
 	RHIPresent();
 }

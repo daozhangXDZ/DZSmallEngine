@@ -124,6 +124,7 @@ public:
 	 * 设置着色器资源视图
 	 */
 	virtual void SetShaderRessourcesView(int stIndex, int num, RHIShaderResourceViewParamRef ResTarget, EShaderFrequency bindShaderType) = 0;
+	virtual void SetShaderRessourcesView(int stIndex, int num, void* NativeShaderResourceView, EShaderFrequency bindShaderType) = 0;
 
 
 	virtual RHIVertexBufferRef CreateVertexBuffer(void*data, UINT descSize, UINT numVertices) = 0;
@@ -159,7 +160,7 @@ public:
 	/**
 	 * 
 	 */
-	virtual RHITexture2DRef RHICreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)=0;
+	virtual RHITexture2DRef CreateTexture2D(uint32 SizeX, uint32 SizeY, uint8 Format, uint32 NumMips, uint32 NumSamples, uint32 Flags)=0;
 
 
 public:

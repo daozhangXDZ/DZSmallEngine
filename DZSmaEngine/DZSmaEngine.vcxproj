@@ -57,6 +57,7 @@
     <ClCompile Include="Engine\Runtime\Render\Private\DrawingPolicy.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SceneRender.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\SimpleShadingRender.cpp" />
+    <ClCompile Include="Engine\Runtime\Render\Private\DebugPassRender.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\PipelineStateCache.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalState.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHIGlobalUniform.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Engine\Runtime\Engine\Public\GameEngine.h" />
     <ClInclude Include="Engine\Check\Public\SceneBasePase_Check.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\BasePassRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\DebugPassRender.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\ISceneRenderInterface.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\primitivesceneproxy.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />
@@ -192,6 +194,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <FileType>Document</FileType>
     </None>
+    <FxCompile Include="Engine\Shaders\Basic_2D_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Engine\Shaders\Basic_2D_VS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Engine\Shaders\Basic_Depth_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

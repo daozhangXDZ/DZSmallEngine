@@ -21,9 +21,7 @@ void BasePaseDrawPolicy::Init()
 void BasePaseDrawPolicy::SetupShaderState(RHICommandListImmediate * RHICMDList)
 {
 	MeshDrawPolicy::SetupShaderState(RHICMDList);
-	RHIOMViewPort(800.0f, 600.0f);
-	RHIClearRMT();
-	RHIClearDepthView();
+
 	SetGraphicsPipelineState(RHICMDList, gr);
 }
 
@@ -46,6 +44,18 @@ void BasePaseDrawPolicy::PreDraw(RHICommandListImmediate * RHICMDList, Primitive
 
 void SimpleShadingRender::RenderBasePass(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderScene)
 {
+	if (mBasePassTexture == nullptr)
+	{
+		mBasePassTexture = RHICreateTexture2D(800, 600, PF_R32G32B32A32_UINT, 1, 1,
+			ETextureCreateFlags::TexCreate_RenderTargetable|TexCreate_DepthStencilTargetable | TexCreate_Shared);
+		BasePassRenderTargetViewParam = new RHIRenderTarget(mBasePassTexture);
+	}
+	RHIClearRMT();
+	RHIClearDepthView();
+	//RHISetRenderTarget(BasePassRenderTargetViewParam, nullptr);
+	//RHIOMRenderTarget();
+	//RHIClearRMT();
+	//RHIClearDepthView();
 	mBasePaseDrawPolicy.SetupShaderState(RHICMDList);
 	for (int i = 0; i < RenderScene->GetDepthSceneInfoList().size(); i++)
 	{

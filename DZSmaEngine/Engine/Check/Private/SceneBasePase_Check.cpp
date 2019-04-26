@@ -77,7 +77,7 @@ void SceneTest01::InitMeshObj()
 				MaterialUtil::CreateOneMateria(
 					MaterialType::Opera,
 					L"Data\\Textures\\p2.jpg", L"Data\\Textures\\p2_NORM.png",
-					L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
+					L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
 					XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f),
 					XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
 					XMFLOAT4(0.2f, 0.2f, 0.2f, 80.0f),
@@ -92,7 +92,7 @@ void SceneTest01::InitMeshObj()
 			MaterialUtil::CreateOneMateria(
 				MaterialType::Opera,
 				L"Data\\Textures\\SampleTextureExam.PNG", L"",
-				L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
+				L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
 				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
 				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
@@ -103,7 +103,7 @@ void SceneTest01::InitMeshObj()
 			MaterialUtil::CreateOneMateria(
 				MaterialType::Opera,
 				L"Data\\Textures\\p3.jpg", L"",
-				L"Basic_VS_3D.cso", L"Basic_PS_3D_PBR_01.cso",
+				L"Basic_VS_3D.cso", L"Basic_PS_3D.cso",
 				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
 				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),

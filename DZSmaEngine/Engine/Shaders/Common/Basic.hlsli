@@ -6,6 +6,8 @@ TextureCube gTexCube : register(t2);
 SamplerState gSam : register(s0);
 
 
+
+
 cbuffer CBChangesEveryDrawing : register(b0)
 {
    

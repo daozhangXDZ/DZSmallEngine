@@ -1,4 +1,5 @@
 
+
 struct VertexPosNormalTex
 {
     float3 PosL : POSITION;
