@@ -37,6 +37,7 @@ cbuffer CBChangesEveryFrame : register(b2)
 cbuffer CBChangesOnResize : register(b3)
 {
     float4x4 gProj;
+    float2   gCamaraN_F;
 }
 
 cbuffer CBChangesRarely : register(b4)

@@ -42,6 +42,7 @@ public:
 	/// 设置渲染目标
 	/// </summary>
 	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource, RHIDepthTargetParamRef DepthTargetParam) override;
+	virtual RHITexture2DParamRef GetRenderTarget(int32 SizeX, int32 SizeY, EPixelFormat PixelFormat) override;
 	/// <summary>
 	/// 分配渲染目标
 	/// </summary>

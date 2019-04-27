@@ -111,6 +111,7 @@ struct CBChangesEveryFrame
 struct CBChangesOnResize
 {
 	DirectX::XMMATRIX proj;
+	DirectX::XMFLOAT2 camera_N_F;
 };
 
 

@@ -7,6 +7,7 @@ public:
 	XMMATRIX viewMat;
 	XMMATRIX ProjMat;
 	XMFLOAT3 eyepos;
+	XMFLOAT2 Near_Far;
 };
 
 struct RenderViewBoard

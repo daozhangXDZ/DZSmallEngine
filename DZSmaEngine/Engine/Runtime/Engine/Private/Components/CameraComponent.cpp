@@ -16,7 +16,14 @@ BaseCameraComponent::~BaseCameraComponent()
 void BaseCameraComponent::SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ)
 {
 	float fovRadians = (fovDegrees / 360.0f) * XM_2PI;
+	this->nearZ = nearZ;
+	this->farZ = farZ;
 	this->projectionMatrix = XMMatrixPerspectiveFovLH(fovRadians, aspectRatio, nearZ, farZ);
+}
+
+const XMFLOAT2 & BaseCameraComponent::GetProject_Near_Far() const
+{
+	return XMFLOAT2(this->nearZ, this->farZ);
 }
 
 const XMMATRIX & BaseCameraComponent::GetViewMatrix() const

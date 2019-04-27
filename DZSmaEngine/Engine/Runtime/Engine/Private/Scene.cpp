@@ -26,6 +26,7 @@ void SceneProxy::Tick(float dt)
 	mViewPortdesc.viewMat = mCameraComponent->GetViewMatrix();
 	mViewPortdesc.ProjMat = mCameraComponent->GetProjectionMatrix();
 	mViewPortdesc.eyepos = mCameraComponent->GetPositionFloat3();
+	mViewPortdesc.Near_Far = mCameraComponent->GetProject_Near_Far();
 }
 
 void SceneProxy::AddOneStaticPrimitiveComponent(PrimitiveComponent * obj)

@@ -48,6 +48,8 @@ public:
 	/// </summary>
 	/// <param name="RenderTargetResource">The render target resource.</param>
 	virtual void SetRenderTarget(RHIRenderTargetParamRef RenderTargetResource, RHIDepthTargetParamRef DepthTargetParam) = 0;
+	virtual RHITexture2DParamRef GetRenderTarget(int32 SizeX, int32 SizeY, EPixelFormat PixelFormat) = 0;
+
 	/// <summary>
 	/// ∑÷≈‰‰÷»æƒø±Í
 	/// </summary>

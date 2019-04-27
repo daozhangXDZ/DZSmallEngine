@@ -9,6 +9,7 @@ public:
 	~BaseCameraComponent();
 	void SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ);
 
+	const XMFLOAT2 & GetProject_Near_Far() const;
 	const XMMATRIX & GetViewMatrix() const;
 	const XMMATRIX & GetProjectionMatrix() const;
 
@@ -41,6 +42,7 @@ public:
 	}
 private:
 	void UpdateViewMatrix();
+	float nearZ, farZ;
 	XMVECTOR posVector;
 	XMVECTOR rotVector;
 	XMFLOAT3 pos;

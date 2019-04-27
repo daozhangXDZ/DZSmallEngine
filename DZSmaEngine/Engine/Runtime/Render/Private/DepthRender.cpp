@@ -34,22 +34,30 @@ void SimpleShadingRender::RenderDepth(RHICommandListImmediate* RHICMDList, IScen
 	if (mDepthTexture == nullptr)
 	{
 		mDepthTexture = RHICreateTexture2D(800, 600, PF_R32G32B32A32_UINT, 1, 1,
-			ETextureCreateFlags::TexCreate_RenderTargetable |TexCreate_ShaderResource|TexCreate_Shared);
-		DepthRenderTargetViewParam = new RHIRenderTarget(mDepthTexture);
-		
+			  ETextureCreateFlags::TexCreate_RenderTargetable 
+			| ETextureCreateFlags::TexCreate_DepthStencilTargetable
+			| TexCreate_ShaderResource
+			| TexCreate_GenerateMipCapable
+			| TexCreate_Shared);
+		DepthPass_RTargetViewParam = new RHIRenderTarget(mDepthTexture);
+		DepthPass_DTargetViewParam = new RHIDepthTarget(mDepthTexture);
 	}
-	RHIClearRMT();
-	RHIClearDepthView();
-	/*RHISetRenderTarget(DepthRenderTargetViewParam, nullptr);
+
+	RHICMDList->CachePreRenderTarget();
+
+
+	RHISetRenderTarget(DepthPass_RTargetViewParam, nullptr);
 	RHIOMRenderTarget();
 	RHIClearRMT();
-	RHIClearDepthView();*/
+	RHIClearDepthView();
 	mDepthDrawPolicy.SetupShaderState(RHICMDList);
 	for (int i=0; i< RenderScene->GetDepthSceneInfoList().size(); i++)
 	{
 		mDepthDrawPolicy.PreDraw(RHICMDList,RenderScene->GetDepthSceneInfoList()[i]);
 		mDepthDrawPolicy.DrawMesh(RHICMDList, RenderScene->GetDepthSceneInfoList()[i]);
 	}
+
+	RHICMDList->ResetCachePreRenderTarget();
 }
 
 

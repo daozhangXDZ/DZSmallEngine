@@ -51,6 +51,12 @@ public:
 	{
 
 	}
+public:
+	void CachePreRenderTarget();
+	void ResetCachePreRenderTarget();
+public:
+	RHIRenderTargetRef vCahce_RTargetViewParam;
+	RHIDepthTargetRef vCahce_DTargetViewParam;
 };
 
 
@@ -76,6 +82,10 @@ inline void RHISetRenderTarget(RHIRenderTargetParamRef RenderTargetResource, RHI
 	GDynamicRHI->SetRenderTarget(RenderTargetResource, DepthTargetParam);
 }
 
+inline RHITexture2DParamRef RHIGetRenderTarget(int32 SizeX, int32 SizeY, EPixelFormat PixelFormat)
+{
+	return GDynamicRHI->GetRenderTarget(SizeX, SizeY, PixelFormat);
+}
 
 /// <summary>
 /// ·ÖÅääÖÈ¾Ä¿±ê

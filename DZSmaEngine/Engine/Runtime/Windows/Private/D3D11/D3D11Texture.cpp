@@ -48,20 +48,27 @@ RHITexture2DRef D3D11DynamicRHI::CreateTexture2D(uint32 SizeX, uint32 SizeY, uin
 	// Setup the render target texture description.
 	textureDesc.Width = SizeX;
 	textureDesc.Height = SizeY;
-	textureDesc.MipLevels = NumMips;
+	textureDesc.MipLevels = 0;// NumMips;
 	textureDesc.ArraySize = 1;
 	//TODO格式
-	textureDesc.Format = PlatformResourceFormat;
-	
-	//DXGI_FORMAT_R32G32B32A32_FLOAT
+	textureDesc.Format = 
+		//PlatformResourceFormat;
+		DXGI_FORMAT_R8G8B8A8_UNORM;
 	textureDesc.SampleDesc.Count = 1;
+	textureDesc.SampleDesc.Quality = 0;
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;
 	textureDesc.BindFlags = BindFlags;
 	textureDesc.CPUAccessFlags = CPUAccessFlags;
 	textureDesc.MiscFlags = 0;
-
-
-
+	if (Flags & TexCreate_Shared)
+	{
+		textureDesc.MiscFlags |= D3D11_RESOURCE_MISC_SHARED;
+	}
+	if (Flags & TexCreate_GenerateMipCapable)
+	{
+		textureDesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
+	}
+	
 	//根据FLAG
 
 	if (Flags & TexCreate_RenderTargetable)
@@ -87,7 +94,10 @@ RHITexture2DRef D3D11DynamicRHI::CreateTexture2D(uint32 SizeX, uint32 SizeY, uin
 			bCreateRTV = true;
 		}
 	}
-
+	if (Flags & TexCreate_UAV)
+	{
+		textureDesc.BindFlags |= D3D11_BIND_UNORDERED_ACCESS;
+	}
 
 	
 	result = md3d11Device->CreateTexture2D(&textureDesc, NULL, vTextureResource.GetAddressOf());
@@ -101,7 +111,9 @@ RHITexture2DRef D3D11DynamicRHI::CreateTexture2D(uint32 SizeX, uint32 SizeY, uin
 		D3D11_RENDER_TARGET_VIEW_DESC RTVDesc;
 		ZeroMemory(&RTVDesc, sizeof(RTVDesc));
 
-		RTVDesc.Format = PlatformRenderTargetFormat;
+		RTVDesc.Format =
+			DXGI_FORMAT_R8G8B8A8_UNORM;
+			//PlatformRenderTargetFormat;
 		RTVDesc.ViewDimension = RenderTargetViewDimension;
 		RTVDesc.Texture2D.MipSlice = 0;
 		result = md3d11Device->CreateRenderTargetView(vTextureResource.Get(), &RTVDesc, vRenderTargetView.GetAddressOf());
@@ -113,7 +125,8 @@ RHITexture2DRef D3D11DynamicRHI::CreateTexture2D(uint32 SizeX, uint32 SizeY, uin
 		D3D11_DEPTH_STENCIL_VIEW_DESC DSVDesc;
 		ZeroMemory(&DSVDesc, sizeof(DSVDesc));
 
-		DSVDesc.Format = FindDepthStencilDXGIFormat(PlatformResourceFormat);
+		DSVDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			//FindDepthStencilDXGIFormat(PlatformResourceFormat);
 		result = md3d11Device->CreateDepthStencilView(vTextureResource.Get(), nullptr, vDepthStenCilTarget.GetAddressOf());
 	}
 
@@ -123,7 +136,7 @@ RHITexture2DRef D3D11DynamicRHI::CreateTexture2D(uint32 SizeX, uint32 SizeY, uin
 		D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc;
 		ZeroMemory(&SRVDesc, sizeof(SRVDesc));
 
-		SRVDesc.Format = PlatformShaderResourceFormat;
+		SRVDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		SRVDesc.ViewDimension = ShaderResourceViewDimension;
 		SRVDesc.Texture2D.MostDetailedMip = 0;
 		SRVDesc.Texture2D.MipLevels = NumMips;

@@ -373,7 +373,7 @@ public:
 		ID3D11RenderTargetView* InRT, ID3D11DepthStencilView* InDepthview,
 		uint32 InSizeX, uint32 InSizeY, uint32 InNumMips, uint32 InNumSamples, EPixelFormat InFormat, FName InTextureName)
 		:
-		BaseResourceType(InSizeX, InSizeY, 0,InNumMips, InNumSamples, InFormat, InTextureName),
+		BaseResourceType(InSizeX, InSizeY, 1,InNumMips, InNumSamples, InFormat, InTextureName),
 		D3D11TextureBase(InD3DRHI,InResource,InShaderResourceView,InRT,InDepthview)
 	{
 

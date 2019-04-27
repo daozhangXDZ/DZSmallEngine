@@ -24,6 +24,7 @@ void SimpleShadingRender::UpdateViewPortViewMat(RHICommandListImmediate* RHICMDL
 void SimpleShadingRender::UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)
 {
 	vResizeCSB.proj = XMMatrixTranspose(desc->ProjMat);
+	vResizeCSB.camera_N_F = desc->Near_Far;
 	RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIResizeBuffer(),  &vResizeCSB, true);
 }
 
@@ -60,6 +61,7 @@ void SimpleShadingRender::InitRes(RHICommandListImmediate* RHICMDList)
 	SetCommandDepthBuffer();
 	mDepthDrawPolicy.Init();
 	mBasePaseDrawPolicy.Init();
+	mLightPassDrawPolicy.Init();
 	mDebugPassPolicy.Init();
 }
 
@@ -70,7 +72,7 @@ void SimpleShadingRender::Render(RHICommandListImmediate* RHICMDList, ISceneRend
 	// ²âÊÔ TODO »ñÈ¡Light
 	{
 		static float dtZ;
-		static float speed = 0.0002f;
+		static float speed = 0.001f;
 		vRarelyCSB.dirLight[0].Diffuse = XMFLOAT4(0.5f + dtZ, 0.5f + dtZ, 0.5f + dtZ, 1.0f);
 		RHIApplyConstantBuffer(RHICMDList->GetGlobalUniForm()->GetRHIRarelyBuffer(), &vRarelyCSB, true);
 		dtZ += speed;
@@ -80,13 +82,11 @@ void SimpleShadingRender::Render(RHICommandListImmediate* RHICMDList, ISceneRend
 		}
 	}
 	RHIOMRenderTarget();
-	RHIOMViewPort(800.0f, 600.0f);
 	RHIClearRMT();
-	RHIClearDepthView();
-
+	RHIOMViewPort(800.0f, 600.0f);
 	RenderDepth(RHICMDList, RenderProxyList);
-
 	RenderBasePass(RHICMDList,RenderProxyList);
+	RenderLightPass(RHICMDList, RenderProxyList);
 	RenderDebug(RHICMDList);
 	RHIPresent();
 }

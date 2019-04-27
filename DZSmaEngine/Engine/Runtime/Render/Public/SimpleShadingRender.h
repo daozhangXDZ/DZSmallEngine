@@ -2,6 +2,7 @@
 #include "SceneRender.h"
 #include "DepthRender.h"
 #include "BasePassRender.h"
+#include "LightPassRender.h"
 #include "DebugPassRender.h"
 class SimpleShadingRender :public SceneRender
 {
@@ -12,6 +13,7 @@ public:
 protected:
 	void RenderDepth(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderScene);
 	void RenderBasePass(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderScene);
+	void RenderLightPass(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderScene);
 	void RenderDebug(RHICommandListImmediate* RHICMDList);
 	void UpdateViewPortViewMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
 	void UpdateViewPortProjMat(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc)override;
@@ -22,11 +24,14 @@ private:
 	CBChangesOnResize vResizeCSB;
 	CBChangesRarely vRarelyCSB;
 	RHITexture2DRef mDepthTexture;
-	RHIRenderTargetParamRef DepthRenderTargetViewParam;
+	RHIRenderTargetParamRef DepthPass_RTargetViewParam;
+	RHIDepthTargetParamRef  DepthPass_DTargetViewParam;
 	RHITexture2DRef mBasePassTexture;
-	RHIRenderTargetParamRef BasePassRenderTargetViewParam;
+	RHIRenderTargetParamRef BasePass_RTargetViewParam;
+	RHIDepthTargetParamRef  BasePass_DTargetViewParam;
 
 	DepthRenderPolicy	mDepthDrawPolicy;
 	BasePaseDrawPolicy	mBasePaseDrawPolicy;
+	LightPaseDrawPolicy	mLightPassDrawPolicy;
 	DebugShowPolicy		mDebugPassPolicy;
 };

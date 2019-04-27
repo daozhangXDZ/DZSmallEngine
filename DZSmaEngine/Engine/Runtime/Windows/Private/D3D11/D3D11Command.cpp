@@ -75,6 +75,26 @@ void D3D11DynamicRHI::SetRenderTarget(RHIRenderTargetParamRef RenderTargetResour
 	
 }
 
+RHITexture2DParamRef D3D11DynamicRHI::GetRenderTarget(int32 SizeX,int32 SizeY,EPixelFormat PixelFormat)
+{
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_MicroDepth;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_MicroRender;
+	md3d11DeviceContext->OMGetRenderTargets(1, m_MicroRender.GetAddressOf(), m_MicroDepth.GetAddressOf());
+	RHID3D11Texture2D* NewTexture = new RHID3D11Texture2D(
+		this,
+		nullptr,
+		nullptr,
+		m_MicroRender.Get(),
+		m_MicroDepth.Get(),
+		SizeX, SizeY,
+		1,
+		1,
+		PixelFormat,
+		"DepthBuffer"
+	);
+	return NewTexture;
+}
+
 
 void D3D11DynamicRHI::ClearRMT()
 {
