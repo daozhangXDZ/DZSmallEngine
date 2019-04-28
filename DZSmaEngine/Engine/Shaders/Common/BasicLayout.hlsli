@@ -49,4 +49,7 @@ struct VertexPosHWNormalTangentTex
     float3 NormalW : NORMAL; // 法向量在世界中的方向
     float4 TangentW : TANGENT; // 切线在世界中的方向
     float2 Tex : TEXCOORD;
+
+    float4 lightViewPosition : TEXCOORD1;
+    float3 lightPos : TEXCOORD2;
 };

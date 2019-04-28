@@ -61,7 +61,7 @@ void SimpleShadingRender::RenderDebug(RHICommandListImmediate* RHICMDList)
 		RHIOMPInputLayout(mDebugPassPolicy.DepthDebugUIS->mInputLayout);
 		RHIOMVSShader(mDebugPassPolicy.DepthDebugUIS->mVertexShader);
 		RHIOMPSShader(mDebugPassPolicy.DepthDebugUIS->mPixelShader);
-		if (mDepthTexture!= nullptr)
+		if (mDepthTexture != nullptr)
 		{
 			RHISetShaderRessourcesView(0, 1, mDepthTexture->GetNativeShaderResourceView(), EShaderFrequency::SF_Pixel);
 		}

@@ -26,6 +26,7 @@
     <ClCompile Include="Engine\Runtime\EngineApplicationCore\Private\EngineWindow.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\DirectionLightComponent.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\LightComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Components\PanelMeshComponent.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\GameEngine.cpp" />
     <ClCompile Include="Engine\Runtime\Engine\Private\Material\Material.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Engine\Runtime\Render\Public\BasePassRender.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\DebugPassRender.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\ISceneRenderInterface.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\LightInfo.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\LightPassRender.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\primitivesceneproxy.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\WindowsPlatform\GameTimer.h" />

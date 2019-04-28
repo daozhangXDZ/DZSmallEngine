@@ -11,4 +11,6 @@ void  RHICommandListImmediate::ResetCachePreRenderTarget()
 {
 	RHISetRenderTarget(vCahce_RTargetViewParam, vCahce_DTargetViewParam);
 	RHIOMRenderTarget();
+	vCahce_RTargetViewParam->Release();
+	vCahce_DTargetViewParam->Release();
 }

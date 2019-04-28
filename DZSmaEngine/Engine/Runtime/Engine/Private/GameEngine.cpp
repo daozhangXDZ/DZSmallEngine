@@ -17,7 +17,7 @@ void GameEngine::Tick(float dt)
 	{
 		RHICMDList = new RHICommandListImmediate();
 		CurrRender = SceneRender::GetShaderRender();
-		CurrRender->InitRes(RHICMDList);
+		CurrRender->InitRes(RHICMDList, mSceneProxy);
 	}
 	CurrRender->Render(RHICMDList, mSceneProxy);
 	CurrRender->UpdateViewPort(RHICMDList, &(mSceneProxy->GetMainCameraDesc()), true);

@@ -82,6 +82,7 @@
     <ClCompile Include="Engine\Runtime\Render\Private\DebugPassRender.cpp" />
     <ClCompile Include="Engine\Runtime\RHI\Private\RHICommandList.cpp" />
     <ClCompile Include="Engine\Runtime\Render\Private\LightPassRender.cpp" />
+    <ClCompile Include="Engine\Runtime\Engine\Private\Components\LightComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Runtime\Core\Public\Container\EngineString.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Engine\Runtime\Render\Public\DebugPassRender.h" />
     <ClInclude Include="Engine\Runtime\Core\Public\Math\Color.h" />
     <ClInclude Include="Engine\Runtime\Render\Public\LightPassRender.h" />
+    <ClInclude Include="Engine\Runtime\Render\Public\LightInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Shaders\Default_VS.hlsl" />

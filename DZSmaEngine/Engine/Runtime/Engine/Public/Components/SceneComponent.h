@@ -57,7 +57,7 @@ protected:
 	DirectX::XMMATRIX mRelativeMatrix;
 public:
 	DirectX::XMMATRIX GetWorldMaterix();
-private:
+protected:
 	XMVECTOR scaleVector;
 	XMVECTOR posVector;
 	XMVECTOR rotVector;

@@ -3,6 +3,8 @@
 Texture2D gDiffuseMap : register(t0);
 Texture2D gNormalMap : register(t1);
 TextureCube gTexCube : register(t2);
+Texture2D BasePassMapTexture : register(t3);
+Texture2D depthMapTexture : register(t4);
 SamplerState gSam : register(s0);
 
 
@@ -37,7 +39,8 @@ cbuffer CBChangesEveryFrame : register(b2)
 cbuffer CBChangesOnResize : register(b3)
 {
     float4x4 gProj;
-    float2   gCamaraN_F;
+    float2   gClip_N_F;
+    float Pad;
 }
 
 cbuffer CBChangesRarely : register(b4)
@@ -48,6 +51,10 @@ cbuffer CBChangesRarely : register(b4)
     DirectionalLight gDirLight[5];
     PointLight gPointLight[5];
     SpotLight gSpotLight[5];
+    int DirLightCount;
+    int pointLightCount;
+    int spotLighttCount;
+    float PadCBChangesRarely;
 }
 
 

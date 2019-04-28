@@ -46,6 +46,7 @@ void RHIGlobalUniform::Init()
 	//vResizeCSB = new CBChangesOnResize();
 	mCBOnResize = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesOnResize));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBOnResize, 3);
+	RHISetUniFormBuffer(mDefaultPixelShader, mCBOnResize, 3);
 
 	mCBRarely = RHICreateUniFormBuffer(nullptr, RHIUtil::CreateLayout(new CBChangesRarely()));
 	RHISetUniFormBuffer(mDefaultVertexShader, mCBRarely, 4);

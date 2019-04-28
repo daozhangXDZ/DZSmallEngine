@@ -7,7 +7,7 @@
 class SimpleShadingRender :public SceneRender
 {
 public:
-	virtual void InitRes(RHICommandListImmediate* RHICMDList)override;
+	virtual void InitRes(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderProxyList)override;
 	virtual void Render(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderProxyList) override;
 	virtual void UpdateViewPort(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc, bool isUpdateProj)override;
 protected:

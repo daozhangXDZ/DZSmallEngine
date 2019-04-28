@@ -38,24 +38,43 @@ float4 main(VertexPosHWNormalTangentTex pIn) : SV_Target
     float4 A = float4(0.0f, 0.0f, 0.0f, 0.0f);
     float4 D = float4(0.0f, 0.0f, 0.0f, 0.0f);
     float4 S = float4(0.0f, 0.0f, 0.0f, 0.0f);
-    int i;
+    int i2 = 0;
 
-    [unroll]
-    for (i = 0; i < 1; ++i)
+    
+    float bias;
+    float2 projectTexCoord;
+    float depthValue;
+    float lightDepthValue;
+    float lightIntensity;
+    float4 textureColor;
+
+     //bias = 0.001f;
+        //projectTexCoord.x = pIn.lightViewPosition.x / pIn.lightViewPosition.w / 2.0f + 0.5f;
+        //projectTexCoord.y = -pIn.lightViewPosition.y / pIn.lightViewPosition.w / 2.0f + 0.5f;
+        // [unroll]
+        //if ((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y))
+        //{
+        //    depthValue = depthMapTexture.Sample(gSam, projectTexCoord).r;
+        //    lightDepthValue = pIn.lightViewPosition.z / pIn.lightViewPosition.w;
+        //    lightDepthValue = lightDepthValue - bias;
+        //     [unroll]
+        //    if (lightDepthValue < depthValue)
+        //    {
+        //        lightIntensity = saturate(dot(pIn.NormalW, pIn.lightPos));
+        //        ComputeDirectionalLight(gMaterial, gDirLight[0], bumpedNormalW, toEyeW, A, D, S);
+        //        ambient += lightIntensity*A;
+        //        diffuse += lightIntensity*D;
+        //        spec += lightIntensity*S;
+        //    }
+        //}
+     [unroll]
+    for (i2 = 0; i2 < 1; ++i2)
     {
-        ComputeDirectionalLight(gMaterial, gDirLight[i], bumpedNormalW, toEyeW, A, D, S);
+        ComputeDirectionalLight(gMaterial, gDirLight[i2], bumpedNormalW, toEyeW, A, D, S);
         ambient += A;
         diffuse += D;
         spec += S;
     }
-    // [unroll]
-    //for (i = 0; i < 3; ++i)
-    //{
-    //    ComputePointLight(gMaterial, gPointLight[i], pIn.PosW, bumpedNormalW, toEyeW, A, D, S);
-    //    ambient += A;
-    //    diffuse += D;
-    //    spec += S;
-    //}
     float4 litColor = texColor * (ambient + diffuse) + spec;
     if (gMaterial.materialType)
     {

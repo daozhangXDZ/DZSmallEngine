@@ -21,21 +21,29 @@ void SceneTest01::InitCamera()
 	mCameraComponent = new BaseCameraComponent();
 	float AspectRatio = mCameraComponent->AspectRatio(800, 600);
 	mCameraComponent->SetProjectionValues(90.0f, AspectRatio, 0.1f, 1000.0f);
-	mCameraComponent->SetPosition(0.0f, 0.0f, -1.0f);
-	mCameraComponent->SetLookAtPos(0.0f, 0.0f, 1.0f);
+	mCameraComponent->SetPosition(0.0f, 10.0f, -3.0f);
+	mCameraComponent->SetLookAtPos(0.0f, 2.0f, 3.0f);
 }
 
 
 void SceneTest01::InitLight()
 {
 	//方向光
-	for (int i = 1; i < 1; i++)
+	for (int i = 0; i < 1; i++)
 	{
+	/*	vRarelyCSB.dirLight[i].Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 2.0f);
+		vRarelyCSB.dirLight[i].Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+		vRarelyCSB.dirLight[i].Specular = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
+		vRarelyCSB.dirLight[i].Direction = XMFLOAT3(-0.577f, -0.577f, 0.577f);*/
 		LightComponent* DireLight = new DirectionLightComponent();
-		DireLight->SetPosition(2.0f, 5.0f, 3.0f);
+		DireLight->SetPosition(2.0f, 5.0f, -30.0f);
+		DireLight->SetRotation(0.0f, 0.0f, 0.45f);
 		DireLight->SetScale(1.0f, 1.0f, 1.0f);
-		DireLight->SetLightColor(DFVector(0.5f, 0.0f, 0.0f));
-		__LightList.push_back(DireLight);
+		
+		DireLight->SetAmbientColor(0.5f, 0.5f, 0.5f, 2.0f);
+		DireLight->SetDiffuseColor(0.5f, 0.5f, 0.5f, 1.0f);
+		DireLight->SetSpecularColor(0.1f, 0.1f, 0.1f, 1.0f);
+		AddOneStaticLightComponent(DireLight);
 	}
 }
 
@@ -49,7 +57,7 @@ void SceneTest01::InitMeshObj()
 		//材质测试
 		{
 			int j = -1;
-			InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
+			InitCubeMode(XMFLOAT3(j * 10.0f, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
 				MaterialUtil::CreateOneMateria(
 					MaterialType::Opera,
 					L"Data\\Textures\\p1.jpg", L"",
@@ -61,7 +69,7 @@ void SceneTest01::InitMeshObj()
 				)
 			);
 			j += 1;
-			InitCubeMode(XMFLOAT3(j * 5.0f, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
+			InitCubeMode(XMFLOAT3(j * 10.0f, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
 				MaterialUtil::CreateOneMateria(
 					MaterialType::Mask,
 					L"Data\\Textures\\p2_alpha.png", L"",
@@ -73,7 +81,7 @@ void SceneTest01::InitMeshObj()
 				)
 			);
 			j += 1;
-			InitCubeMode(XMFLOAT3(5.0f * j, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
+			InitCubeMode(XMFLOAT3(10.0f * j, 4.0f, 10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f),
 				MaterialUtil::CreateOneMateria(
 					MaterialType::Opera,
 					L"Data\\Textures\\p2.jpg", L"Data\\Textures\\p2_NORM.png",
@@ -99,13 +107,13 @@ void SceneTest01::InitMeshObj()
 				XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
 			)
 		);
-		InitPanelMode(XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(10.0f, 1.0f, 10.0f),
+		InitCubeMode(XMFLOAT3(0.0f, 4.0f, 2.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(90.0f, -2.0f, 90.0f),
 			MaterialUtil::CreateOneMateria(
 				MaterialType::Opera,
-				L"Data\\Textures\\p3.jpg", L"",
+				L"Data\\Textures\\p2.jpg", L"",
 				L"Basic_Light_VS.cso", L"Basic_Light_PS.cso",
 				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
-				XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f),
+				XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f),
 				XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f),
 				XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f)
 			)

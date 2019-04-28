@@ -9,8 +9,8 @@ class CEffect
 public:
 	// 各种类型灯光允许的最大数目
 	static const int maxDireLights = 5;
-	static const int maxPointLights = 1000;
-	static const int maxSpotLights = 1000;
+	static const int maxPointLights = 5;
+	static const int maxSpotLights = 5;
 };
 
 struct ShaderDirectionalLight
@@ -20,8 +20,15 @@ struct ShaderDirectionalLight
 	DirectX::XMFLOAT4 Ambient;
 	DirectX::XMFLOAT4 Diffuse;
 	DirectX::XMFLOAT4 Specular;
+
 	DirectX::XMFLOAT3 Direction;
-	float Pad; // 最后用一个浮点数填充使得该结构体大小满足16的倍数，便于我们以后在HLSL设置数组
+	float Pad; 
+
+	DirectX::XMMATRIX view;
+	DirectX::XMMATRIX proj;
+
+	DirectX::XMFLOAT3 Att;
+	float Pad2; // 最后用一个浮点数填充使得该结构体大小满足16的倍数，便于我们以后在HLSL设置数组
 };
 
 // 点光
@@ -37,6 +44,8 @@ struct ShaderPointLight
 	DirectX::XMFLOAT3 Position;
 	float Range;
 
+	DirectX::XMMATRIX view;
+	DirectX::XMMATRIX proj;
 	// 打包成4D向量: (A0, A1, A2, Pad)
 	DirectX::XMFLOAT3 Att;
 	float Pad; // 最后用一个浮点数填充使得该结构体大小满足16的倍数，便于我们以后在HLSL设置数组
@@ -58,6 +67,9 @@ struct ShaderSpotLight
 	// 打包成4D向量: (Direction, Spot)
 	DirectX::XMFLOAT3 Direction;
 	float Spot;
+
+	DirectX::XMMATRIX view;
+	DirectX::XMMATRIX proj;
 
 	// 打包成4D向量: (Att, Pad)
 	DirectX::XMFLOAT3 Att;
@@ -111,7 +123,8 @@ struct CBChangesEveryFrame
 struct CBChangesOnResize
 {
 	DirectX::XMMATRIX proj;
-	DirectX::XMFLOAT2 camera_N_F;
+	DirectX::XMFLOAT2 Clip_N_F;
+	float Pad;
 };
 
 
@@ -123,4 +136,9 @@ struct CBChangesRarely
 	ShaderDirectionalLight dirLight[CEffect::maxDireLights];
 	ShaderPointLight pointLight[CEffect::maxPointLights];
 	ShaderSpotLight spotLight[CEffect::maxSpotLights];
+
+	int DirLightCount;
+	int pointLightCount;
+	int spotLighttCount;
+	float PadCBChangesRarely;
 };

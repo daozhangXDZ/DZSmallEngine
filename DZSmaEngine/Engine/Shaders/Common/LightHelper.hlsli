@@ -5,8 +5,15 @@ struct DirectionalLight
     float4 Ambient;
     float4 Diffuse;
     float4 Specular;
+
     float3 Direction;
     float Pad;
+
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
+
+    float3 Att;
+    float Pad2;
 };
 
 // µã¹â
@@ -18,6 +25,9 @@ struct PointLight
 
     float3 Position;
     float Range;
+
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
 
     float3 Att;
     float Pad;
@@ -35,6 +45,9 @@ struct SpotLight
 
     float3 Direction;
     float Spot;
+
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
 
     float3 Att;
     float Pad;

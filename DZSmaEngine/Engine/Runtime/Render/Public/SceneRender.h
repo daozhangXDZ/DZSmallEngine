@@ -11,7 +11,7 @@ class SceneRender
 public:
 	
 	SceneRender() {}
-	virtual void InitRes(RHICommandListImmediate* RHICMDList) =0;
+	virtual void InitRes(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderProxyList) =0;
 	virtual void Render(RHICommandListImmediate* RHICMDList, ISceneRenderInterface* RenderProxyList)=0;
 	virtual void InitViewPort(RHICommandListImmediate* RHICMDList, RenderViewBoard ViewBoard) {};
 	virtual void UpdateViewPort(RHICommandListImmediate* RHICMDList, ViewPortDesc* desc, bool isUpdateProj) {}

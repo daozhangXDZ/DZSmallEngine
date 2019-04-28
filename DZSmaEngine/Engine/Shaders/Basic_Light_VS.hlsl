@@ -15,5 +15,13 @@ VertexPosHWNormalTangentTex main(VertexPosNormalTangentTex vIn)
     vOut.NormalW = mul(vIn.NormalL, (float3x3) gWorldInvTranspose);
     vOut.TangentW = mul(vIn.TangentL, gWorld);
     vOut.Tex = vIn.Tex;
+
+    int i = 0;
+    [unroll]
+    for (i = 0; i < DirLightCount; ++i)
+    {
+        matrix lightviewProj = mul(gDirLight[i].lightViewMatrix, gDirLight[i].lightProjectionMatrix);
+        vOut.lightViewPosition = mul(posW, lightviewProj);
+    }
     return vOut;
 }

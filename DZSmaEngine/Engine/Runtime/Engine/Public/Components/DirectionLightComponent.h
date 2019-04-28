@@ -4,4 +4,5 @@ class DirectionLightComponent : public LightComponent
 {
 public:
 	virtual DFVector GetDirection() override;
+	virtual FSceneLightInfo* GetLightInfo() override;
 };

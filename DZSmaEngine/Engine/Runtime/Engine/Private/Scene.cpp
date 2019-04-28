@@ -46,6 +46,14 @@ void SceneProxy::AddOneDynamicPrimitiveComponent(PrimitiveComponent * obj)
 	//obj->Initialize();
 }
 
+void SceneProxy::AddOneStaticLightComponent(LightComponent* obj)
+{
+	{
+		FSceneLightInfo* info = obj->GetLightInfo();
+		SceneLightInfo.push_back(info);
+	}
+}
+
 std::vector<PrimitiveComponent*> SceneProxy::GetScenePrimitive()
 {
 	return __ObjList;
@@ -69,4 +77,9 @@ TArray<PrimitiveSceneInfo*> SceneProxy::GetBaseSceneInfoList()
 BaseCameraComponent * SceneProxy::GetCamera()
 {
 	return mCameraComponent;
+}
+
+TArray<FSceneLightInfo*> SceneProxy::GetLightInfoList()
+{
+	return SceneLightInfo;
 }

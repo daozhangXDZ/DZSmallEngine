@@ -9,6 +9,7 @@
 #include <vector>
 #include "Material/Material.h"
 #include "ISceneRenderInterface.h"
+
 //template<typename T>
 class SceneProxy :public SceneComponent, public ISceneRenderInterface
 {
@@ -25,13 +26,16 @@ public:
 
 	void AddOneDynamicPrimitiveComponent(PrimitiveComponent* obj);
 
+	void AddOneStaticLightComponent(LightComponent* obj);
+
 	std::vector<PrimitiveComponent*> GetScenePrimitive();
 
 	ViewPortDesc GetMainCameraDesc();
 
-	virtual	TArray<PrimitiveSceneInfo*> GetDepthSceneInfoList() override;
-	virtual TArray<PrimitiveSceneInfo*> GetBaseSceneInfoList() override;
+	TArray<PrimitiveSceneInfo*> GetDepthSceneInfoList() override;
+	TArray<PrimitiveSceneInfo*> GetBaseSceneInfoList() override;
 
+	TArray<FSceneLightInfo*> GetLightInfoList() override;
 	BaseCameraComponent* GetCamera();
 
 protected:
@@ -42,6 +46,7 @@ protected:
 
 	TArray<PrimitiveSceneInfo*>			SceneDepthInfo;
 	TArray<PrimitiveSceneInfo*>			SceneRenderInfo;
+	TArray<FSceneLightInfo*>			SceneLightInfo;
 };
 
 extern SceneProxy* currCheckScene;
